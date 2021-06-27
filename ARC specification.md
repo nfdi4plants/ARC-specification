@@ -257,6 +257,8 @@ To foster FAIRification, badges will be earned by reaching certain scores for a 
  
 ## Best Practices
 
+*(not cleaned up / merged)*
+
 Additionally, it is RECOMMENDED to place the corresponding protocol (assay SOP) in text form under:  
 
 

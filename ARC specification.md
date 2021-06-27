@@ -282,17 +282,14 @@ Everything not meeting these criteria is regarded as auxiliary payload and there
 Auxiliary payload MUST be ignored by any processing. Also, auxiliary payload might be restricted in size or retention depending on the repository for ARC sharing and publication.  
 
 #### Community specific data formats 
-
-List of preferred sequencing, metabolomics etc. file types. 
-Standards like  
-- mzML 
-- mzTAB 
+We recommend the use of community specific data formats covering most common measurement techniques. 
+Using the following recommended formats will ensure improoved accessability and findability:   
+- mzML (raw data metabolomics and proteomics) 
+- mzTAB (analysis data metabolomics and proteomics)
 - Fastq.gz (compressed NGS Short Read Sequencing, Long Read Sequencing) 
 - fastq (NGS Short Read Sequencing, Long Read Sequencing) 
 - BAM 
 - SAM 
-are preferred as they can be used/computed directly ... 
-
  
 ## TODO: Open Questions
 Stichpunkte aus dem operational Speaker-JF vom 25.05.2021: 

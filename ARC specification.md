@@ -211,8 +211,7 @@ Encryption is not advised (but could be an option to share sensitive data in an 
 The investigation file follows the vanilla ISA model specification saved in the XLSX format.
 
 ## Shareable and Publishable ARCs
-
-ARCs are considered *publishable* (e.g. for the purpose of minting a DOI) when fulfilling the following conditions:
+ARCs can be shared in any state. They are considered *publishable* (e.g. for the purpose of minting a DOI) when fulfilling the following conditions:
 
 - Investigation-level metadata contains minimally the following DataCite terms:
 
@@ -271,18 +270,13 @@ As the ARC might be used by different persons and in different workflow contexts
 
 ### Auxiliary Payload
 
-vendor-specific formats etc.
-
 *(not cleaned up / merged)*
-
-To allow re-using and reproduction all contained (meta)data NEEDs to be understood and properly interpretable. In general, the use of human and machine-readable formats is RECOMMENDED and strongly encouraged (details see: Community specific data formats). However, ARC payload files MUST be openly accessible. This is ensured if the file is accompanied by readable open formats (preferred), referencing a schema definition, or interpreting software stored under workflows.  
-
 Everything not meeting these criteria is regarded as auxiliary payload and therefore is not strictly considered ARC content. This might result in an ‘empty’ ARC only containing auxiliary payload. 
 
 Auxiliary payload MUST be ignored by any processing. Also, auxiliary payload might be restricted in size or retention depending on the repository for ARC sharing and publication.  
 
 #### Community specific data formats 
-We recommend the use of community specific data formats covering most common measurement techniques. 
+It is recommend to use of community specific data formats covering most common measurement techniques. 
 Using the following recommended formats will ensure improoved accessability and findability:   
 - mzML (raw data metabolomics and proteomics) 
 - mzTAB (analysis data metabolomics and proteomics)
@@ -290,32 +284,7 @@ Using the following recommended formats will ensure improoved accessability and 
 - fastq (NGS Short Read Sequencing, Long Read Sequencing) 
 - BAM 
 - SAM 
- 
-## TODO: Open Questions
-Stichpunkte aus dem operational Speaker-JF vom 25.05.2021: 
-Thema Workflow: Einziges requirement ist ein CWL file 
-ARC-CWL in Root-Verzeichnis, sodass Reihenfolge und Abhängigkeiten abgebildet werden können 
-Requirements for ARC vs. Optional Features (Zweites nach Wenn-Dann-Logik) 
-Restriktionen müssen auch durchgesetzt werden, deshalb eine Regulierung nicht über das Erzwingen einzelner Punkte sondern über das Scoring der ARCs geschehen (Blech, Silber, Gold, usw.). Stichwort: ArchivementAchievement-Baum 
-*** 
- 
-It is possible to publish: 
-Just all or partial raw data with complete annotation (Single data sets vs. Complete experiments of  a CRC, project, …) 
-Workflow specifications and descriptions to be run by third party on their data (without any raw or processed data contained) 
-Results data (with necessary run information for reproduction)  
-Tools and information about them  
-A complete ARC containing all relevant raw, derived data associated with workflows, tools and runs  
-Comments on ARCs to be published on some well known public repository? 
-For an ARC publication requiring a DOI certain further criteria are required 
-Single branches either Assay or Workflow including metadata or processing 
-Workflows executable  
-Runs need to be reproduceable  
-Assays need to contain annotation 
-there will be different versions of publishable ARCs dependent on previously defined content 
-publishable ARCs needs to be pure (pristine) -> Manually curated ( maybe freezing/bagit ignores comment files or additional material ) 
-Additional criteria defined by repositories 
-ARCs will be packed for publishing into a single file using BagIT or OCFL. Provenance information is gathered from various inputs and added. Checksums will be automatically generated for each contained file (part of BagIt specification).  
-Certain metadata information is getting extracted from ISA metadata files (to be available for publishing e.g. on Invenio) 
-Data publication granularity 
-Generally, there is no size limit to a published ARC (repositories might impose single object size limits) 
- 
+
+Notes: 
+  - In case of storing vendor-spesific data within an ARC, it is strongly encurage to accompany them by the corresponding open formats or provide a workflow for convertion or processing.
+  

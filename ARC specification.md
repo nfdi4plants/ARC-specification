@@ -206,9 +206,13 @@ Compression is preferrable to save on disk space and speed up data transfers but
 
 Encryption is not advised (but could be an option to share sensitive data in an otherwise open ARC) .
 
-### ISA-XLSX Format (-> Timo)
+### ISA-XLSX Format
 
-The investigation file follows the vanilla ISA model specification saved in the XLSX format.
+ISA-XLSX follows the ISA model specification saved in a XLSX format. The XLSX format uses the SpreadsheetML markup language and schema to represent a spreadsheet document. Conceptually, using the terminology of the Spreadsheet ML specification in [ISO/IEC 29500-1](https://www.loc.gov/preservation/digital/formats/fdd/fdd000398.shtml#:~:text=The%20XLSX%20format%20uses%20the,a%20rectangular%20grid%20of%20cells.), the document comprises one or more worksheets in a workbook.
+A workbook MUST contain a single assay that can be organized in one or many worksheets. Worksheets MUST be named uniquely within the same workbook. A worksheet named study MUST store the STUDY ASSAYS section defined on investigation-level of the ISA model that is duplicated in the isa.investigation.xlsx. Additional worksheets MUST contain table object with fields organized on a per-row basis. The first row MUST be used for column headers. Comments or axillary information MAY be stored alongside with table objects in a worksheet. A ´Source´ MUST be indicated with the column heading ´Source Name´. Every table object MUST define at least one source per row. A Sample MUST be indicated with the column heading Sample Name. The source sample relation MUST follow a unique path in directed acyclic graph, but MAY distributed across different worksheets.
+
+Notes: 
+  - It RECOMMENDED to order worksheets according to the source sample relation for readability.
 
 ## Shareable and Publishable ARCs
 ARCs can be shared in any state. They are considered *publishable* (e.g. for the purpose of minting a DOI) when fulfilling the following conditions:

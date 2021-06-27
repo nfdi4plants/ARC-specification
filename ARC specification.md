@@ -198,14 +198,6 @@ This allows to execute all computations defined in the workflow structure in ord
 
 *(about `arc.cwl`)*
 
-#### Compression and Encryption 
-
-*(this should not be included)*
-
-Compression is preferrable to save on disk space and speed up data transfers but not required. Without compression workflows are simpler as often no transparent compression and decompression is available. Uncompressed files are usually easier to index and better searchable. 
-
-Encryption is not advised (but could be an option to share sensitive data in an otherwise open ARC) .
-
 ### ISA-XLSX Format
 
 ISA-XLSX follows the ISA model specification saved in a XLSX format. The XLSX format uses the SpreadsheetML markup language and schema to represent a spreadsheet document. Conceptually, using the terminology of the Spreadsheet ML specification in [ISO/IEC 29500-1](https://www.loc.gov/preservation/digital/formats/fdd/fdd000398.shtml#:~:text=The%20XLSX%20format%20uses%20the,a%20rectangular%20grid%20of%20cells.), the document comprises one or more worksheets in a workbook.
@@ -271,6 +263,14 @@ Additionally, it is RECOMMENDED to place the corresponding protocol (assay SOP) 
 Required files defined in the ARC structure need to be named accordingly. Files and folders specified < > can be named freely. 
 
 As the ARC might be used by different persons and in different workflow contexts, we recommend a concise filename without blanks and special characters. A good choice is to stick to small and capital letters without umlauts and similar special characters. Numbers, hyphen, and underscores are suitable as well. Modern working environments can handle blanks in filenames but might confuse automatically run scripts and thus should be avoided. Depending on the intended amount of people the ARC is shared with, certain information might prove useful to provide a fast overview in human readable form in the filename, e.g. by providing abbreviations of the project, sub project, person creating or working on a particular data set. Date and time information might be encoded as well if it provides a better ordering or information for the particular purpose. 
+
+### Compression and Encryption 
+
+*(this should not be included)*
+
+Compression is preferrable to save on disk space and speed up data transfers but not required. Without compression workflows are simpler as often no transparent compression and decompression is available. Uncompressed files are usually easier to index and better searchable. 
+
+Encryption is not advised (but could be an option to share sensitive data in an otherwise open ARC) .
 
 ### Auxiliary Payload
 

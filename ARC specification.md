@@ -175,10 +175,14 @@ Note:
 
 *(not cleaned up / merged)*
 
+- *Top-level metadata and workflow description* tie together the elements of an ARC in the contexts of investigation and associated studies (in the ISA definition), captured in the files `isa.investigation.xlsx` in [ISA-XLSX format](#isa-xlsx), which MUST be present. Optionally, study-level metadata CAN be present in `isa.studies.xlsx`. Furthermore, top-level reproducibility information MUST be provided in the CWL `arc.cwl`, which also MUST exist.
+
+
 #### Investigation and Study Metadata (-> Timo)
 
-ARCs contain raw measurement data, externals, computation results and computational workflows in the respective sub-folders assays, workflows, runs and externals placed in the root (details see: ARC content categories).  
-The name of the ARC root directory is not defined, but a root directory is identifiable by the presence of the investigation file: 
+*(not cleaned up / merged)*
+
+ARC root directory is identifiable by the presence of the investigation file: 
 \isa.investigation.xlsx  
 
 The investigation file (in XLSX format) contains top-level information about the investigation and links to studies and assays. An investigation is used to record metadata relating to the description of the investigation context and administrative metadata, such as the title and description of the investigation as well as about involved people and publications. 
@@ -189,14 +193,14 @@ The study file is optional and can be used to group assays into studies within o
 In contrast to the original ISA specifications, only [factors] are included. Several studies may be related to a single investigation. Each study serves as a steppingstone for achieving the investigation aim (e.g. investigating salt tolerance in Arabidopsis) 
 
 
+#### Workflow Description (-> Christoph)
+
+*(about `arc.cwl`)*
+
 To (re)produce the run results corresponding to the workflows stored in an ARC, all workflows need to be registered within 
     \arc.cwl 
 This allows to execute all computations defined in the workflow structure in order to (re)produce corresponding runs results using all necessary parameters defined in:  
     \arc.yml 
-
-#### Workflow Description (-> Christoph)
-
-*(about `arc.cwl`)*
 
 ### ISA-XLSX Format
 

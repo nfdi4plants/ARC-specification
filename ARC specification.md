@@ -205,7 +205,7 @@ ISA-XLSX follows the ISA model specification saved in a XLSX format. The XLSX fo
 A workbook MUST contain a single assay that can be organized in one or many worksheets. Worksheets MUST be named uniquely within the same workbook. A worksheet named study MUST store the STUDY ASSAYS section defined on investigation-level of the ISA model that is duplicated in the isa.investigation.xlsx. Additional worksheets MUST contain table object with fields organized on a per-row basis. The first row MUST be used for column headers. Comments or axillary information MAY be stored alongside with table objects in a worksheet. A ´Source´ MUST be indicated with the column heading ´Source Name´. Every table object MUST define at least one source per row. A Sample MUST be indicated with the column heading Sample Name. The source sample relation MUST follow a unique path in directed acyclic graph, but MAY distributed across different worksheets.
 
 Notes: 
-  - It RECOMMENDED to order worksheets according to the source sample relation for readability.
+  - It is RECOMMENDED to order worksheets according to the source sample relation for readability.
 
 ## Shareable and Publishable ARCs
 ARCs can be shared in any state. They are considered *publishable* (e.g. for the purpose of minting a DOI) when fulfilling the following conditions:

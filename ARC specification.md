@@ -248,9 +248,9 @@ In the next section we provide you with Best Practices to make the use of an ARC
 
 ### Additional (auxiliary) Payload
 
-Additionally, it is RECOMMENDED to place the corresponding protocol (assay SOP) in text form under:  
+ARCs can include additional or auxiliary payload according to users’ requirements, e.g. presentation, reading material, or manuscripts. While these files can be placed anywhere in the ARC, it is strongly advised to organize these in additional subdirectories to avoid polluting the Especially for the storage of protocols, it is RECOMMENDED to place protocols (assay SOP) in text form with the corresponding assay in /assays/<assay_name>/protocol/<protocol_name>. 
 
-#### Community specific data formats 
+### Community specific data formats 
 It is recommend to use of community specific data formats covering most common measurement techniques. 
 Using the following recommended formats will ensure improoved accessability and findability:   
 - mzML (raw data metabolomics and proteomics) 

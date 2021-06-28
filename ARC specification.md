@@ -45,9 +45,7 @@ This document intends to develop and describe a specification for a standardized
 
 This document specifies a data storage schema and representation, named *Annotated Research Context*(ARC), for organizing file-based data and processing workflows with associated metadata in both human and machine-readable formats. ARCs combine existing standards, leveraging the properties of the investigation-study-assay ISA model, for metadata and the Common Workflow Language (CWL) for representing processing specification. While aiming to be compatible with similar standards and schemas, ARCs are specifically oriented towards common practices in experimental plant biology.
 
-An ARC is intended to capture research data, analysis and metadata and their evolution in scenarios ranging from single experimental setups to complete research cycles in plant biological research. Its design intent is to not only assist researchers in meeting FAIR requirements, but to also minimize the workload for doing so. ARCs are self-contained and include assay/measurement data, workflow, and computation results, accompanied by metadata and history, in one package.  
-
-** easy conversion to other formats / repositories ** (Christoph  )
+An ARC is intended to capture research data, analysis and metadata and their evolution in scenarios ranging from single experimental setups to complete research cycles in plant biological research. Its design intent is to not only assist researchers in meeting FAIR requirements, but to also minimize the workload for doing so. ARCs are self-contained and include assay/measurement data, workflow, and computation results, accompanied by metadata and history, in one package. ARCs are furthermore designed with straightforward conversion to other types of research data archive in mind, such as e.g. [Research Object Crates](https://www.researchobject.org/ro-crate/), to facilitate straightforward operation with widely used archives (e.g. PRIDE).
 
 This specification is intended as a practical guide for software authors to create tools for generating and consuming research data packages.
 

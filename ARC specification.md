@@ -233,9 +233,7 @@ Version numbers, strict documentation of changes (what/by whom), a process to re
 
 ## Mechanism for quality control of ARCs 
 
-*(Would push this to a future version of the ARC spec)*
-
-ARCs are supposed to be living research objects and as such are at no point in time complete. Nevertheless, a mechanism to report the current state and quality of an ARC is indispensable. Therefore, ARCs will be scored according to the amount of metadata information available, the quality of data and metadata (this metric will be established in version 1.0), manual curation and review, and the re-use of ARCs by other researcher measured by physical includes of the data and referencing.
+ARCs are supposed to be living research objects and as such are at no point in time complete. Nevertheless, a mechanism to report the current state and quality of an ARC is indispensable. Therefore, ARCs will be scored according to the amount of metadata information available, the quality of data and metadata (this metric will be established in the next version), manual curation and review, and the re-use of ARCs by other researcher measured by physical includes of the data and referencing.
 
 To foster FAIRification, badges will be earned by reaching certain scores for a transparent review process.  
  

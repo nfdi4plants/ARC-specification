@@ -244,33 +244,11 @@ To foster FAIRification, badges will be earned by reaching certain scores for a 
  
 ## Best Practices
 
-*(not cleaned up / merged)*
+In the next section we provide you with Best Practices to make the use of an ARC even more efficient and valuable for open science. 
+
+### Additional (auxiliary) Payload
 
 Additionally, it is RECOMMENDED to place the corresponding protocol (assay SOP) in text form under:  
-
-
-### Directory and File Naming Conventions 
-
-*(do we really need this?)*
-
-Required files defined in the ARC structure need to be named accordingly. Files and folders specified < > can be named freely. 
-
-As the ARC might be used by different persons and in different workflow contexts, we recommend a concise filename without blanks and special characters. A good choice is to stick to small and capital letters without umlauts and similar special characters. Numbers, hyphen, and underscores are suitable as well. Modern working environments can handle blanks in filenames but might confuse automatically run scripts and thus should be avoided. Depending on the intended amount of people the ARC is shared with, certain information might prove useful to provide a fast overview in human readable form in the filename, e.g. by providing abbreviations of the project, sub project, person creating or working on a particular data set. Date and time information might be encoded as well if it provides a better ordering or information for the particular purpose. 
-
-### Compression and Encryption 
-
-*(this should not be included)*
-
-Compression is preferrable to save on disk space and speed up data transfers but not required. Without compression workflows are simpler as often no transparent compression and decompression is available. Uncompressed files are usually easier to index and better searchable. 
-
-Encryption is not advised (but could be an option to share sensitive data in an otherwise open ARC) .
-
-### Auxiliary Payload
-
-*(not cleaned up / merged)*
-Everything not meeting these criteria is regarded as auxiliary payload and therefore is not strictly considered ARC content. This might result in an ‘empty’ ARC only containing auxiliary payload. 
-
-Auxiliary payload MUST be ignored by any processing. Also, auxiliary payload might be restricted in size or retention depending on the repository for ARC sharing and publication.  
 
 #### Community specific data formats 
 It is recommend to use of community specific data formats covering most common measurement techniques. 
@@ -284,4 +262,18 @@ Using the following recommended formats will ensure improoved accessability and 
 
 Notes: 
   - In case of storing vendor-spesific data within an ARC, it is strongly encurage to accompany them by the corresponding open formats or provide a workflow for convertion or processing.
+
+### Compression and Encryption 
+
+Compression is preferrable to save on disk space and speed up data transfers but not required. Without compression workflows are simpler as often no transparent compression and decompression is available. Uncompressed files are usually easier to index and better searchable. 
+
+Encryption is not advised (but could be an option to share sensitive data in an otherwise open ARC) .
+
+### Directory and File Naming Conventions 
+
+Required files defined in the ARC structure need to be named accordingly. Files and folders specified < > can be named freely. 
+As the ARC might be used by different persons and in different workflow contexts, we recommend a concise filename without blanks and special characters. A good choice is to stick to small and capital letters without umlauts and similar special characters. Numbers, hyphen, and underscores are suitable as well. Modern working environments can handle blanks in filenames but might confuse automatically run scripts and thus should be avoided. Depending on the intended amount of people the ARC is shared with, certain information might prove useful to provide a fast overview in human readable form in the filename, e.g. by providing abbreviations of the project, sub project, person creating or working on a particular data set. Date and time information might be encoded as well if it provides a better ordering or information for the particular purpose. 
+
+
+
   

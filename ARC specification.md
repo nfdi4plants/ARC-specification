@@ -130,7 +130,7 @@ Notes:
 
 - There are no requirements on specific assay-level metadata. Conversion of ARCs into other repository or archival format (e.g. PRIDE, GEO, ENA etc.) may however mandate the presence of specific terms (cf. [below](#arc-conversion)) required in the destination format.
 
-- An implementation that ensures assay annotation consistent with these requirements is provided by the [SWATE tool]().
+- An implementation that ensures assay annotation consistent with these requirements is provided by the [SWATE tool](https://github.com/nfdi4plants/Swate).
 
 - While assays can in principle contain arbitrary data formats, it is highly recommended to use community-supported, open formats (see [Best Practices](#best-practices)).
 

@@ -7,36 +7,35 @@ Please provide feedback via Github issues or a pull request.
   - Dirk von Suchodoletz &lt;dirk.von.suchodoletz@rz.uni-freiburg.de&gt;
   - Christoph Garth &lt;garth@cs.uni-kl.de&gt;
 
-**Github repository:**  
-  https://github.com/nfdi4plants/specs
+**Github repository:**  https://github.com/nfdi4plants/specs
 
 This specification is Copyright 2021 by [DataPLANT – Nationale Forschungsdateninfrastruktur](nfdi4plants.de). 
 
 Licensed under the Creative Commons License CC BY, Version 4.0; you may not use this file except in compliance with the License. You may obtain a copy of the License at https://creativecommons.org/about/cclicenses/. This license allows re-users to distribute, remix, adapt, and build upon the material in any medium or format, so long as attribution is given to the creator. The license allows for commercial use. Credit must be given to the creator. 
 
-- [Annotated Research Context Specification, v1-rfc](#annotated-research-context-specification-v1-rfc)
-  - [Introduction](#introduction)
-  - [ARC Structure and Content](#arc-structure-and-content)
-    - [High-Level Schema](#high-level-schema)
-    - [Example ARC structure](#example-arc-structure)
-    - [ARC representation](#arc-representation)
-    - [Assay Data and Metadata](#assay-data-and-metadata)
-    - [Workflow Description](#workflow-description)
-    - [Run Description](#run-description)
-    - [External Data](#external-data)
-    - [Top-level Metadata and Workflow Description](#top-level-metadata-and-workflow-description)
-      - [Investigation and Study Metadata](#investigation-and-study-metadata)
-      - [Top-Level Run Description](#top-level-run-description)
-    - [ISA-XLSX Format](#isa-xlsx-format)
-  - [Shareable and Publishable ARCs](#shareable-and-publishable-arcs)
-  - [ARC Provenance](#arc-provenance)
-  - [Conversion of ARCs to RO Crates](#conversion-of-arcs-to-ro-crates)
-  - [Mechanism for quality control of ARCs](#mechanism-for-quality-control-of-arcs)
-  - [Best Practices](#best-practices)
-    - [Additional (auxiliary) Payload](#additional-auxiliary-payload)
-    - [Community specific data formats](#community-specific-data-formats)
-    - [Compression and Encryption](#compression-and-encryption)
-    - [Directory and File Naming Conventions](#directory-and-file-naming-conventions)
+**Table of Contents**
+- [Introduction](#introduction)
+- [ARC Structure and Content](#arc-structure-and-content)
+  - [High-Level Schema](#high-level-schema)
+  - [Example ARC structure](#example-arc-structure)
+  - [ARC representation](#arc-representation)
+  - [Assay Data and Metadata](#assay-data-and-metadata)
+  - [Workflow Description](#workflow-description)
+  - [Run Description](#run-description)
+  - [External Data](#external-data)
+  - [Top-level Metadata and Workflow Description](#top-level-metadata-and-workflow-description)
+    - [Investigation and Study Metadata](#investigation-and-study-metadata)
+    - [Top-Level Run Description](#top-level-run-description)
+  - [ISA-XLSX Format](#isa-xlsx-format)
+- [Shareable and Publishable ARCs](#shareable-and-publishable-arcs)
+- [ARC Provenance](#arc-provenance)
+- [Conversion of ARCs to RO Crates](#conversion-of-arcs-to-ro-crates)
+- [Mechanism for quality control of ARCs](#mechanism-for-quality-control-of-arcs)
+- [Best Practices](#best-practices)
+  - [Additional (auxiliary) Payload](#additional-auxiliary-payload)
+  - [Community specific data formats](#community-specific-data-formats)
+  - [Compression and Encryption](#compression-and-encryption)
+  - [Directory and File Naming Conventions](#directory-and-file-naming-conventions)
 
 ## Introduction
 
@@ -71,6 +70,7 @@ Logically, each ARC is a directory containing the following elements:
 All other files contained in an ARC (e.g, a `README.txt`, a pre-print PDFs, additional annotation files, etc.) are referred to as *additional payload*, and MAY be located anywhere within the ARC structure. However, an ARC MUST be [reproducible](#reproducible-arcs) and [complete](#complete-arcs) even if these files are deleted. Further considerations on additional payload are described [below](#additional-payload).
 
 Note: 
+
 - Subdirectories and other files in the top-level `assays`, `workflows`, `runs`, and `externals` directories are viewed as additional payload unless they are accompanied by the corresponding mandatory description (`isa.assay.xlsx`, `workflow.cwl`, `run.cwl`, `isa.external.xlsx`) specified below. This is intended to allow gradual migration from existing data storage schemes to the ARC schema. For example, *data files* for an assay may be stored in a subdirectory of `assays/`, but are only identified as an assay of the ARC if metadata is present and complete, including a reference from top-level metadata.
 
 - @ Distribution of metadata across many files.

@@ -45,7 +45,7 @@ This document intends to develop and describe a specification for a standardized
 
 This document specifies a data storage schema and representation, named *Annotated Research Context*(ARC), for organizing file-based data and processing workflows with associated metadata in both human and machine-readable formats. ARCs combine existing standards, leveraging the properties of the investigation-study-assay ISA model, for metadata and the Common Workflow Language (CWL) for representing processing specification. While aiming to be compatible with similar standards and schemas, ARCs are specifically oriented towards common practices in experimental plant biology.
 
-An ARC is intended to capture research data, analysis and metadata and their evolution in scenarios ranging from single experimental setups to complete research cycles in plant biological research. Its design intent is to not only assist researchers in meeting FAIR requirements, but to also minimize the workload for doing so. ARCs are self-contained and include assay/measurement data, workflow, and computation results, accompanied by metadata and history, in one package. ARCs are furthermore designed with straightforward conversion to other types of research data archive in mind, such as e.g. [Research Object Crates](https://www.researchobject.org/ro-crate/), to facilitate straightforward operation with widely used archives (e.g. PRIDE).
+An ARC is intended to capture research data, analysis and metadata and their evolution in scenarios ranging from single experimental setups to complete research cycles in plant biological research. Its design intent is to not only assist researchers in meeting FAIR requirements, but to also minimize the workload for doing so. ARCs are self-contained and include assay/measurement data, workflow, and computation results, accompanied by metadata and history, in one package. ARCs are furthermore designed with straightforward conversion to other types of research data archive in mind, such as e.g. [Research Object Crates](https://www.researchobject.org/ro-crate/), to facilitate straightforward operation with widely used archives (e.g. PRIDE, GEO, ENA etc.).
 
 This specification is intended as a practical guide for software authors to create tools for generating and consuming research data packages.
 
@@ -176,20 +176,9 @@ Note:
 - *Top-level metadata and workflow description* tie together the elements of an ARC in the contexts of investigation and associated studies (in the ISA definition), captured in the files `isa.investigation.xlsx` in [ISA-XLSX format](#isa-xlsx), which MUST be present. Optionally, study-level metadata CAN be present in `isa.studies.xlsx`. Furthermore, top-level reproducibility information MUST be provided in the CWL `arc.cwl`, which also MUST exist.
 
 
-#### Investigation and Study Metadata (-> Timo)
+#### Investigation and Study Metadata
 
-*(not cleaned up / merged)*
-
-ARC root directory is identifiable by the presence of the investigation file: 
-\isa.investigation.xlsx  
-
-The investigation file (in XLSX format) contains top-level information about the investigation and links to studies and assays. An investigation is used to record metadata relating to the description of the investigation context and administrative metadata, such as the title and description of the investigation as well as about involved people and publications. 
-
-Study and assay objects are registered and grouped with an Investigation to record other metadata within the relevant contexts. (https://isa-specs.readthedocs.io/en/latest/isamodel.html#investigation) 
-The study file is optional and can be used to group assays into studies within one investigation. Multiple studies can be stored using one worksheet per study: 
-    \isa.studies.xlsx  
-In contrast to the original ISA specifications, only [factors] are included. Several studies may be related to a single investigation. Each study serves as a steppingstone for achieving the investigation aim (e.g. investigating salt tolerance in Arabidopsis) 
-
+ARC root directory is identifiable by the presence of the \isa.investigation.xlsx investigation file in XLSX format following the ISA Model at investigation level. It contains top-level information about the investigation and MUST link all assays and studies within an ARC. Study and assay objects are registered and grouped with an investigation to record other metadata within the relevant contexts. The study file is optional and can be used to group assays into studies within one investigation. Multiple studies MUST be stored using one worksheet per study in \isa.studies.xlsx in the root of the ARC. The study-level SHOULD define ´Factors´ of a study and also MAY contain overlapping information also to be found in all assays grouped by the study.
 
 #### Workflow Description (-> Christoph)
 

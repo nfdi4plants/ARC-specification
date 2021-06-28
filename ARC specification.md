@@ -25,19 +25,18 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
     - [Run Description](#run-description)
     - [External Data](#external-data)
     - [Top-level Metadata and Workflow Description](#top-level-metadata-and-workflow-description)
-      - [Investigation and Study Metadata (-> Timo)](#investigation-and-study-metadata---timo)
-      - [Workflow Description (-> Christoph)](#workflow-description---christoph)
-      - [Compression and Encryption](#compression-and-encryption)
-    - [ISA-XLSX Format (-> Timo)](#isa-xlsx-format---timo)
+      - [Investigation and Study Metadata](#investigation-and-study-metadata)
+      - [Top-Level Run Description](#top-level-run-description)
+    - [ISA-XLSX Format](#isa-xlsx-format)
   - [Shareable and Publishable ARCs](#shareable-and-publishable-arcs)
   - [ARC Provenance](#arc-provenance)
   - [Conversion of ARCs to RO Crates](#conversion-of-arcs-to-ro-crates)
   - [Mechanism for quality control of ARCs](#mechanism-for-quality-control-of-arcs)
   - [Best Practices](#best-practices)
+    - [Additional (auxiliary) Payload](#additional-auxiliary-payload)
+    - [Community specific data formats](#community-specific-data-formats)
+    - [Compression and Encryption](#compression-and-encryption)
     - [Directory and File Naming Conventions](#directory-and-file-naming-conventions)
-    - [Auxiliary Payload](#auxiliary-payload)
-      - [Community specific data formats](#community-specific-data-formats)
-  - [TODO: Open Questions](#todo-open-questions)
 
 ## Introduction
 
@@ -136,27 +135,43 @@ Notes:
 
 ### Workflow Description
 
-*Workflows* in ARCs embody one or more computational steps that are used in computational analysis of an ARC's assays and other data to generate a [run result](#run-description). Typical examples include data cleaning and pre-processing, computational analysis, or visualization.
+*Workflows* in ARCs are computational steps that are used in computational analysis of an ARC's assays and other data transformation to generate a [run result](#run-description). Typical examples include data cleaning and pre-processing, computational analysis, or visualization. Workflows are used and combined to generate [run results](#run-description), and allow re-use of processing steps across multiple [run results](#run-description).
 
-...
+Workflows execution and metadata MUST be described using the [Common Workflow Language](https://www.commonwl.org/) (CWL), [v1.2](https://www.commonwl.org/v1.2/) or higher, in a file `workflow.cwl`, which MUST be placed in the subdirectory containing all files specific to this workflow under the top-level `workflows` directory. This file MUST contain either of:
 
-All programmatic and computational components of an ARC MUST be individually sorted into  
-    \workflows\<workflow_name> 
-in the form of application or code and their environment including packages and other includes. A top-level Dockerfile in which all code/workflow should be executable is RECOMMENDED. Metadata to describe the workflow MUST be provided in CWL-abstract. To ensure reusability the CWL-abstract gives metadata in form of a tool description and does not include concrete parameters leading to actual results.  
-\workflows\<workflow_name>\workflow.cwl 
-The parameter necessary for workflow execution that are input, and output specific MUST be specified in runs.
+- A CWL [tool description](https://www.commonwl.org/v1.2/CommandLineTool.html). Tool descriptions must be self-contained and not refer to any files outside the workflow subdirectory. All paths used within the tool description MUST be relative to itself.
+
+- A CWL [workflow description](https://www.commonwl.org/v1.2/Workflow.html). Such descriptions MAY utilize other ARC workflows as [nested workflows](https://www.commonwl.org/user_guide/22-nested-workflows/index.html), but MUST use relative paths in this case. Files outside the ARC root directory MUST NOT be referenced.
+
+Notes:
+
+- There are no requirements on the structure or granularity of workflows. An ARC may contain no workflows at all if it contains no [run results](#run-description), or may utilize a single workflow to generate a single run result containing all computational output.
+
+- While workflows typically are (and should be) *generic*, i.e. a single workflow can be applied to different data of the same type, this is not a requirement. It is allowed to hard-code assay file paths and other parameters if workflow re-useability is not a priority.
+
+- It is highly recommended that tool descriptions contain a reproducable execution environment description in the form of a [Docker](https://www.commonwl.org/user_guide/07-containers/index.html) container description.
+
+- It is expected that workflow and tool descriptions are be authored semi-automatically, e.g. using the [arcCommander](https://github.com/nfdi4plants/arcCommander) tool.
+
+- It is strongly encouraged to include author and contributor metadata in tool descriptions and workflow descriptions as [CWL metadata](https://www.commonwl.org/user_guide/17-metadata/index.html).
 
 ### Run Description
 
-*(not cleaned up / merged)*
+**Runs** in an ARC represent all artefacts that result from some computation on the data within the ARC, i.e. [assays](#assay-data-and-metadata) and [external data](#external-data). These results (e.g. plots, tables, data files, etc. ) MUST reside inside one or more subdirectory of the top-level `runs` directory.
 
-Runs are all artefacts that result from some computation within an ARC. The results (e.g. plots, tables, etc. ) of your run aka. workflow execution or analysis MUST reside in  
-\runs\<runResult_name> 
-These results can be either generated by the application of a workflow on assay data and/or previous runs as well as standalone computation (e.g. simulations). The link between the respective input and the resulting run MUST be specified by the parameters in  
-\runs\<runResult_name>.yml 
-and the corresponding execution MUST be specified in  
-\runs\<runResult_name>.cwl 
-to produce run results accordingly. 
+Each such subdirectory must contain a workflow description `run.cwl`, given in [Common Workflow Language](https://www.commonwl.org/) (CWL), [v1.2](https://www.commonwl.org/v1.2/) or higher, that describes how the files contained with the run are derived from assay or external data, or other runs. `run.cwl` MUST be placed in the subdirectory under the top-level `runs` directory. A parameter file `run.yml` MAY be given to specify run-specific input parameters.
+
+`run.cwl` MUST refer to assay data files, external data files, workflow descriptions stored under the top-level `workflows` directory, and files in other run results using relative paths. Furthermore, `run.cwl` MUST specify as outputs all result files. `run.cwl` MUST BE executable without referring to additional payload files in the ARC.
+
+Notes:
+
+- Run descriptions are intended to ensure that the computational analysis encapsulated within an ARC can be fully reproduced.
+
+- Any files produced by executing the run description which are not specified as CWL outputs in `run.cwl` are considered additional ARC payload. Furthermore, all files of all subdirectories under `run` that are not referenced from the [top-level workflow](#top-level-workflow) are considered additional payload.
+
+- It is expected that run descriptions are be authored semi-automatically, e.g. using the [arcCommander](https://github.com/nfdi4plants/arcCommander) tool.
+
+- It is strongly encouraged to include author and contributor metadata in run descriptions as [CWL metadata](https://www.commonwl.org/user_guide/17-metadata/index.html).
 
 ### External Data
 
@@ -175,16 +190,14 @@ Note:
 
 #### Investigation and Study Metadata
 
-ARC root directory is identifiable by the presence of the \isa.investigation.xlsx investigation file in XLSX format following the ISA Model at investigation level. It contains top-level information about the investigation and MUST link all assays and studies within an ARC. Study and assay objects are registered and grouped with an investigation to record other metadata within the relevant contexts. The study file is optional and can be used to group assays into studies within one investigation. Multiple studies MUST be stored using one worksheet per study in \isa.studies.xlsx in the root of the ARC. The study-level SHOULD define ´Factors´ of a study and also MAY contain overlapping information also to be found in all assays grouped by the study.
+ARC root directory is identifiable by the presence of the `isa.investigation.xlsx` investigation file in XLSX format following the ISA Model at investigation level. It contains top-level information about the investigation and MUST link all assays and studies within an ARC. Study and assay objects are registered and grouped with an investigation to record other metadata within the relevant contexts. The study file is optional and can be used to group assays into studies within one investigation. Multiple studies MUST be stored using one worksheet per study in \isa.studies.xlsx in the root of the ARC. The study-level SHOULD define ´Factors´ of a study and also MAY contain overlapping information also to be found in all assays grouped by the study.
 
-#### Workflow Description (-> Christoph)
+#### Top-Level Run Description
 
-*(about `arc.cwl`)*
+The file `arc.cwl` MUST exist at the root directory of each ARC. It describes which runs are executed (and specifically, their ordering) to produce the computational results contained within the ARC.
 
-To (re)produce the run results corresponding to the workflows stored in an ARC, all workflows need to be registered within 
-    \arc.cwl 
-This allows to execute all computations defined in the workflow structure in order to (re)produce corresponding runs results using all necessary parameters defined in:  
-    \arc.yml 
+`arc.cwl` MUST be a CWL v1.2 workflow description and adhere to the same requirements as [run descriptions](#run-description). In particular, references to assay data files, external data, nested workflows MUST use relative paths. An optional file `arc.yml` MAY be provided to specify input parameters. 
+
 
 ### ISA-XLSX Format
 

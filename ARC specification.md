@@ -23,19 +23,19 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
   - [Workflow Description](#workflow-description)
   - [Run Description](#run-description)
   - [External Data](#external-data)
-  - [TODO: Additional Payload](#todo-additional-payload)
+  - [Additional Payload](#additional-payload)
   - [Top-level Metadata and Workflow Description](#top-level-metadata-and-workflow-description)
     - [Investigation and Study Metadata](#investigation-and-study-metadata)
     - [Top-Level Run Description](#top-level-run-description)
   - [ISA-XLSX Format](#isa-xlsx-format)
 - [Shareable and Publishable ARCs](#shareable-and-publishable-arcs)
-- [Appendix: Conversion of ARCs to RO Crates](#appendix-conversion-of-arcs-to-ro-crates)
 - [Mechanism for quality control of ARCs](#mechanism-for-quality-control-of-arcs)
 - [Best Practices](#best-practices)
   - [Additional (auxiliary) Payload](#additional-auxiliary-payload)
   - [Community specific data formats](#community-specific-data-formats)
   - [Compression and Encryption](#compression-and-encryption)
   - [Directory and File Naming Conventions](#directory-and-file-naming-conventions)
+- [Appendix: Conversion of ARCs to RO Crates](#appendix-conversion-of-arcs-to-ro-crates)
 
 ## Introduction
 
@@ -45,7 +45,7 @@ This document specifies a data storage schema and representation, named *Annotat
 
 An ARC is intended to capture research data, analysis and metadata and their evolution in scenarios ranging from single experimental setups to complete research cycles in plant biological research. Its design intent is to not only assist researchers in meeting FAIR requirements, but to also minimize the workload for doing so. ARCs are self-contained and include assay/measurement data, workflow, and computation results, accompanied by metadata and history, in one package. To integrate data, metadata, and workflows, ARCs combine two widely used standards: the [ISA metadata model](https://isa-specs.readthedocs.io/en/latest/isamodel.html) and the [Common Workflow Language](https://www.commonwl.org).
 
-ARCs are furthermore designed with straightforward conversion to other types of research data archive in mind, such as e.g. [Research Object Crates](https://www.researchobject.org/ro-crate/), to facilitate straightforward operation with widely used archives (e.g. PRIDE, GEO, ENA etc.).
+ARCs are furthermore designed with straightforward conversion to other types of research data archive in mind, such as e.g. [Research Object Crates](https://www.researchobject.org/ro-crate/), to facilitate straightforward operation with widely used archives (e.g. PRIDE, GEO, ENA etc.). Therefore, ARCs aggregate administrative, experimental, and workflow meta data within a common structure.
 
 This specification is intended as a practical guide for software authors to create tools for generating and consuming research data packages.
 
@@ -189,9 +189,14 @@ Note:
 
 - Each external data file can be interpreted as a virtual sample in the *externals* assay. Due to the conceptual difference to the immutable measurements represented by the assays in `assays`, external files are stored in a different location to ensure that this distinction explict.
 
-### TODO: Additional Payload
+### Additional Payload
 
-TODO: move up from best practices
+ARCs can include additional payload according to users’ requirements, e.g. presentation, reading material, or manuscripts. While these files can be placed anywhere in the ARC, it is strongly advised to organize these in additional subdirectories. 
+Especially for the storage of protocols, it is RECOMMENDED to place protocols (assay SOP) in text form with the corresponding assay in /assays/<assay_name>/protocol/<protocol_name>. 
+
+Note:
+
+- All data missing proper anotation (e.g. assays, workflows, runs, or externals ) is considered additional payload independant of its location within the ARC. 
 
 ### Top-level Metadata and Workflow Description
 
@@ -233,10 +238,6 @@ ARCs can be shared in any state. They are considered *publishable* (e.g. for the
 Notes: 
   - The attribute *publishable* does not imply that data and metadata contained in an ARC are suitable for publication in a specific outlet (e.g. PRIDE, GEO, EBI). While it may be straightforward to convert the ARC schema into one required by specific publishers or repositories, additional metadata requirements may be enforced during conversion. These are intentionally not captured in this specification.
   - Minimal administrative metadata ensure compliance with DataCite for DOI creation
- 
-## Appendix: Conversion of ARCs to RO Crates
-
-*(would be great if we could include this)*
 
 ## Mechanism for quality control of ARCs 
 
@@ -248,11 +249,7 @@ To foster FAIRification, badges will be earned by reaching certain scores for a 
 
 In the next section we provide you with Best Practices to make the use of an ARC even more efficient and valuable for open science. 
 
-### Additional (auxiliary) Payload
-
-ARCs can include additional or auxiliary payload according to users’ requirements, e.g. presentation, reading material, or manuscripts. While these files can be placed anywhere in the ARC, it is strongly advised to organize these in additional subdirectories to avoid polluting the Especially for the storage of protocols, it is RECOMMENDED to place protocols (assay SOP) in text form with the corresponding assay in /assays/<assay_name>/protocol/<protocol_name>. 
-
-### Community specific data formats 
+#### Community specific data formats 
 It is recommend to use of community specific data formats covering most common measurement techniques. 
 Using the following recommended formats will ensure improoved accessability and findability:   
 - mzML (raw data metabolomics and proteomics) 
@@ -265,17 +262,19 @@ Using the following recommended formats will ensure improoved accessability and 
 Notes: 
   - In case of storing vendor-spesific data within an ARC, it is strongly encurage to accompany them by the corresponding open formats or provide a workflow for convertion or processing.
 
-### Compression and Encryption 
+#### Compression and Encryption 
 
 Compression is preferrable to save on disk space and speed up data transfers but not required. Without compression workflows are simpler as often no transparent compression and decompression is available. Uncompressed files are usually easier to index and better searchable. 
 
 Encryption is not advised (but could be an option to share sensitive data in an otherwise open ARC) .
 
-### Directory and File Naming Conventions 
+#### Directory and File Naming Conventions 
 
 Required files defined in the ARC structure need to be named accordingly. Files and folders specified < > can be named freely. 
 As the ARC might be used by different persons and in different workflow contexts, we recommend a concise filename without blanks and special characters. A good choice is to stick to small and capital letters without umlauts and similar special characters. Numbers, hyphen, and underscores are suitable as well. Modern working environments can handle blanks in filenames but might confuse automatically run scripts and thus should be avoided. Depending on the intended amount of people the ARC is shared with, certain information might prove useful to provide a fast overview in human readable form in the filename, e.g. by providing abbreviations of the project, sub project, person creating or working on a particular data set. Date and time information might be encoded as well if it provides a better ordering or information for the particular purpose. 
 
 
+ ## Appendix: Conversion of ARCs to RO Crates
 
+*(would be great if we could include this)*
   

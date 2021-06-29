@@ -43,17 +43,17 @@ This document intends to develop and describe a specification for a standardized
 
 This document specifies a data storage schema and representation, named *Annotated Research Context*(ARC), for organizing file-based data and processing workflows with associated metadata in both human and machine-readable formats. ARCs combine existing standards, leveraging the properties of the investigation-study-assay ISA model, for metadata and the Common Workflow Language (CWL) for representing processing specification. While aiming to be compatible with similar standards and schemas, ARCs are specifically oriented towards common practices in experimental plant biology.
 
-An ARC is intended to capture research data, analysis and metadata and their evolution in scenarios ranging from single experimental setups to complete research cycles in plant biological research. Its design intent is to not only assist researchers in meeting FAIR requirements, but to also minimize the workload for doing so. ARCs are self-contained and include assay/measurement data, workflow, and computation results, accompanied by metadata and history, in one package. ARCs are furthermore designed with straightforward conversion to other types of research data archive in mind, such as e.g. [Research Object Crates](https://www.researchobject.org/ro-crate/), to facilitate straightforward operation with widely used archives (e.g. PRIDE, GEO, ENA etc.).
+An ARC is intended to capture research data, analysis and metadata and their evolution in scenarios ranging from single experimental setups to complete research cycles in plant biological research. Its design intent is to not only assist researchers in meeting FAIR requirements, but to also minimize the workload for doing so. ARCs are self-contained and include assay/measurement data, workflow, and computation results, accompanied by metadata and history, in one package. To integrate data, metadata, and workflows, ARCs combine two widely used standards: the [ISA metadata model](https://isa-specs.readthedocs.io/en/latest/isamodel.html) and the [Common Workflow Language](https://www.commonwl.org).
 
-TODO: ARCs are union of experimental, administrative, and workflow data and metadata. Former are ISA, latter are CWL.
+ARCs are furthermore designed with straightforward conversion to other types of research data archive in mind, such as e.g. [Research Object Crates](https://www.researchobject.org/ro-crate/), to facilitate straightforward operation with widely used archives (e.g. PRIDE, GEO, ENA etc.).
 
 This specification is intended as a practical guide for software authors to create tools for generating and consuming research data packages.
 
-The key words MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RECOMMENDED, MAY, and OPTIONAL in this document are to be interpreted as described in [RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119).  This specification is furthermore based on the [ISA model](https://isa-specs.readthedocs.io/en/latest/isamodel.html) and the [Common Workflow Specification (v1.2)](https://www.commonwl.org/v1.2/).
+The key words MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RECOMMENDED, MAY, and OPTIONAL in this document are to be interpreted as described in [RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119).  This specification is  based on the [ISA model](https://isa-specs.readthedocs.io/en/latest/isamodel.html) and the [Common Workflow Specification (v1.2)](https://www.commonwl.org/v1.2/).
 
 ## ARC Structure and Content
 
-The ARC structure aims for a strict separation of data and metadata content into raw data (assays), externals, computation results (runs) and computational workflows (workflows) generating the latter. The scope or granularity of an ARC aligns with the necessities of the individual projects or experimental setups covered by the respective ARC. 
+ARCs are based on a strict separation of data and metadata content into raw data (assays), externals, computation results (runs) and computational workflows (workflows) generating the latter. The scope or granularity of an ARC aligns with the necessities of individual projects or large experimental setups. 
 
 ### High-Level Schema
 
@@ -113,13 +113,13 @@ Tree objects (resp. directories) and blobs (i.e., files) of all branch heads in 
 
 All representation suitable for Git-LFS repositories are also a valid representations of ARCs. This includes both bare repositories (without a checked out working copy) and non-bare repositories (i.e. a `.git` directory with one or more attached working copies). In particular, it is possible and intended to maintain ARCs on local user filesystems and via Git repository hosting services. No requirements are made of state and contents of working copies.
 
-TODO: Archival formats (e.g. tar.gz) are valid representations
+Notes:
 
-TODO: 
-Note: implicit content addressing and hashing via Git mechanisms
+- Archival representation (e.g. `.zip` or `.tar.gz`) are valid ARC representations if archives are created to preserve file attributes, i.e. if unarchiving preserves Git interoperability. Furthermore, Git's [*bundle mechanism*](https://git-scm.com/docs/git-bundle) can be used to create archives of complete ARCs or individual branches. For archiving purposes, `git bundle create --all` or an equivalent should be used.
 
-TODO:
-Note: removing .git -> no longer an ARC
+- Elements of an ARC are implicitly content-addressable using standard Git mechanisms via SHA1 hashes.
+
+- Removing the `.git` top-level subdirectory (and thereby all provenance information captured within the Git history) invalidates an ARC.
 
 ### Assay Data and Metadata
 
@@ -167,15 +167,12 @@ Notes:
 
 Each such subdirectory must contain a workflow description `run.cwl`, given in [Common Workflow Language](https://www.commonwl.org/) (CWL), [v1.2](https://www.commonwl.org/v1.2/) or higher, that describes how the files contained with the run are derived from assay or external data, or other runs. `run.cwl` MUST be placed in the subdirectory under the top-level `runs` directory. A parameter file `run.yml` MAY be given to specify run-specific input parameters.
 
-TODO: reword first sentence, clarify that references can only be to "registered" assays, externals, run results.
-
-`run.cwl` MUST refer to assay data files, external data files, workflow descriptions stored under the top-level `workflows` directory, and files in other run results using relative paths. Furthermore, `run.cwl` MUST specify as outputs all result files. `run.cwl` MUST BE executable without referring to additional payload files in the ARC.
+`run.cwl` MAY (and sensibly, should) refer to assay data files, external data files, workflow descriptions, and files in other run results; such references MUST use relative paths. Furthermore, `run.cwl` MUST specify as outputs all result files. `run.cwl` MUST BE executable without referring to [additional payload files](#additional-auxiliary-payload) or files outside the ARC.
 
 Notes:
 
 - Run descriptions are intended to ensure that the computational analysis encapsulated within an ARC can be fully reproduced.
 
-- TODO: point out that references are only valid if the corresponding metadata is there.
 - Any files produced by executing the run description which are not specified as CWL outputs in `run.cwl` are considered additional ARC payload. Furthermore, all files of all subdirectories under `run` that are not referenced from the [top-level workflow](#top-level-workflow) are considered additional payload.
 
 - It is expected that run descriptions are be authored semi-automatically, e.g. using the [arcCommander](https://github.com/nfdi4plants/arcCommander) tool.

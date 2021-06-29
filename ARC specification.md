@@ -18,18 +18,18 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
 - [ARC Structure and Content](#arc-structure-and-content)
   - [High-Level Schema](#high-level-schema)
   - [Example ARC structure](#example-arc-structure)
-  - [ARC representation](#arc-representation)
+  - [ARC Representation](#arc-representation)
   - [Assay Data and Metadata](#assay-data-and-metadata)
   - [Workflow Description](#workflow-description)
   - [Run Description](#run-description)
   - [External Data](#external-data)
+  - [TODO: Additional Payload](#todo-additional-payload)
   - [Top-level Metadata and Workflow Description](#top-level-metadata-and-workflow-description)
     - [Investigation and Study Metadata](#investigation-and-study-metadata)
     - [Top-Level Run Description](#top-level-run-description)
   - [ISA-XLSX Format](#isa-xlsx-format)
 - [Shareable and Publishable ARCs](#shareable-and-publishable-arcs)
-- [ARC Provenance](#arc-provenance)
-- [Conversion of ARCs to RO Crates](#conversion-of-arcs-to-ro-crates)
+- [Appendix: Conversion of ARCs to RO Crates](#appendix-conversion-of-arcs-to-ro-crates)
 - [Mechanism for quality control of ARCs](#mechanism-for-quality-control-of-arcs)
 - [Best Practices](#best-practices)
   - [Additional (auxiliary) Payload](#additional-auxiliary-payload)
@@ -44,6 +44,8 @@ This document intends to develop and describe a specification for a standardized
 This document specifies a data storage schema and representation, named *Annotated Research Context*(ARC), for organizing file-based data and processing workflows with associated metadata in both human and machine-readable formats. ARCs combine existing standards, leveraging the properties of the investigation-study-assay ISA model, for metadata and the Common Workflow Language (CWL) for representing processing specification. While aiming to be compatible with similar standards and schemas, ARCs are specifically oriented towards common practices in experimental plant biology.
 
 An ARC is intended to capture research data, analysis and metadata and their evolution in scenarios ranging from single experimental setups to complete research cycles in plant biological research. Its design intent is to not only assist researchers in meeting FAIR requirements, but to also minimize the workload for doing so. ARCs are self-contained and include assay/measurement data, workflow, and computation results, accompanied by metadata and history, in one package. ARCs are furthermore designed with straightforward conversion to other types of research data archive in mind, such as e.g. [Research Object Crates](https://www.researchobject.org/ro-crate/), to facilitate straightforward operation with widely used archives (e.g. PRIDE, GEO, ENA etc.).
+
+TODO: ARCs are union of experimental, administrative, and workflow data and metadata. Former are ISA, latter are CWL.
 
 This specification is intended as a practical guide for software authors to create tools for generating and consuming research data packages.
 
@@ -73,7 +75,7 @@ Note:
 
 - Subdirectories and other files in the top-level `assays`, `workflows`, `runs`, and `externals` directories are viewed as additional payload unless they are accompanied by the corresponding mandatory description (`isa.assay.xlsx`, `workflow.cwl`, `run.cwl`, `isa.external.xlsx`) specified below. This is intended to allow gradual migration from existing data storage schemes to the ARC schema. For example, *data files* for an assay may be stored in a subdirectory of `assays/`, but are only identified as an assay of the ARC if metadata is present and complete, including a reference from top-level metadata.
 
-- @ Distribution of metadata across many files.
+- TODO: Distribution of metadata across many files. Redundancy etc.
 
 ### Example ARC structure
 ``` 
@@ -101,7 +103,7 @@ Note:
         |    isa.xlsx           
 ``` 
 
-### ARC representation
+### ARC Representation
 
 ARCs are a Git repositories, as defined and supported by the [Git C implementation](https://git-scm.org) (version XX or newer) with [Git-LFS extension](https://git-lfs.github.com) (version 2.12.0), or fully compatible implementations. 
 
@@ -109,10 +111,14 @@ ARC terminology implicitly borrows from Git and Git-LFS terminology. For example
 
 Tree objects (resp. directories) and blobs (i.e., files) of all branch heads in the repository MUST adhere to the [ARC schema](#arc-structure-and-contents-schema). ARCs allow all typical Git operations (e.g. clone, branch) etc.
 
-All representation suitable for Git-LFS repositories are also a valid representations of ARCs. This includes both bare repositories (without a checked out working copy) and non-bare repositories (i.e. a `.git` directory with one or more attached working copies). In particular, it is possible and intended to maintain ARCs on local user filesystems and via Git repository hosting services. No requirements are made of the state and contents of working copies.
+All representation suitable for Git-LFS repositories are also a valid representations of ARCs. This includes both bare repositories (without a checked out working copy) and non-bare repositories (i.e. a `.git` directory with one or more attached working copies). In particular, it is possible and intended to maintain ARCs on local user filesystems and via Git repository hosting services. No requirements are made of state and contents of working copies.
 
+TODO: Archival formats (e.g. tar.gz) are valid representations
+
+TODO: 
 Note: implicit content addressing and hashing via Git mechanisms
 
+TODO:
 Note: removing .git -> no longer an ARC
 
 ### Assay Data and Metadata
@@ -161,12 +167,15 @@ Notes:
 
 Each such subdirectory must contain a workflow description `run.cwl`, given in [Common Workflow Language](https://www.commonwl.org/) (CWL), [v1.2](https://www.commonwl.org/v1.2/) or higher, that describes how the files contained with the run are derived from assay or external data, or other runs. `run.cwl` MUST be placed in the subdirectory under the top-level `runs` directory. A parameter file `run.yml` MAY be given to specify run-specific input parameters.
 
+TODO: reword first sentence, clarify that references can only be to "registered" assays, externals, run results.
+
 `run.cwl` MUST refer to assay data files, external data files, workflow descriptions stored under the top-level `workflows` directory, and files in other run results using relative paths. Furthermore, `run.cwl` MUST specify as outputs all result files. `run.cwl` MUST BE executable without referring to additional payload files in the ARC.
 
 Notes:
 
 - Run descriptions are intended to ensure that the computational analysis encapsulated within an ARC can be fully reproduced.
 
+- TODO: point out that references are only valid if the corresponding metadata is there.
 - Any files produced by executing the run description which are not specified as CWL outputs in `run.cwl` are considered additional ARC payload. Furthermore, all files of all subdirectories under `run` that are not referenced from the [top-level workflow](#top-level-workflow) are considered additional payload.
 
 - It is expected that run descriptions are be authored semi-automatically, e.g. using the [arcCommander](https://github.com/nfdi4plants/arcCommander) tool.
@@ -183,6 +192,9 @@ Note:
 
 - Each external data file can be interpreted as a virtual sample in the *externals* assay. Due to the conceptual difference to the immutable measurements represented by the assays in `assays`, external files are stored in a different location to ensure that this distinction explict.
 
+### TODO: Additional Payload
+
+TODO: move up from best practices
 
 ### Top-level Metadata and Workflow Description
 
@@ -200,6 +212,8 @@ The file `arc.cwl` MUST exist at the root directory of each ARC. It describes wh
 
 
 ### ISA-XLSX Format
+
+TODO: move up and proofread
 
 ISA-XLSX follows the ISA model specification saved in a XLSX format. The XLSX format uses the SpreadsheetML markup language and schema to represent a spreadsheet document. Conceptually, using the terminology of the Spreadsheet ML specification in [ISO/IEC 29500-1](https://www.loc.gov/preservation/digital/formats/fdd/fdd000398.shtml#:~:text=The%20XLSX%20format%20uses%20the,a%20rectangular%20grid%20of%20cells.), the document comprises one or more worksheets in a workbook.
 A workbook MUST contain a single assay that can be organized in one or many worksheets. Worksheets MUST be named uniquely within the same workbook. A worksheet named study MUST store the STUDY ASSAYS section defined on investigation-level of the ISA model that is duplicated in the isa.investigation.xlsx. Additional worksheets MUST contain table object with fields organized on a per-row basis. The first row MUST be used for column headers. Comments or axillary information MAY be stored alongside with table objects in a worksheet. A ´Source´ MUST be indicated with the column heading ´Source Name´. Every table object MUST define at least one source per row. A Sample MUST be indicated with the column heading Sample Name. The source sample relation MUST follow a unique path in directed acyclic graph, but MAY distributed across different worksheets.
@@ -227,20 +241,8 @@ ARCs can be shared in any state. They are considered *publishable* (e.g. for the
 Notes: 
   - The attribute *publishable* does not imply that data and metadata contained in an ARC are suitable for publication in a specific outlet (e.g. PRIDE, GEO, EBI). While it may be straightforward to convert the ARC schema into one required by specific publishers or repositories, additional metadata requirements may be enforced during conversion. These are intentionally not captured in this specification.
 
-
-
-## ARC Provenance
-
-*(Is this section really needed?)*
-
-The ARC is meant to exist in an evolving form for long periods, thus provenance information is crucial. It provides different sources of provenance information: 
-Metadata from the isa.investigation.xlsx file 
-Information produced by the workflow runs by individual tools 
-History of the underlying versioning system (who changed what when) 
  
-Version numbers, strict documentation of changes (what/by whom), a process to revert that, ... 
- 
-## Conversion of ARCs to RO Crates
+## Appendix: Conversion of ARCs to RO Crates
 
 *(would be great if we could include this)*
 

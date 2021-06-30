@@ -121,23 +121,27 @@ Notes:
 
 - Removing the `.git` top-level subdirectory (and thereby all provenance information captured within the Git history) invalidates an ARC.
 
+### ISA-XLSX Format
+
+ISA-XLSX follows the ISA model specification saved in a XLSX format. The XLSX format uses the SpreadsheetML markup language and schema to represent a spreadsheet document. Conceptually, using the terminology of the Spreadsheet ML specification in [ISO/IEC 29500-1](https://www.loc.gov/preservation/digital/formats/fdd/fdd000398.shtml#:~:text=The%20XLSX%20format%20uses%20the,a%20rectangular%20grid%20of%20cells.), the document comprises one or more worksheets in a workbook. Every worksheet MUST contain one table object storing the metadata. Comments or axillary information MAY be stored alongside with table objects in a worksheet.
+
 ### Assay Data and Metadata
 
-All measurement data sets are considered as assays and are consider immutable input data. Assays data MUST be placed into a unique subdirectory of the top-level `assays` folder. 
-
-All ISA metadata specific to a single assay (e.g., measurement type and technology, i.e. all terms with term names beginning with `ASSAY`) must be annotated in a in the file `isa.assay.xlsx` at the root of the assay's subdirectory. All investigation-level assay metadata specific to an assay MUST be duplicated from the ARC's top-level `isa.investigation.xlsx` in a separate worksheet
+All measurement data sets are considered as assays and are consider immutable input data. Assays data MUST be placed into a unique subdirectory of the top-level `assays` folder. All ISA metadata specific to a single assay (e.g., measurement type and technology, i.e. all terms with term names beginning with ASSAY) MUST be annotated in a in the file `isa.assay.xlsx` at the root of the assay's subdirectory. This workbook MUST containing a single assay that can be organized in one or many worksheets. Worksheets MUST be named uniquely within the same workbook. A worksheet named `study` MUST store the STUDY ASSAYS section defined on investigation-level of the ISA model that is duplicated from the ARC's top-level `isa.investigation.xlsx`. Additional worksheets MUST contain table object with fields organized on a per-row basis. The first row MUST be used for column headers. A `Source` MUST be indicated with the column heading `Source Name`. Every table object MUST define at least one source per row. A Sample MUST be indicated with the column heading Sample Name. The source sample relation MUST follow a unique path in directed acyclic graph, but MAY distributed across different worksheets.
 
 Notes:
 
 - To ensure reusability of entire assays across multiple ARCs, redundancy between assay-specfic, assay-level metadata and investigation-level metadata is intentional. 
-  
-- It is recommended to adopt the structure outlined [below](#best-practices) to organize assay data files and other supporting information.
+
+- It is RECOMMENDED to order worksheets according to the source sample relation for readability.
+
+- It is RECOMMENDED to adopt the structure outlined [below](#best-practices) to organize assay data files and other supporting information.
 
 - There are no requirements on specific assay-level metadata. Conversion of ARCs into other repository or archival format (e.g. PRIDE, GEO, ENA etc.) may however mandate the presence of specific terms (cf. [below](#arc-conversion)) required in the destination format.
 
 - An implementation that ensures assay annotation consistent with these requirements is provided by the [SWATE tool](https://github.com/nfdi4plants/Swate).
 
-- While assays can in principle contain arbitrary data formats, it is highly recommended to use community-supported, open formats (see [Best Practices](#best-practices)).
+- While assays can in principle contain arbitrary data formats, it is highly RECOMMENDED to use community-supported, open formats (see [Best Practices](#best-practices)).
 
 ### Workflow Description
 
@@ -211,17 +215,6 @@ ARC root directory is identifiable by the presence of the `isa.investigation.xls
 The file `arc.cwl` MUST exist at the root directory of each ARC. It describes which runs are executed (and specifically, their ordering) to produce the computational results contained within the ARC.
 
 `arc.cwl` MUST be a CWL v1.2 workflow description and adhere to the same requirements as [run descriptions](#run-description). In particular, references to assay data files, external data, nested workflows MUST use relative paths. An optional file `arc.yml` MAY be provided to specify input parameters. 
-
-
-### ISA-XLSX Format
-
-TODO: move up and proofread
-
-ISA-XLSX follows the ISA model specification saved in a XLSX format. The XLSX format uses the SpreadsheetML markup language and schema to represent a spreadsheet document. Conceptually, using the terminology of the Spreadsheet ML specification in [ISO/IEC 29500-1](https://www.loc.gov/preservation/digital/formats/fdd/fdd000398.shtml#:~:text=The%20XLSX%20format%20uses%20the,a%20rectangular%20grid%20of%20cells.), the document comprises one or more worksheets in a workbook.
-A workbook MUST contain a single assay that can be organized in one or many worksheets. Worksheets MUST be named uniquely within the same workbook. A worksheet named study MUST store the STUDY ASSAYS section defined on investigation-level of the ISA model that is duplicated in the isa.investigation.xlsx. Additional worksheets MUST contain table object with fields organized on a per-row basis. The first row MUST be used for column headers. Comments or axillary information MAY be stored alongside with table objects in a worksheet. A ´Source´ MUST be indicated with the column heading ´Source Name´. Every table object MUST define at least one source per row. A Sample MUST be indicated with the column heading Sample Name. The source sample relation MUST follow a unique path in directed acyclic graph, but MAY distributed across different worksheets.
-
-Notes: 
-  - It is RECOMMENDED to order worksheets according to the source sample relation for readability.
 
 ## Shareable and Publishable ARCs
 ARCs can be shared in any state. They are considered *publishable* (e.g. for the purpose of minting a DOI) when fulfilling the following conditions:

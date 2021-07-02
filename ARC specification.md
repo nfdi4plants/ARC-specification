@@ -115,7 +115,7 @@ All representation suitable for Git-LFS repositories are also a valid representa
 
 Notes:
 
-- Archival representation (e.g. `.zip` or `.tar.gz`) are valid ARC representations if archives are created to preserve file attributes, i.e. if unarchiving preserves Git interoperability. Furthermore, Git's [*bundle mechanism*](https://git-scm.com/docs/git-bundle) can be used to create archives of complete ARCs or individual branches. For archiving purposes, `git bundle create --all` or an equivalent should be used.
+- Archival representation (e.g. `.zip` or `.tar.gz`) are valid ARC representations if archives are created to preserve file attributes, i.e. if unarchiving preserves Git interoperability. Furthermore, Git's [bundle mechanism](https://git-scm.com/docs/git-bundle) can be used to create archives of complete ARCs or individual branches. For archiving purposes, `git bundle create --all` or an equivalent should be used.
 
 - Elements of an ARC are implicitly content-addressable using standard Git mechanisms via SHA1 hashes.
 

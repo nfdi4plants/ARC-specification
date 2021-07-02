@@ -185,7 +185,7 @@ Notes:
 
 ### External Data
 
-External data refer to data that is neither originating within the investigation/study scope of the ARC nor can be referenced externally, but is required to ensure reproducability. Examples include early use of ontologies, mapping files, gene information, etc. All correspondig data MUST be placed in the ARC's top-level `external` directory.
+External data refers to data that is neither originating within the investigation/study scope of the ARC nor can be referenced externally, but is required to ensure reproducability. Examples include early use of ontologies, mapping files, gene information, etc. All correspondig data MUST be placed in the ARC's top-level `external` directory.
 
 The union of external data forms a *virtual* assay; as such, it MUST adhere to the metadata requirements of assays and hence MUST contain, for each file, annotation in a file `isa.external.xlsx`, located under the top-level `external` directory.
 
@@ -204,7 +204,7 @@ Note:
 
 ### Top-level Metadata and Workflow Description
 
-*Top-level metadata and workflow description* tie together the elements of an ARC in the contexts of investigation and associated studies (in the ISA definition), captured in the files `isa.investigation.xlsx` in [ISA-XLSX format](#isa-xlsx), which MUST be present. Optionally, study-level metadata MAY be present in `isa.studies.xlsx`. Furthermore, top-level reproducibility information MUST be provided in the CWL `arc.cwl`, which also MUST exist.
+*Top-level metadata and workflow description* tie together the elements of an ARC in the contexts of investigation and associated studies (in the ISA definition), captured in the files `isa.investigation.xlsx` in [ISA-XLSX format](#isa-xlsx-format), which MUST be present. Optionally, study-level metadata MAY be present in `isa.studies.xlsx`. Furthermore, top-level reproducibility information MUST be provided in the CWL `arc.cwl`, which also MUST exist.
 
 #### Investigation and Study Metadata
 
@@ -231,6 +231,7 @@ ARCs can be shared in any state. They are considered *publishable* (e.g. for the
 Notes: 
   - The attribute *publishable* does not imply that data and metadata contained in an ARC are suitable for publication in a specific outlet (e.g. PRIDE, GEO, EBI). While it may be straightforward to convert the ARC schema into one required by specific publishers or repositories, additional metadata requirements may be enforced during conversion. These are intentionally not captured in this specification.
   - Minimal administrative metadata ensure compliance with DataCite for DOI creation
+  - (TODO: provisions to enable reproducibility - what do we want to require here?)
 
 ## Mechanism for quality control of ARCs 
 
@@ -249,17 +250,17 @@ Using the following recommended formats will ensure improoved accessability and 
 - mzTAB (analysis data metabolomics and proteomics)
 - Fastq.gz (compressed NGS Short Read Sequencing, Long Read Sequencing) 
 - fastq (NGS Short Read Sequencing, Long Read Sequencing) 
-- BAM 
-- SAM 
+- BAM (??)
+- SAM (??)
 
 Notes: 
-  - In case of storing vendor-spesific data within an ARC, it is strongly encurage to accompany them by the corresponding open formats or provide a workflow for convertion or processing.
+  - In case of storing vendor-spesific data within an ARC, it is strongly encuraged to accompany them by the corresponding open formats or provide a workflow for convertion or processing. (TODO: Hm, I would consider that as a task for the longterm access squad/technology watch!?)
 
 #### Compression and Encryption 
 
 Compression is preferrable to save on disk space and speed up data transfers but not required. Without compression workflows are simpler as often no transparent compression and decompression is available. Uncompressed files are usually easier to index and better searchable. 
 
-Encryption is not advised (but could be an option to share sensitive data in an otherwise open ARC) .
+Encryption is not advised (but could be an option to share sensitive data in an otherwise open ARC).
 
 #### Directory and File Naming Conventions 
 

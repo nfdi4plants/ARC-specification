@@ -136,8 +136,44 @@ ISA-XLSX follows the ISA model specification (v1.0) saved in a XLSX format. The 
 
 ### Assay Data and Metadata
 
-All measurement data sets are considered as assays and are considered immutable input data. Assays data MUST be placed into a unique subdirectory of the top-level `assays` folder. All ISA metadata specific to a single assay (e.g., measurement type and technology, i.e. all terms with term names beginning with ASSAY) MUST be annotated in a in the file `isa.assay.xlsx` at the root of the assay's subdirectory. This workbook MUST containing a single assay that can be organized in one or many worksheets. Worksheets MUST be named uniquely within the same workbook. A worksheet named `assay` MUST store the STUDY ASSAYS section defined on investigation-level of the ISA model and are not required in the `isa.investigation.xlsx `. These include the terms `Study Assay File Name`, `Study Assay Measurement Type`, `Study Assay Measurement Type Term Accession Number`, `Study Assay Measurement Type Term Source REF`, `Study Assay Technology Type`, `Study Assay Technology Type Term Accession Number`, `Study Assay Technology Type Term Source REF`, and `Study Assay Technology Platform`. 
+All measurement data sets are considered as assays and are considered immutable input data. Assays data MUST be placed into a unique subdirectory of the top-level `assays` folder. All ISA metadata specific to a single assay (e.g., measurement type and technology, i.e. all terms with term names beginning with ASSAY) MUST be annotated in a in the file `isa.assay.xlsx` at the root of the assay's subdirectory. This workbook MUST containing a single assay that can be organized in one or many worksheets. Worksheets MUST be named uniquely within the same workbook. A worksheet named `assay` MUST store the STUDY ASSAYS section defined on investigation-level of the ISA model and are not required in the `isa.investigation.xlsx `. These include the terms `Study Assay Measurement Type`, `Study Assay Measurement Type Term Accession Number`, `Study Assay Measurement Type Term Source REF`, `Study Assay Technology Type`, `Study Assay Technology Type Term Accession Number`, `Study Assay Technology Type Term Source REF`, and `Study Assay Technology Platform`. 
 Additional worksheets MUST contain table object with fields organized on a per-row basis. The first row MUST be used for column headers. A `Source` MUST be indicated with the column heading `Source Name`. Every table object MUST define at least one source per row. A Sample MUST be indicated with the column heading Sample Name. The source sample relation MUST follow a unique path in a directed acyclic graph, but MAY distributed across different worksheets.
+
+<table>
+
+<tr><td>
+
+|   |   |
+|-|-|
+| Study Assay Measurement Type | "value" |
+| Study Assay Measurement Type Term Accession Number | "value" |
+| Study Assay Measurement Type Term Source REF | "value" |
+| ... | ... |
+
+</td><td>
+
+| Source Name | building block* | Sample Name |
+|-|-|-|
+mrv1 | descriptorA | s1 |
+mrv2 | descriptorB | s2 |
+_
+
+</td><td>
+
+| Source Name | building block* | Sample Name |
+|-|-|-|
+s1 | descriptorC | n1 |
+s1 | descriptorD | n2 |
+s2 | descriptorD | n3 |
+
+</td></tr>
+    <tr>
+        <th style="text-align:center">[*assay*]</th>
+        <th style="text-align:center">[*worksheet1*]</th>
+        <th style="text-align:center">[*worksheet2*]</th>
+    </tr>
+</table>
+
 
 Notes:
 

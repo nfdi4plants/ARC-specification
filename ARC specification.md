@@ -123,21 +123,22 @@ Notes:
 
 ### ISA-XLSX Format
 
-ISA-XLSX follows the ISA model specification saved in a XLSX format. The XLSX format uses the SpreadsheetML markup language and schema to represent a spreadsheet document. Conceptually, using the terminology of the Spreadsheet ML specification [ISO/IEC 29500-1](https://www.loc.gov/preservation/digital/formats/fdd/fdd000398.shtml#:~:text=The%20XLSX%20format%20uses%20the,a%20rectangular%20grid%20of%20cells.), the document comprises one or more worksheets in a workbook. Every worksheet MUST contain one table object storing the metadata. Comments or axillary information MAY be stored alongside with table objects in a worksheet.
+ISA-XLSX follows the ISA model specification (v1.0) saved in a XLSX format. The XLSX format uses the SpreadsheetML markup language and schema to represent a spreadsheet document. Conceptually, using the terminology of the Spreadsheet ML specification [ISO/IEC 29500-1](https://www.loc.gov/preservation/digital/formats/fdd/fdd000398.shtml#:~:text=The%20XLSX%20format%20uses%20the,a%20rectangular%20grid%20of%20cells.), the document comprises one or more worksheets in a workbook. Every worksheet MUST contain one table object storing the metadata. Comments or axillary information MAY be stored alongside with table objects in a worksheet.
 
 ### Assay Data and Metadata
 
-All measurement data sets are considered as assays and are considered immutable input data. Assays data MUST be placed into a unique subdirectory of the top-level `assays` folder. All ISA metadata specific to a single assay (e.g., measurement type and technology, i.e. all terms with term names beginning with ASSAY) MUST be annotated in a in the file `isa.assay.xlsx` at the root of the assay's subdirectory. This workbook MUST containing a single assay that can be organized in one or many worksheets. Worksheets MUST be named uniquely within the same workbook. A worksheet named `study` MUST store the STUDY ASSAYS section defined on investigation-level of the ISA model that is duplicated from the ARC's top-level `isa.investigation.xlsx`. Additional worksheets MUST contain table object with fields organized on a per-row basis. The first row MUST be used for column headers. A `Source` MUST be indicated with the column heading `Source Name`. Every table object MUST define at least one source per row. A Sample MUST be indicated with the column heading Sample Name. The source sample relation MUST follow a unique path in a directed acyclic graph, but MAY distributed across different worksheets.
+All measurement data sets are considered as assays and are considered immutable input data. Assays data MUST be placed into a unique subdirectory of the top-level `assays` folder. All ISA metadata specific to a single assay (e.g., measurement type and technology, i.e. all terms with term names beginning with ASSAY) MUST be annotated in a in the file `isa.assay.xlsx` at the root of the assay's subdirectory. This workbook MUST containing a single assay that can be organized in one or many worksheets. Worksheets MUST be named uniquely within the same workbook. A worksheet named `assay` MUST store the STUDY ASSAYS section defined on investigation-level of the ISA model and are not required in the `isa.investigation.xlsx `. These include the terms `Study Assay File Name`, `Study Assay Measurement Type`, `Study Assay Measurement Type Term Accession Number`, `Study Assay Measurement Type Term Source REF`, `Study Assay Technology Type`, `Study Assay Technology Type Term Accession Number`, `Study Assay Technology Type Term Source REF`, and `Study Assay Technology Platform`. 
+Additional worksheets MUST contain table object with fields organized on a per-row basis. The first row MUST be used for column headers. A `Source` MUST be indicated with the column heading `Source Name`. Every table object MUST define at least one source per row. A Sample MUST be indicated with the column heading Sample Name. The source sample relation MUST follow a unique path in a directed acyclic graph, but MAY distributed across different worksheets.
 
 Notes:
 
-- To ensure reusability of entire assays across multiple ARCs, redundancy between assay-specfic, assay-level metadata and investigation-level metadata is intentional. 
+- There are no requirements on specific assay-level metadata per formal ARC definition. Conversion of ARCs into other repository or archival format (e.g. PRIDE, GEO, ENA etc.) may however mandate the presence of specific terms required in the destination format.
+
+- To ensure reusability of assays, it is strongly RECOMMENDED to included necessary metadata mandated by typical metadata schemes necessary for reproduction. This process is facilitated by the use of template that can be found [here](https://github.com/nfdi4plants/SWATE_templates).
 
 - It is RECOMMENDED to order worksheets according to the source sample relation for readability.
 
 - It is RECOMMENDED to adopt the structure outlined [below](#best-practices) to organize assay data files and other supporting information.
-
-- There are no requirements on specific assay-level metadata. Conversion of ARCs into other repository or archival format (e.g. PRIDE, GEO, ENA etc.) may however mandate the presence of specific terms (cf. [below](#arc-conversion)) required in the destination format.
 
 - An implementation that ensures assay annotation consistent with these requirements is provided by the [SWATE tool](https://github.com/nfdi4plants/Swate).
 
@@ -200,7 +201,7 @@ Especially for the storage of protocols, it is RECOMMENDED to place protocols (a
 
 Note:
 
-- All data missing proper anotation (e.g. assays, workflows, runs, or externals ) is considered additional payload independant of its location within the ARC. 
+- All data missing proper annotation (e.g. assays, workflows, runs, or externals ) is considered additional payload independent of its location within the ARC. 
 
 ### Top-level Metadata and Workflow Description
 
@@ -219,7 +220,7 @@ The file `arc.cwl` MUST exist at the root directory of each ARC. It describes wh
 ## Shareable and Publishable ARCs
 ARCs can be shared in any state. They are considered *publishable* (e.g. for the purpose of minting a DOI) when fulfilling the following conditions:
 
-- Investigation-level metadata contains minimally the following terms:
+- Investigation-level (administrative) metadata contains minimally the following terms:
 
   - Investigation Identifier 
   - Investigation Title 
@@ -231,9 +232,11 @@ ARCs can be shared in any state. They are considered *publishable* (e.g. for the
 -  ARC MUST be [reproducible](#reproducible-arcs) 
 
 Notes: 
-  - The attribute *publishable* does not imply that data and metadata contained in an ARC are suitable for publication in a specific outlet (e.g. PRIDE, GEO, EBI). While it may be straightforward to convert the ARC schema into one required by specific publishers or repositories, additional metadata requirements may be enforced during conversion. These are intentionally not captured in this specification.
+  - The attribute *publishable* does not imply that data and metadata contained in an ARC are suitable for publication in a specific outlet (e.g. PRIDE, GEO, EBI) nor that metadata is complete or enables reusability of data. While it may be straightforward to convert the ARC schema into one required by specific publishers or repositories, additional metadata requirements may be enforced during conversion. These are intentionally not captured in this specification.
+
+  - It might be worth to notice that experimental metadata necessary for publication in a specific outlet is encoded by template that can be found [here](https://github.com/nfdi4plants/SWATE_templates).
+
   - Minimal administrative metadata ensure compliance with DataCite for DOI creation
-  - (TODO: provisions to enable reproducibility - what do we want to require here?)
 
 ### Reproducible ARCs
 
@@ -242,7 +245,7 @@ Reproducability of ARCs referes mainly to its *Runs*. With an ARC it MUST be pos
 
 ## Mechanism for quality control of ARCs 
 
-ARCs are supposed to be living research objects and as such are at no point in time complete. Nevertheless, a mechanism to report the current state and quality of an ARC is indispensable. Therefore, ARCs will be scored according to the amount of metadata information available, the quality of data and metadata (this metric will be established in the next version), manual curation and review, and the re-use of ARCs by other researcher measured by physical includes of the data and referencing.
+ARCs are supposed to be living research objects and as such are at no point in time complete. Nevertheless, a mechanism to report the current state and quality of an ARC is indispensable. Therefore, ARCs will be scored according to the amount of metadata information available (specifically with established minimal metadata standards such as MinSeqE, MIAPPE etc), the quality of data and metadata (this metric will be established in the next version), manual curation and review, and the re-use of ARCs by other researcher measured by physical includes of the data and referencing.
 
 To foster FAIRification, badges will be earned by reaching certain scores for a transparent review process.  
  
@@ -252,16 +255,16 @@ In the next section we provide you with Best Practices to make the use of an ARC
 
 #### Community specific data formats 
 It is recommend to use of community specific data formats covering most common measurement techniques. 
-Using the following recommended formats will ensure improoved accessability and findability:   
+Using the following recommended formats will ensure improved accessibility and findability:   
 - mzML (raw data metabolomics and proteomics) 
 - mzTAB (analysis data metabolomics and proteomics)
 - Fastq.gz (compressed NGS Short Read Sequencing, Long Read Sequencing) 
 - fastq (NGS Short Read Sequencing, Long Read Sequencing) 
-- BAM (??)
-- SAM (??)
+- SAM (Sequence Alignment/Map format)
+- BAM (Compressed binary version of a SAM file that is used to represent aligned sequences)
 
 Notes: 
-  - In case of storing vendor-spesific data within an ARC, it is strongly encuraged to accompany them by the corresponding open formats or provide a workflow for convertion or processing. (TODO: Hm, I would consider that as a task for the longterm access squad/technology watch!?)
+  - In case of storing vendor-specific data within an ARC, it is strongly encouraged to accompany them by the corresponding open formats or provide a workflow for conversion or processing where this is possible and considered standard.
 
 #### Compression and Encryption 
 
@@ -272,7 +275,7 @@ Encryption is not advised (but could be an option to share sensitive data in an 
 #### Directory and File Naming Conventions 
 
 Required files defined in the ARC structure need to be named accordingly. Files and folders specified < > can be named freely. 
-As the ARC might be used by different persons and in different workflow contexts, we recommend a concise filename without blanks and special characters. A good choice is to stick to small and capital letters without umlauts and similar special characters. Numbers, hyphen, and underscores are suitable as well. Modern working environments can handle blanks in filenames but might confuse automatically run scripts and thus should be avoided. Depending on the intended amount of people the ARC is shared with, certain information might prove useful to provide a fast overview in human readable form in the filename, e.g. by providing abbreviations of the project, sub project, person creating or working on a particular data set. Date and time information might be encoded as well if it provides a better ordering or information for the particular purpose. 
+As the ARC might be used by different persons and in different workflow contexts, we recommend a concise filename without blanks and special characters. Therefore, filenames SHOULD stick to small and capital letters without umlauts, accented and similar special characters . Numbers, hyphen, and underscores are suitable as well. Modern working environments can handle blanks in filenames but might confuse automatically run scripts and thus should be avoided. Depending on the intended amount of people the ARC is shared with, certain information might prove useful to provide a fast overview in human readable form in the filename, e.g. by providing abbreviations of the project, sub project, person creating or working on a particular data set. Date and time information might be encoded as well if it provides a better ordering or information for the particular purpose.
 
 
  ## Appendix: Conversion of ARCs to RO Crates

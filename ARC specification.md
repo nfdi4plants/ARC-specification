@@ -2,11 +2,6 @@
 
 Please provide feedback via Github issues or a pull request.
 
-**Editors:**
-  - Timo Mühlhaus &lt;muehlhaus@bio.uni-kl.de&gt;
-  - Dirk von Suchodoletz &lt;dirk.von.suchodoletz@rz.uni-freiburg.de&gt;
-  - Christoph Garth &lt;garth@cs.uni-kl.de&gt;
-
 **Github repository:**  https://github.com/nfdi4plants/specs
 
 This specification is Copyright 2021 by [DataPLANT – Nationale Forschungsdateninfrastruktur](nfdi4plants.de). 

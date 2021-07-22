@@ -318,7 +318,16 @@ Required files defined in the ARC structure need to be named accordingly. Files 
 As the ARC might be used by different persons and in different workflow contexts, we recommend a concise filename without blanks and special characters. Therefore, filenames SHOULD stick to small and capital letters without umlauts, accented and similar special characters . Numbers, hyphen, and underscores are suitable as well. Modern working environments can handle blanks in filenames but might confuse automatically run scripts and thus should be avoided. Depending on the intended amount of people the ARC is shared with, certain information might prove useful to provide a fast overview in human readable form in the filename, e.g. by providing abbreviations of the project, sub project, person creating or working on a particular data set. Date and time information might be encoded as well if it provides a better ordering or information for the particular purpose.
 
 
- ## Appendix: Conversion of ARCs to RO Crates
+## Appendix: Conversion of ARCs to RO Crates
 
-*(would be great if we could include this)*
-  
+[Research Object Crate](https://www.researchobject.org/ro-crate/) is a lightweight approach, based on schema.org, to packaging research data together with their metadata. An ARC can be augmented into an RO Crate placing a metadata file `ro-crate-metadata.json` into the top-level ARC folder, which must conform to the [RO Crate specification](https://www.researchobject.org/ro-crate/1.1/). The ARC root folder is then simultaneously the RO-Crate Root. It is recommended to adhere to the following conventions when creating this file:
+
+- The root data entity description are taken from the "Investigation Description" term in `isa.investigation.xlsx`.
+- The root data entity authors are taken from the "Investigation Contacts" in `isa.investigation.xlsx`:
+- The root data entity citations are copied from the "Investigation Publications" section in `isa.investigation.xlsx`.
+- Per assay linked from `isa.investigation.xlsx`, one Dataset entity is provided in `ro-crate-metadata.json`. The Dataset id corresponds to the relative path of the assay ISA file under `assays/`, e.g. "sample-data/assay.isa.xlsx". Other metadata is taken from the corresponding terms in the corresponding `assay.isa.xlsx`.
+- The root data entity contains an child Dataset entity named `assays`, which lists the ids of all assays linked from `isa.investigation.xlsx`.
+
+It is expected that future versions of this specification will provide additional guidance on a comprehensive conversion of ARC metadata into RO-Crate metadata.
+
+   

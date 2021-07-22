@@ -320,7 +320,7 @@ As the ARC might be used by different persons and in different workflow contexts
 
 ## Appendix: Conversion of ARCs to RO Crates
 
-[Research Object Crate](https://www.researchobject.org/ro-crate/) is a lightweight approach, based on schema.org, to packaging research data together with their metadata. An ARC can be augmented into an RO Crate placing a metadata file `ro-crate-metadata.json` into the top-level ARC folder, which must conform to the [RO Crate specification](https://www.researchobject.org/ro-crate/1.1/). The ARC root folder is then simultaneously the RO-Crate Root. It is recommended to adhere to the following conventions when creating this file:
+[Research Object Crate](https://www.researchobject.org/ro-crate/) is a lightweight approach, based on schema.org, to packaging research data together with their metadata. An ARC can be augmented into an RO Crate by placing a metadata file `ro-crate-metadata.json` into the top-level ARC folder, which must conform to the [RO Crate specification](https://www.researchobject.org/ro-crate/1.1/). The ARC root folder is then simultaneously the RO-Crate Root. It is recommended to adhere to the following conventions when creating this file:
 
 - The root data entity description are taken from the "Investigation Description" term in `isa.investigation.xlsx`.
 - The root data entity authors are taken from the "Investigation Contacts" in `isa.investigation.xlsx`:

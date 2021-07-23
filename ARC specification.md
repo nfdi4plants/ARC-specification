@@ -87,7 +87,7 @@ Note:
 |   isa.investigation.xlsx 
 |   isa.studies.xlsx
 |   arc.cwl 
-|   arc.yml            
+|   arc.yml [optional]            
 \--- assays
     \--- <assay_name> 
             |    isa.assay.xlsx  
@@ -101,7 +101,7 @@ Note:
     \--- <run_name> 
         |    [files;...] (different result files) 
         |    run.cwl 
-        |    run.yml            
+        |    run.yml [optional]           
 \--- externals 
         |    [ knowledge files ] # external reference  
         |    isa.xlsx           

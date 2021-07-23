@@ -35,7 +35,7 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
 
 ## Introduction
 
-This document describes a specification for a standardized way of creating a working environment and packaging file-based research data and necessary additional contextual information for working, collaboration, preservation, reproduction, re-use, and archiving as well as distribution. This organization unit is named Annotated Research Context (ARC) and is designed to be both human and machine actionable. 
+This document describes a specification for a standardized way of creating a working environment and packaging file-based research data and necessary additional contextual information for working, collaboration, preservation, reproduction, re-use, and archiving as well as distribution. This organization unit is named *Annotated Research Context* (ARC) and is designed to be both human and machine actionable. 
 
 ARCs are digital objects that fulfill all FAIR principles and are therefore referred to as FAIR Digital Objects (FDO).
 

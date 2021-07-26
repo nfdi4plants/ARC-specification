@@ -280,7 +280,7 @@ Notes:
 Reproducability of ARCs referes mainly to its *Runs*. With an ARC it MUST be possible to reproduce the run data. Therefore, necessary software MUST be available in *Workflows*. In the case of non-deterministic software the run results should represent typical examples.
 
 
-## Mechanism for quality control of ARCs 
+## Mechanism for Quality Control of ARCs 
 
 ARCs are supposed to be living research objects and as such are at no point in time complete. Nevertheless, a mechanism to report the current state and quality of an ARC is indispensable. Therefore, ARCs will be scored according to the amount of metadata information available (specifically with established minimal metadata standards such as MinSeqE, MIAPPE, etc.), the quality of data and metadata (this metric will be established in the next version), manual curation and review, and the re-use of ARCs by other researchers measured by physical includes of the data and referencing.
 
@@ -290,7 +290,7 @@ To foster FAIRification, badges will be earned by reaching certain scores for a 
 
 In the next section we provide you with Best Practices to make the use of an ARC even more efficient and valuable for open science. 
 
-#### Community specific data formats 
+#### Community Specific Data Formats 
 It is recommend to use community specific data formats covering most common measurement techniques. 
 Using the following recommended formats will ensure improved accessibility and findability:   
 - mzML (raw data metabolomics and proteomics) 

@@ -262,7 +262,7 @@ ARCs can be shared in any state. They are considered *publishable* (e.g. for the
   - Investigation Identifier 
   - Investigation Title 
   - Investigation Description 
-  - INVESTIGATION CONTACTS and/or [Comment]ORCID-ID of the PI(s)
+  - INVESTIGATION CONTACTS and/or [Comment]ORCID-ID of the PI(s) (comment: lower case, like the other entries? would encourage the use of ORCID-IDs a bit stronger)
 
 - The ARC MUST NOT be *empty*: it MUST contain minimally a single assay or a single workflow.
 

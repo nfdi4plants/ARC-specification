@@ -62,13 +62,13 @@ ARCs are based on a strict separation of data and metadata content into raw data
 
 Logically, each ARC is a directory containing the following elements: 
 
-- *Assays* correspond to analytical measurements (in the interpretation of the ISA model) and are treated as immutable data. Each assay is a collection of files, together with a corresponding metadata file, stored in a subdirectory of the top-level subdirectory `assays`. Assay-level metadata is stored in [ISA-XLSX](##isa-xlsx-format) format in a file `isa.assay.xlsx`, which MUST exist for each assay. Further details on `isa.assay.xlsx` are specified [below](#assay-metadata). Assay data files MUST be placed in a `dataset` subdirectory.
+- *Assays* correspond to analytical measurements (in the interpretation of the ISA model) and are treated as immutable data. Each assay is a collection of files, together with a corresponding metadata file, stored in a subdirectory of the top-level subdirectory `assays`. Assay-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a file `isa.assay.xlsx`, which MUST exist for each assay. Further details on `isa.assay.xlsx` are specified [below](#assay-data-and-metadata). Assay data files MUST be placed in a `dataset` subdirectory.
 
-- *Workflows* represent data analysis routines (in the sense of CWL tools and workflows) and are a collection of files, together with a corresponding CWL description, stored in a single directory under the top-level `workflows` subdirectory. A per-workflow executable CWL description is stored in `workflow.cwl`, which MUST exist for all ARC workflows. Further details on workflow descriptions are given [below](#workflow-descriptions).
+- *Workflows* represent data analysis routines (in the sense of CWL tools and workflows) and are a collection of files, together with a corresponding CWL description, stored in a single directory under the top-level `workflows` subdirectory. A per-workflow executable CWL description is stored in `workflow.cwl`, which MUST exist for all ARC workflows. Further details on workflow descriptions are given [below](#workflow-description).
 
-- *Runs* capture data products (i.e., results of computational analysis) derived from assays, other runs, or external data using workflows (located in the aforementioned *Workflows* directory). Each run is a collection of files, stored in the top-level `runs` subdirectory. It MUST be accompanied by a per-run CWL workflow description, stored in `<run_name>.cwl` and further described [below](#run-descriptions).
+- *Runs* capture data products (i.e., results of computational analysis) derived from assays, other runs, or external data using workflows (located in the aforementioned *Workflows* directory). Each run is a collection of files, stored in the top-level `runs` subdirectory. It MUST be accompanied by a per-run CWL workflow description, stored in `<run_name>.cwl` and further described [below](#run-description).
 
-- *Externals* are external data (e.g., knowledge files) that need to be included and cannot be referenced due to external limitations. Metadata information SHOULD be stored according to the ISA model and CWL in case of workflow information; see [below](#external-data-annotation) for details.
+- *Externals* are external data (e.g., knowledge files) that need to be included and cannot be referenced due to external limitations. Metadata information SHOULD be stored according to the ISA model and CWL in case of workflow information; see [below](#external-data) for details.
 
 - *Top-level metadata and workflow description* tie together the elements of an ARC in the contexts of investigation and associated studies (in the ISA definition), captured in the files `isa.investigation.xlsx` in [ISA-XLSX format](#isa-xlsx-format), which MUST be present. Optionally, study-level metadata MAY be present in `isa.studies.xlsx`. Furthermore, top-level reproducibility information MUST be provided in the CWL `arc.cwl`, which also MUST exist.
 
@@ -101,7 +101,7 @@ Note:
         |    run.yml [optional]           
 \--- externals 
         |    [ knowledge files ] # external reference  
-        |    isa.xlsx           
+        |    isa.externals.xlsx           
 ``` 
 
 ### ARC Representation
@@ -110,7 +110,7 @@ ARCs are Git repositories, as defined and supported by the [Git C implementation
 
 ARC terminology implicitly borrows from Git and Git-LFS terminology. For example, an ARC commit is simply a Git commit, and the ARC history is the repository history. Furthermore, an ARC can contain multiple branches, etc.
 
-Tree objects (resp. directories) and blobs (i.e., files) of all branch heads in the repository MUST adhere to the [ARC schema](#arc-structure-and-contents-schema). ARCs allow all typical Git operations (e.g. clone, branch).
+Tree objects (resp. directories) and blobs (i.e., files) of all branch heads in the repository MUST adhere to the [ARC schema](#arc-structure-and-content). ARCs allow all typical Git operations (e.g. clone, branch).
 
 All representation suitable for Git-LFS repositories are also valid representations of ARCs. This includes both bare repositories (without a checked out working copy) and non-bare repositories (i.e. a `.git` directory with one or more attached working copies). In particular, it is possible and intended to maintain ARCs on local user filesystems and via Git repository hosting services. No requirements are made for state and contents of working copies.
 
@@ -128,7 +128,7 @@ ISA-XLSX follows the ISA model specification (v1.0) saved in a XLSX format. The 
 
 ### Assay Data and Metadata
 
-All measurement data sets are considered as assays and are considered immutable input data. Assay data MUST be placed into a unique subdirectory of the top-level `assays` folder. All ISA metadata specific to a single assay MUST be annotated in a in the file `isa.assay.xlsx` at the root of the assay's subdirectory. This workbook MUST containing a single assay that can be organized in one or many worksheets. Worksheets MUST be named uniquely within the same workbook. A worksheet named `assay` MUST store the STUDY ASSAYS section defined on investigation-level of the ISA model and are not required in the `isa.investigation.xlsx `. These include the terms `Study Assay Measurement Type`, `Study Assay Measurement Type Term Accession Number`, `Study Assay Measurement Type Term Source REF`, `Study Assay Technology Type`, `Study Assay Technology Type Term Accession Number`, `Study Assay Technology Type Term Source REF`, and `Study Assay Technology Platform`. 
+All measurement data sets are considered as assays and are considered immutable input data. Assay data MUST be placed into a unique subdirectory of the top-level `assays` folder. All ISA metadata specific to a single assay MUST be annotated in the file `isa.assay.xlsx` at the root of the assay's subdirectory. This workbook MUST contain a single assay that can be organized in one or many worksheets. Worksheets MUST be named uniquely within the same workbook. A worksheet named `assay` MUST store the STUDY ASSAYS section defined on investigation-level of the ISA model and is not required in the `isa.investigation.xlsx `. These include the terms `Study Assay Measurement Type`, `Study Assay Measurement Type Term Accession Number`, `Study Assay Measurement Type Term Source REF`, `Study Assay Technology Type`, `Study Assay Technology Type Term Accession Number`, `Study Assay Technology Type Term Source REF`, and `Study Assay Technology Platform`. 
 Additional worksheets MUST contain a table object with fields organized on a per-row basis. The first row of the table object MUST be used for column headers. A `Source` MUST be indicated with the column heading `Source Name`. Every table object MUST define at least one source per row. A `Sample` MUST be indicated with the column heading `Sample Name`. The source sample relation MUST follow a unique path in a directed acyclic graph, but MAY be distributed across different worksheets.
 
 <table>

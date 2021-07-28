@@ -62,7 +62,7 @@ ARCs are based on a strict separation of data and metadata content into raw data
 
 Logically, each ARC is a directory containing the following elements: 
 
-- *Assays* correspond to analytical measurements (in the interpretation of the ISA model) and are treated as immutable data. Each assay is a collection of files, together with a corresponding metadata file, stored in a subdirectory of the top-level subdirectory `assays`. Assay-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a file `isa.assay.xlsx`, which MUST exist for each assay. Further details on `isa.assay.xlsx` are specified [below](#assay-data-and-metadata). Assay data files MUST be placed in a `dataset` subdirectory.
+- *Assays* correspond to analytical measurements (in the interpretation of the ISA model) and are treated as immutable data. Each assay is a collection of files, together with a corresponding metadata file, stored in a subdirectory of the top-level subdirectory `assays`. Assay-level metadata is stored in [ISA-XLSX format](#isa-xlsx-format) in a file `isa.assay.xlsx`, which MUST exist for each assay. Further details on `isa.assay.xlsx` are specified [below](#assay-data-and-metadata). Assay data files MUST be placed in a `dataset` subdirectory.
 
 - *Workflows* represent data analysis routines (in the sense of CWL tools and workflows) and are a collection of files, together with a corresponding CWL description, stored in a single directory under the top-level `workflows` subdirectory. A per-workflow executable CWL description is stored in `workflow.cwl`, which MUST exist for all ARC workflows. Further details on workflow descriptions are given [below](#workflow-description).
 
@@ -209,13 +209,13 @@ Notes:
 
 Each such subdirectory must contain a workflow description `run.cwl`, given in [Common Workflow Language](https://www.commonwl.org/) (CWL), [v1.2](https://www.commonwl.org/v1.2/) or higher, that describes how the files contained with the run are derived from assay or external data, or other runs. `run.cwl` MUST be placed in the subdirectory under the top-level `runs` directory. A parameter file `run.yml` MAY be given to specify run-specific input parameters.
 
-`run.cwl` MAY (and sensibly, should) refer to assay data files, external data files, workflow descriptions, and files in other run results; such references MUST use relative paths. Furthermore, `run.cwl` MUST specify as outputs all result files. `run.cwl` MUST BE executable without referring to [additional payload files](#additional-auxiliary-payload) or files outside the ARC.
+`run.cwl` MAY (and sensibly, should) refer to assay data files, external data files, workflow descriptions, and files in other run results; such references MUST use relative paths. Furthermore, `run.cwl` MUST specify as outputs all result files. `run.cwl` MUST BE executable without referring to [additional payload files](#additional-payload) or files outside the ARC.
 
 Notes:
 
 - Run descriptions are intended to ensure that the computational analysis encapsulated within an ARC can be fully reproduced.
 
-- Any files produced by executing the run description which are not specified as CWL outputs in `run.cwl` are considered additional ARC payload. Furthermore, all files of all subdirectories under `run` that are not referenced from the [top-level workflow](#top-level-workflow) are considered additional payload.
+- Any files produced by executing the run description which are not specified as CWL outputs in `run.cwl` are considered additional ARC payload. Furthermore, all files of all subdirectories under `run` that are not referenced from the [top-level workflow](#top-level-metadata-and-workflow-description) are considered additional payload.
 
 - It is expected that run descriptions are authored semi-automatically, e.g. using the [arcCommander](https://github.com/nfdi4plants/arcCommander) tool.
 

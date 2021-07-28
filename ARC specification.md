@@ -56,19 +56,19 @@ All changes that are not backwards compatible with the current ARC specification
 
 ## ARC Structure and Content
 
-ARCs are based on a strict separation of data and metadata content into raw data (assays), externals, computation results (runs) and computational workflows (workflows) generating the latter. The scope or granularity of an ARC aligns with the necessities of individual projects or large experimental setups. 
+ARCs are based on a strict separation of data and metadata content into folders for raw data (*assays*), *externals*, computation results (*runs*) and computational workflows (*workflows*) generating the latter. The scope or granularity of an ARC aligns with the necessities of individual projects or large experimental setups.
 
 ### High-Level Schema
 
-Logically, each ARC is a directory containing the following elements: 
+Each ARC is a directory containing the following elements:
 
-- *Assays* correspond to analytical measurements (in the interpretation of the ISA model) and are treated as immutable data. Each assay is a collection of files, together with a corresponding metadata file, stored in a subdirectory of the top-level subdirectory `assays`. Assay-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a file `isa.assay.xlsx`, which MUST exist for each assay. Further details on `isa.assay.xlsx` are specified [below](#assay-data-and-metadata). Assay data files MUST be placed in a `dataset` subdirectory.
+- *assays* correspond to analytical measurements (in the interpretation of the ISA model) and are treated as immutable data. Each assay is a collection of files, together with a corresponding metadata file, stored in a subdirectory of the top-level subdirectory `assays`. Assay-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a file `isa.assay.xlsx`, which MUST exist for each assay. Further details on `isa.assay.xlsx` are specified [below](#assay-data-and-metadata). Assay data files MUST be placed in a *dataset* subdirectory.
 
-- *Workflows* represent data analysis routines (in the sense of CWL tools and workflows) and are a collection of files, together with a corresponding CWL description, stored in a single directory under the top-level `workflows` subdirectory. A per-workflow executable CWL description is stored in `workflow.cwl`, which MUST exist for all ARC workflows. Further details on workflow descriptions are given [below](#workflow-description).
+- *workflows* represent data analysis routines (in the sense of CWL tools and workflows) and are a collection of files, together with a corresponding CWL description, stored in a single directory under the top-level *workflows* subdirectory. A per-workflow executable CWL description is stored in `workflow.cwl`, which MUST exist for all ARC workflows. Further details on workflow descriptions are given [below](#workflow-description).
 
-- *Runs* capture data products (i.e., results of computational analysis) derived from assays, other runs, or external data using workflows (located in the aforementioned *Workflows* directory). Each run is a collection of files, stored in the top-level `runs` subdirectory. It MUST be accompanied by a per-run CWL workflow description, stored in `<run_name>.cwl` and further described [below](#run-description).
+- *runs* capture data products (i.e., results of computational analysis) derived from assays, other runs, or external data using workflows (located in the aforementioned *workflows* directory). Each run is a collection of files, stored in the top-level *runs* subdirectory. It MUST be accompanied by a per-run CWL workflow description, stored in `<run_name>.cwl` and further described [below](#run-description).
 
-- *Externals* are external data (e.g., knowledge files) that need to be included and cannot be referenced due to external limitations. Metadata information SHOULD be stored according to the ISA model and CWL in case of workflow information; see [below](#external-data) for details.
+- *externals* are external data (e.g., knowledge files) that need to be included and cannot be referenced due to external limitations. Metadata information SHOULD be stored according to the ISA model and CWL in case of workflow information; see [below](#external-data) for details.
 
 - *Top-level metadata and workflow description* tie together the elements of an ARC in the contexts of investigation and associated studies (in the ISA definition), captured in the files `isa.investigation.xlsx` in [ISA-XLSX format](#isa-xlsx-format), which MUST be present. Optionally, study-level metadata MAY be present in `isa.studies.xlsx`. Furthermore, top-level reproducibility information MUST be provided in the CWL `arc.cwl`, which also MUST exist.
 
@@ -76,7 +76,7 @@ All other files contained in an ARC (e.g., a `README.txt`, a pre-print PDFs, add
 
 Note: 
 
-- Subdirectories and other files in the top-level `assays`, `workflows`, `runs`, and `externals` directories are viewed as additional payload unless they are accompanied by the corresponding mandatory description (`isa.assay.xlsx`, `workflow.cwl`, `run.cwl`, `isa.external.xlsx`) specified below. This is intended to allow gradual migration from existing data storage schemes to the ARC schema. For example, *data files* for an assay may be stored in a subdirectory of `assays/`, but are only identified as an assay of the ARC if metadata is present and complete, including a reference from top-level metadata.
+- Subdirectories and other files in the top-level *assays*, *workflows*, *runs*, and *externals* directories are viewed as additional payload unless they are accompanied by the corresponding mandatory description (`isa.assay.xlsx`, `workflow.cwl`, `run.cwl`, `isa.external.xlsx`) specified below. This is intended to allow gradual migration from existing data storage schemes to the ARC schema. For example, *data files* for an assay may be stored in a subdirectory of *assays*, but are only identified as an assay of the ARC if metadata is present and complete, including a reference from top-level metadata.
 
 ### Example ARC structure
 ``` 
@@ -205,7 +205,7 @@ Notes:
 
 ### Run Description
 
-**Runs** in an ARC represent all artefacts that result from some computation on the data within the ARC, i.e. [assays](#assay-data-and-metadata) and [external data](#external-data). These results (e.g. plots, tables, data files, etc. ) MUST reside inside one or more subdirectory of the top-level `runs` directory.
+**runs** in an ARC represent all artefacts that result from some computation on the data within the ARC, i.e. [assays](#assay-data-and-metadata) and [external data](#external-data). These results (e.g. plots, tables, data files, etc. ) MUST reside inside one or more subdirectory of the top-level `runs` directory.
 
 Each such subdirectory must contain a workflow description `run.cwl`, given in [Common Workflow Language](https://www.commonwl.org/) (CWL), [v1.2](https://www.commonwl.org/v1.2/) or higher, that describes how the files contained with the run are derived from assay or external data, or other runs. `run.cwl` MUST be placed in the subdirectory under the top-level `runs` directory. A parameter file `run.yml` MAY be given to specify run-specific input parameters.
 
@@ -277,7 +277,7 @@ Notes:
 
 ### Reproducible ARCs
 
-Reproducability of ARCs referes mainly to its *Runs*. With an ARC it MUST be possible to reproduce the run data. Therefore, necessary software MUST be available in *Workflows*. In the case of non-deterministic software the run results should represent typical examples.
+Reproducability of ARCs referes mainly to its *runs*. With an ARC it MUST be possible to reproduce the run data. Therefore, necessary software MUST be available in *workflows*. In the case of non-deterministic software the run results should represent typical examples.
 
 
 ## Mechanism for Quality Control of ARCs 
@@ -322,7 +322,7 @@ As the ARC might be used by different persons and in different workflow contexts
 - The root data entity description are taken from the "Investigation Description" term in `isa.investigation.xlsx`.
 - The root data entity authors are taken from the "Investigation Contacts" in `isa.investigation.xlsx`:
 - The root data entity citations are copied from the "Investigation Publications" section in `isa.investigation.xlsx`.
-- Per assay linked from `isa.investigation.xlsx`, one Dataset entity is provided in `ro-crate-metadata.json`. The Dataset id corresponds to the relative path of the assay ISA file under `assays/`, e.g. "sample-data/assay.isa.xlsx". Other metadata is taken from the corresponding terms in the corresponding `assay.isa.xlsx`.
+- Per assay linked from `isa.investigation.xlsx`, one Dataset entity is provided in `ro-crate-metadata.json`. The Dataset id corresponds to the relative path of the assay ISA file under the *assays* directory, e.g. `sample-data/assay.isa.xlsx`. Other metadata is taken from the corresponding terms in the corresponding `assay.isa.xlsx`.
 - The root data entity contains an child Dataset entity named `assays`, which lists the ids of all assays linked from `isa.investigation.xlsx`.
 
 It is expected that future versions of this specification will provide additional guidance on a comprehensive conversion of ARC metadata into RO-Crate metadata.

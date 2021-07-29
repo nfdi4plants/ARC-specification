@@ -83,7 +83,7 @@ Note:
 <top-level directory> 
 |   isa.investigation.xlsx 
 |   isa.studies.xlsx
-|   arc.cwl 
+|   arc.cwl [optional]
 |   arc.yml [optional]            
 \--- assays
     \--- <assay_name> 

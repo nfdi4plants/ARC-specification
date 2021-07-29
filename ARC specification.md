@@ -269,9 +269,9 @@ ARCs can be shared in any state. They are considered *publishable* (e.g. for the
       - Investigation Person Email      
       - Investigation Person Affiliation
 
-- The ARC MUST NOT be *empty*: it MUST contain minimally a single assay or a single workflow.
+- A *publishable* ARC MUST NOT be *empty*: it MUST contain minimally a single assay or a single workflow.
 
--  ARC MUST be [reproducible](#reproducible-arcs) 
+- A *publishable* ARC MUST be [reproducible](#reproducible-arcs) 
 
 Notes: 
   - The attribute *publishable* does not imply that data and metadata contained in an ARC are suitable for publication in a specific outlet (e.g. PRIDE, GEO, EBI) nor that metadata is complete or enables reusability of data. While it may be straightforward to convert the ARC schema into one required by specific publishers or repositories, additional metadata requirements may be enforced during conversion. These are intentionally not captured in this specification.

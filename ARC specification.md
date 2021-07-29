@@ -15,6 +15,7 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
   - [High-Level Schema](#high-level-schema)
   - [Example ARC structure](#example-arc-structure)
   - [ARC Representation](#arc-representation)
+  - [ISA-XLSX Format](#isa-xlsx-format)
   - [Assay Data and Metadata](#assay-data-and-metadata)
   - [Workflow Description](#workflow-description)
   - [Run Description](#run-description)
@@ -23,14 +24,13 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
   - [Top-level Metadata and Workflow Description](#top-level-metadata-and-workflow-description)
     - [Investigation and Study Metadata](#investigation-and-study-metadata)
     - [Top-Level Run Description](#top-level-run-description)
-  - [ISA-XLSX Format](#isa-xlsx-format)
 - [Shareable and Publishable ARCs](#shareable-and-publishable-arcs)
-- [Mechanism for quality control of ARCs](#mechanism-for-quality-control-of-arcs)
+  - [Reproducible ARCs](#reproducible-arcs)
+- [Mechanism for Quality Control of ARCs](#mechanism-for-quality-control-of-arcs)
 - [Best Practices](#best-practices)
-  - [Additional (auxiliary) Payload](#additional-auxiliary-payload)
-  - [Community specific data formats](#community-specific-data-formats)
-  - [Compression and Encryption](#compression-and-encryption)
-  - [Directory and File Naming Conventions](#directory-and-file-naming-conventions)
+    - [Community Specific Data Formats](#community-specific-data-formats)
+    - [Compression and Encryption](#compression-and-encryption)
+    - [Directory and File Naming Conventions](#directory-and-file-naming-conventions)
 - [Appendix: Conversion of ARCs to RO Crates](#appendix-conversion-of-arcs-to-ro-crates)
 
 ## Introduction
@@ -56,11 +56,11 @@ All changes that are not backwards compatible with the current ARC specification
 
 ## ARC Structure and Content
 
-ARCs are based on a strict separation of data and metadata content into raw data (assays), externals, computation results (runs) and computational workflows (workflows) generating the latter. The scope or granularity of an ARC aligns with the necessities of individual projects or large experimental setups. 
+ARCs are based on a strict separation of data and metadata content into raw data (*assays*), *externals*, computation results (*runs*) and computational workflows (*workflows*) generating the latter. The scope or granularity of an ARC aligns with the necessities of individual projects or large experimental setups.
 
 ### High-Level Schema
 
-Logically, each ARC is a directory containing the following elements: 
+Each ARC is a directory containing the following elements:
 
 - *Assays* correspond to analytical measurements (in the interpretation of the ISA model) and are treated as immutable data. Each assay is a collection of files, together with a corresponding metadata file, stored in a subdirectory of the top-level subdirectory `assays`. Assay-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a file `isa.assay.xlsx`, which MUST exist for each assay. Further details on `isa.assay.xlsx` are specified [below](#assay-data-and-metadata). Assay data files MUST be placed in a `dataset` subdirectory.
 

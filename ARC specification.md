@@ -112,7 +112,7 @@ Notes:
 
 - Elements of an ARC are implicitly content-addressable using standard Git mechanisms via SHA1 hashes.
 
-- Removing the `.git` top-level subdirectory (and thereby all provenance information captured within the Git history) invalidates an ARC.
+- Removing the `.git` top-level subdirectory (and thereby all provenance information captured within the Git history) from a working copy invalidates an ARC.
 
 ### ISA-XLSX Format
 

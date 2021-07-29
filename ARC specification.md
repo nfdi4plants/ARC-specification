@@ -10,6 +10,7 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
 
 **Table of Contents**
 - [Introduction](#introduction)
+  - [Extensions](#extensions)
 - [ARC Structure and Content](#arc-structure-and-content)
   - [High-Level Schema](#high-level-schema)
   - [Example ARC structure](#example-arc-structure)
@@ -42,13 +43,20 @@ An ARC is intended to capture research data, analysis and metadata and their evo
 
 ARCs are furthermore designed to enable straightforward conversion to other types of research data archives, such as e.g. [Research Object Crates](https://www.researchobject.org/ro-crate/), to facilitate straightforward operation with widely used archives (e.g. PRIDE, GEO, ENA etc.). Therefore, ARCs aggregate administrative, experimental, and workflow meta data within a common structure.
 
-This specification is intended as a practical guide for software authors to create tools for generating and consuming research data packages. Feedback and improvements to this specification are welcome, taking into account backwards compatibility according to [semantic versioning](https://semver.org/spec/v2.0.0.html).
+This specification is intended as a practical guide for software authors to create tools for generating and consuming research data packages.
+
 
 The key words MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RECOMMENDED, MAY, and OPTIONAL in this document are to be interpreted as described in [RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119).  This specification is  based on the [ISA model](https://isa-specs.readthedocs.io/en/latest/isamodel.html) and the [Common Workflow Specification (v1.2)](https://www.commonwl.org/v1.2/).
 
+### Extensions
+
+The ARC specification can be extended in a backwards compatible way and will evolve over time. This is accomplished through community-driven ARC discussion forum and pull request mechanism.
+
+All changes that are not backwards compatible with the current ARC specification will be implemented in ARCs 2.0
+
 ## ARC Structure and Content
 
-ARCs are based on a strict separation of raw data (*assays*), *externals*, computation results (*runs*) and computational workflows (*workflows*) generating the latter, while items and their specific metadata are grouped together. The scope or granularity of an ARC aligns with the necessities of individual projects or large experimental setups.
+ARCs are based on a strict separation of data and metadata content into raw data (*assays*), *externals*, computation results (*runs*) and computational workflows (*workflows*) generating the latter. The scope or granularity of an ARC aligns with the necessities of individual projects or large experimental setups.
 
 ### High-Level Schema
 
@@ -121,7 +129,7 @@ ISA-XLSX follows the ISA model specification (v1.0) saved in a XLSX format. The 
 ### Assay Data and Metadata
 
 All measurement data sets are considered as assays and are considered immutable input data. Assay data MUST be placed into a unique subdirectory of the top-level `assays` folder. All ISA metadata specific to a single assay MUST be annotated in the file `isa.assay.xlsx` at the root of the assay's subdirectory. This workbook MUST contain a single assay that can be organized in one or many worksheets. Worksheets MUST be named uniquely within the same workbook. A worksheet named `assay` MUST store the STUDY ASSAYS section defined on investigation-level of the ISA model and is not required in the `isa.investigation.xlsx `. These include the terms `Study Assay Measurement Type`, `Study Assay Measurement Type Term Accession Number`, `Study Assay Measurement Type Term Source REF`, `Study Assay Technology Type`, `Study Assay Technology Type Term Accession Number`, `Study Assay Technology Type Term Source REF`, and `Study Assay Technology Platform`. 
-Additional worksheets MUST contain a table object with fields organized on a per-row basis. The first row of the table object MUST be used for column headers. A `Source` MUST be indicated with the column heading `Source Name`. Every table object MUST define at least one source per row. A `Sample` MUST be indicated with the column heading `Sample Name`. The source sample relation MUST follow a unique path in a directed acyclic graph, but MAY be distributed across different worksheets.
+Additional worksheets MUST contain a table object with fields organized on a per-row basis. The first row of the table object MUST be used for column headers. A `Source` MUST be indicated with the column heading `Source Name`. Every table object MUST define one source per row and MUST contain at least one source. A `Sample` MUST be indicated with the column heading `Sample Name`. The source sample relation MUST follow a unique path in a directed acyclic graph, but MAY be distributed across different worksheets.
 
 <table>
 

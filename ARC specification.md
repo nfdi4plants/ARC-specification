@@ -183,7 +183,7 @@ Notes:
 
 ### Workflow Description
 
-*Workflows* in ARCs are computational steps that are used in computational analysis of an ARC's assays and other data transformation to generate a [run result](#run-description). Typical examples include data cleaning and pre-processing, computational analysis, or visualization. Workflows are used and combined to generate [run results](#run-description), and allow re-use of processing steps across multiple [run results](#run-description).
+*Workflows* in ARCs are computational steps that are used in computational analysis of an ARC's assays and other data transformation to generate a [run result](#run-description). Typical examples include data cleaning and preprocessing, computational analysis, or visualization. Workflows are used and combined to generate [run results](#run-description), and allow reuse of processing steps across multiple [run results](#run-description).
 
 Workflow execution and metadata MUST be described using the [Common Workflow Language](https://www.commonwl.org/) (CWL), [v1.2](https://www.commonwl.org/v1.2/) or higher, in a file `workflow.cwl`, which MUST be placed in the subdirectory containing all files specific to this workflow under the top-level `workflows` directory. This file MUST contain either of:
 
@@ -195,7 +195,7 @@ Notes:
 
 - There are no requirements on the structure or granularity of workflows. An ARC may contain no workflows at all if it contains no [run results](#run-description), or may utilize a single workflow to generate a single run result containing all computational output.
 
-- While workflows typically are (and should be) *generic*, i.e. a single workflow can be applied to different data of the same type, this is not a requirement. It is allowed to hard-code assay file paths and other parameters if workflow re-useability is not a priority.
+- While workflows typically are (and should be) *generic*, i.e. a single workflow can be applied to different data of the same type, this is not a requirement. It is allowed to hard-code assay file paths and other parameters if workflow reuseability is not a priority.
 
 - It is highly recommended that tool descriptions contain a reproducable execution environment description in the form of a [Docker](https://www.commonwl.org/user_guide/07-containers/index.html) container description.
 

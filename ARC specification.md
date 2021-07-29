@@ -160,9 +160,9 @@ s2 | descriptorD | n3 |
 
 </td></tr>
     <tr>
-        <th style="text-align:center">[*assay*]</th>
-        <th style="text-align:center">[*worksheet1*]</th>
-        <th style="text-align:center">[*worksheet2*]</th>
+        <th style="text-align:center">[assay]</th>
+        <th style="text-align:center">[worksheet1]</th>
+        <th style="text-align:center">[worksheet2]</th>
     </tr>
 </table>
 
@@ -246,7 +246,7 @@ Note:
 
 #### Investigation and Study Metadata
 
-The ARC root directory is identifiable by the presence of the `isa.investigation.xlsx` investigation file in XLSX format following the ISA Model at investigation level. It contains top-level information about the investigation and MUST link all assays and studies within an ARC. Study and assay objects are registered and grouped with an investigation to record other metadata within the relevant contexts. The study file is optional and can be used to group assays into studies within one investigation. Multiple studies MUST be stored using one worksheet per study in \isa.studies.xlsx in the root of the ARC. The study-level SHOULD define ´Factors´ of a study and also MAY contain overlapping information also to be found in all assays grouped by the study.
+The ARC root directory is identifiable by the presence of the `isa.investigation.xlsx` file in XLSX format. It contains top-level information about the investigation and MUST link all assays and studies within an ARC. Study and assay objects are registered and grouped with an investigation to record other metadata within the relevant contexts. The study file is optional and can be used to group assays into studies within one investigation. Multiple studies MUST be stored using one worksheet per study in `isa.studies.xlsx` in the root directory of the ARC. The study-level SHOULD define [ISA factors](https://isa-specs.readthedocs.io/en/latest/isamodel.html#study) of a study and MAY contain overlapping information also to be found in all assays grouped by the study.
 
 #### Top-Level Run Description
 
@@ -276,13 +276,14 @@ ARCs can be shared in any state. They are considered *publishable* (e.g. for the
 Notes: 
   - The attribute *publishable* does not imply that data and metadata contained in an ARC are suitable for publication in a specific outlet (e.g. PRIDE, GEO, EBI) nor that metadata is complete or enables reusability of data. While it may be straightforward to convert the ARC schema into one required by specific publishers or repositories, additional metadata requirements may be enforced during conversion. These are intentionally not captured in this specification.
 
-  - It might be worth to notice that experimental metadata necessary for publication in a specific outlet is encoded by templates that can be found [here](https://github.com/nfdi4plants/SWATE_templates).
+   - It might be worthwhile to notice that experimental metadata necessary for publication in a specific outlet is encoded by templates that can be found [here](https://github.com/nfdi4plants/SWATE_templates).
+
 
   - Minimal administrative metadata ensure compliance with DataCite for DOI creation
 
 ### Reproducible ARCs
 
-Reproducability of ARCs referes mainly to its *Runs*. With an ARC it MUST be possible to reproduce the run data. Therefore, necessary software MUST be available in *Workflows*. In the case of non-deterministic software the run results should represent typical examples.
+Reproducability of ARCs referes mainly to its *Runs*. Within an ARC, it MUST be possible to reproduce the *run* data. Therefore, necessary software MUST be available in *Workflows*. In the case of non-deterministic software the run results should represent typical examples.
 
 
 ## Mechanism for Quality Control of ARCs 
@@ -322,7 +323,7 @@ As the ARC might be used by different persons and in different workflow contexts
 
 ## Appendix: Conversion of ARCs to RO Crates
 
-[Research Object Crate](https://www.researchobject.org/ro-crate/) is a lightweight approach, based on schema.org, to packaging research data together with their metadata. An ARC can be augmented into an RO Crate by placing a metadata file `ro-crate-metadata.json` into the top-level ARC folder, which must conform to the [RO Crate specification](https://www.researchobject.org/ro-crate/1.1/). The ARC root folder is then simultaneously the RO-Crate Root. It is recommended to adhere to the following conventions when creating this file:
+[Research Object (RO) Crate](https://www.researchobject.org/ro-crate/) is a lightweight approach, based on [schema.org](`https://schema.org`), to package research data together with their metadata. An ARC can be augmented into a RO Crate by placing a metadata file `ro-crate-metadata.json` into the top-level ARC folder, which must conform to the [RO Crate specification](https://www.researchobject.org/ro-crate/1.1/). The ARC root folder is then simultaneously the RO Crate Root. It is recommended to adhere to the following conventions when creating this file:
 
 - The root data entity description are taken from the "Investigation Description" term in `isa.investigation.xlsx`.
 - The root data entity authors are taken from the "Investigation Contacts" in `isa.investigation.xlsx`:

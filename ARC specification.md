@@ -10,7 +10,6 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
 
 **Table of Contents**
 - [Introduction](#introduction)
-  - [Extensions](#extensions)
 - [ARC Structure and Content](#arc-structure-and-content)
   - [High-Level Schema](#high-level-schema)
   - [Example ARC structure](#example-arc-structure)
@@ -43,16 +42,9 @@ An ARC is intended to capture research data, analysis and metadata and their evo
 
 ARCs are furthermore designed to enable straightforward conversion to other types of research data archives, such as e.g. [Research Object Crates](https://www.researchobject.org/ro-crate/), to facilitate straightforward operation with widely used archives (e.g. PRIDE, GEO, ENA etc.). Therefore, ARCs aggregate administrative, experimental, and workflow meta data within a common structure.
 
-This specification is intended as a practical guide for software authors to create tools for generating and consuming research data packages.
-
+This specification is intended as a practical guide for software authors to create tools for generating and consuming research data packages. Feedback and improvements to this specification are welcome, taking into account backwards compatibility according to [semantic versioning](https://semver.org/spec/v2.0.0.html).
 
 The key words MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RECOMMENDED, MAY, and OPTIONAL in this document are to be interpreted as described in [RFC 2119](https://datatracker.ietf.org/doc/html/rfc2119).  This specification is  based on the [ISA model](https://isa-specs.readthedocs.io/en/latest/isamodel.html) and the [Common Workflow Specification (v1.2)](https://www.commonwl.org/v1.2/).
-
-### Extensions
-
-The ARC specification can be extended in a backwards compatible way and will evolve over time. This is accomplished through community-driven ARC discussion forum and pull request mechanism.
-
-All changes that are not backwards compatible with the current ARC specification will be implemented in ARCs 2.0
 
 ## ARC Structure and Content
 

@@ -56,7 +56,7 @@ All changes that are not backwards compatible with the current ARC specification
 
 ## ARC Structure and Content
 
-ARCs are based on a strict separation of data and metadata content into raw data (*assays*), *externals*, computation results (*runs*) and computational workflows (*workflows*) generating the latter. The scope or granularity of an ARC aligns with the necessities of individual projects or large experimental setups.
+ARCs are based on a strict separation of raw data (*assays*), *externals*, computation results (*runs*) and computational workflows (*workflows*) generating the latter, while items and their specific metadata are grouped together. The scope or granularity of an ARC aligns with the necessities of individual projects or large experimental setups.
 
 ### High-Level Schema
 

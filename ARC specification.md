@@ -81,7 +81,7 @@ Note:
 
 ### Example ARC structure
 
-``` 
+```
 <top-level directory> 
 |   isa.investigation.xlsx 
 |   arc.cwl [optional]
@@ -109,7 +109,7 @@ Note:
 
 ### ARC Representation
 
-ARCs are Git repositories, as defined and supported by the [Git C implementation](https://git-scm.org) (version 2.26 or newer) with [Git-LFS extension](https://git-lfs.github.com) (version 2.12.0), or fully compatible implementations. 
+ARCs are Git repositories, as defined and supported by the [Git C implementation](https://git-scm.org) (version 2.26 or newer) with [Git-LFS extension](https://git-lfs.github.com) (version 2.12.0), or fully compatible implementations.
 
 ARC terminology implicitly borrows from Git and Git-LFS terminology. For example, an ARC commit is simply a Git commit, and the ARC history is the repository history. Furthermore, an ARC can contain multiple branches, etc.
 
@@ -131,14 +131,14 @@ ISA-XLSX follows the ISA model specification (v1.0) saved in a XLSX format. The 
 
 ### Study and Resources
 
-The characteristics of all material and resources used within the investigation must be specified in a `study`. Studies must be placed into a unique subdirectory of the top-level `studies` folder. All ISA metadata specific to a single study MUST be annotated in the file `isa.study.xlsx` at the root of the study's subdirectory. This workbook MUST contain a single resources description that can be organized in one or many worksheets. Material or experimental samples can be stored in the form of virtual sample files (containing unique identifier) in the resources directory. Each external data file can be interpreted as a virtual samples and stored accordingly under resources. External data refers to data that is neither originating within the investigation scope of the ARC nor can be referenced externally, but is required to ensure reproducibility.
+The characteristics of all material and resources used within the investigation must be specified in a study. Studies must be placed into a unique subdirectory of the top-level `studies` subdirectory. All ISA metadata specific to a single study MUST be annotated in the file `isa.study.xlsx` at the root of the study's subdirectory. This workbook MUST contain a single resources description that can be organized in one or multiple worksheets. Material or experimental samples can be stored in the form of virtual sample files (containing unique identifiers) in the resources directory. Each external data file can be interpreted as a virtual sample and stored accordingly under resources. External data refers to data that is neither originating within the investigation scope of the ARC nor can be referenced externally, but is required to ensure reproducibility.
 
-Protocols that are necessary to describe the sample or material creating process can be placed under the protocol sub-folder.
+Protocols that are necessary to describe the sample or material creating process can be placed under the protocols directory.
 
 ### Assay Data and Metadata
 
-All measurement data sets are considered as assays and are considered immutable input data. Assay data MUST be placed into a unique subdirectory of the top-level `assays` folder. All ISA metadata specific to a single assay MUST be annotated in the file `isa.assay.xlsx` at the root of the assay's subdirectory. This workbook MUST contain a single assay that can be organized in one or many worksheets. Worksheets MUST be named uniquely within the same workbook. A worksheet named `assay` MUST store the STUDY ASSAYS section defined on investigation-level of the ISA model and is not required in the `isa.investigation.xlsx `. These include the terms `Study Assay Measurement Type`, `Study Assay Measurement Type Term Accession Number`, `Study Assay Measurement Type Term Source REF`, `Study Assay Technology Type`, `Study Assay Technology Type Term Accession Number`, `Study Assay Technology Type Term Source REF`, and `Study Assay Technology Platform`. 
-Additional worksheets MUST contain a table object with fields organized on a per-row basis. The first row of the table object MUST be used for column headers. A `Source` MUST be indicated with the column heading `Source Name`. Every table object MUST define one source per row and MUST contain at least one source. A `Sample` MUST be indicated with the column heading `Sample Name`. The source sample relation MUST follow a unique path in a directed acyclic graph, but MAY be distributed across different worksheets.
+All measurement data sets are considered as assays and are considered immutable input data. Assay data MUST be placed into a unique subdirectory of the top-level `assays` subdirectory. All ISA metadata specific to a single assay MUST be annotated in the file `isa.assay.xlsx` at the root of the assay's subdirectory. This workbook MUST contain a single assay that can be organized in one or multiple worksheets. Worksheets MUST be named uniquely within the same workbook. A worksheet named `Assay` MUST store the STUDY ASSAYS section defined on investigation-level of the ISA model and is not required in the `isa.investigation.xlsx`. These include the terms `Study Assay Measurement Type`, `Study Assay Measurement Type Term Accession Number`, `Study Assay Measurement Type Term Source REF`, `Study Assay Technology Type`, `Study Assay Technology Type Term Accession Number`, `Study Assay Technology Type Term Source REF`, and `Study Assay Technology Platform`.
+Additional worksheets MUST contain a table object with fields organized on a per-row basis. The first row of the table object MUST be used for column headers. A `Source` MUST be indicated with the column heading `Source Name`. Every table object MUST define one source per row and MUST contain at least one source. A `Sample` MUST be indicated with the column heading `Sample Name`. The source-sample-relation MUST follow a unique path in a directed acyclic graph, but MAY be distributed across different worksheets.
 
 <table>
 
@@ -175,20 +175,19 @@ s2 | descriptorD | n3 |
     </tr>
 </table>
 
-
 Notes:
 
-- There are no requirements on specific assay-level metadata per formal ARC definition. Conversion of ARCs into other repository or archival format (e.g. PRIDE, GEO, ENA etc.) may however mandate the presence of specific terms required in the destination format.
+- There are no requirements on specific assay-level metadata per formal ARC definition. Conversion of ARCs into other repository or archival formats (e.g. PRIDE, GEO, ENA) may however mandate the presence of specific terms required in the destination format.
 
 - To ensure reusability of assays, it is strongly RECOMMENDED to include necessary metadata mandated by typical metadata schemes necessary for reproduction. This process is facilitated by the use of templates that can be found [here](https://github.com/nfdi4plants/SWATE_templates).
 
-- It is RECOMMENDED to order worksheets according to the source sample relation for readability.
+- It is RECOMMENDED to order worksheets according to the source-sample-relation for readability.
 
 - It is RECOMMENDED to adopt the structure outlined [below](#best-practices) to organize assay data files and other supporting information.
 
 - An implementation that ensures assay annotation consistent with these requirements is provided by the [SWATE tool](https://github.com/nfdi4plants/Swate).
 
-- While assays can in principle contain arbitrary data formats, it is highly RECOMMENDED to use community-supported, open formats (see [Best Practices](#best-practices)).
+- While assays MAY in principle contain arbitrary data formats, it is highly RECOMMENDED to use community-supported, open formats (see [Best Practices](#best-practices)).
 
 ### Workflow Description
 

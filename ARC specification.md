@@ -1,4 +1,4 @@
-# Annotated Research Context Specification, v1-rfc 
+# Annotated Research Context Specification, v1.1-rfc 
 
 Please provide feedback via Github issues or a pull request.
 
@@ -39,7 +39,7 @@ This document describes a specification for a standardized way of creating a wor
 
 ARCs are digital objects that fulfill all FAIR principles and are therefore referred to as FAIR Digital Objects (FDO).
 
-An ARC is intended to capture research data, analysis and metadata and their evolution in scenarios ranging from single experimental setups to complex experimental designs in plant biological research. Its design intent is to assist researchers in meeting FAIR requirements, and also minimize the workload for doing so. ARCs are self-contained and include assay/measurement data, workflow, and computation results, accompanied by metadata and history, in one package. Toward this, ARCs combine existing standards, leveraging the properties of the [ISA metadata model](https://isa-specs.readthedocs.io/en/latest/isamodel.html), for administrative and experimental metadata and the [Common Workflow Language (CWL)](https://www.commonwl.org) for representing processing specification.
+An ARC is intended to capture research data, analysis and metadata and their evolution in scenarios ranging from single experimental setups to complex experimental designs in plant biological research. Its design intent is to assist researchers in meeting FAIR requirements, and also minimize the workload for doing so. ARCs are self-contained and include study materials, assay/measurement data, workflow, and computation results, accompanied by metadata and history, in one package. Toward this, ARCs combine existing standards, leveraging the properties of the [ISA metadata model](https://isa-specs.readthedocs.io/en/latest/isamodel.html), for administrative and experimental metadata and the [Common Workflow Language (CWL)](https://www.commonwl.org) for representing processing specification.
 
 ARCs are furthermore designed to enable straightforward conversion to other types of research data archives, such as e.g. [Research Object Crates](https://www.researchobject.org/ro-crate/), to facilitate straightforward operation with widely used archives (e.g. PRIDE, GEO, ENA etc.). Therefore, ARCs aggregate administrative, experimental, and workflow meta data within a common structure.
 
@@ -56,21 +56,23 @@ All changes that are not backwards compatible with the current ARC specification
 
 ## ARC Structure and Content
 
-ARCs are based on a strict separation of data and metadata content into raw data (*assays*), *externals*, computation results (*runs*) and computational workflows (*workflows*) generating the latter. The scope or granularity of an ARC aligns with the necessities of individual projects or large experimental setups.
+ARCs are based on a strict separation of data and metadata content into study material (*studies*), measurement and assay outcomes (*assays*), computation results (*runs*) and computational workflows (*workflows*) generating the latter. The scope or granularity of an ARC aligns with the necessities of individual projects or large experimental setups.
 
 ### High-Level Schema
 
 Each ARC is a directory containing the following elements:
 
-- *Assays* correspond to analytical measurements (in the interpretation of the ISA model) and are treated as immutable data. Each assay is a collection of files, together with a corresponding metadata file, stored in a subdirectory of the top-level subdirectory `assays`. Assay-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a file `isa.assay.xlsx`, which MUST exist for each assay. Further details on `isa.assay.xlsx` are specified [below](#assay-data-and-metadata). Assay data files MUST be placed in a `dataset` subdirectory.
+- *Studies* are collections of material and resources used within the investigation. 
+Metadata that describe the charactheristics of material and resources follow the ISA study model. Study-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a file `isa.study.xlsx`, which MUST exist to specify the input material or data resources. Resources might include external data (e.g., knowledge files, results files) that need to be included and cannot be referenced due to external limitations. Resources described in a study file can be the input for one or multiple assays
+Further details on `isa.study.xlsx` are specified [below](#study-and-metadata).
+
+- *Assays* correspond to outcomes of experimental assays or analytical measurements (in the interpretation of the ISA model) and are treated as immutable data. Each assay is a collection of files, together with a corresponding metadata file, stored in a subdirectory of the top-level subdirectory `assays`. Assay-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a file `isa.assay.xlsx`, which MUST exist for each assay. Further details on `isa.assay.xlsx` are specified [below](#assay-data-and-metadata). Assay data files MUST be placed in a `dataset` subdirectory.
 
 - *Workflows* represent data analysis routines (in the sense of CWL tools and workflows) and are a collection of files, together with a corresponding CWL description, stored in a single directory under the top-level `workflows` subdirectory. A per-workflow executable CWL description is stored in `workflow.cwl`, which MUST exist for all ARC workflows. Further details on workflow descriptions are given [below](#workflow-description).
 
 - *Runs* capture data products (i.e., results of computational analysis) derived from assays, other runs, or external data using workflows (located in the aforementioned *Workflows* directory). Each run is a collection of files, stored in the top-level `runs` subdirectory. It MUST be accompanied by a per-run CWL workflow description, stored in `<run_name>.cwl` and further described [below](#run-description).
 
-- *Externals* are external data (e.g., knowledge files) that need to be included and cannot be referenced due to external limitations. Metadata information SHOULD be stored according to the ISA model and CWL in case of workflow information; see [below](#external-data) for details.
-
-- *Top-level metadata and workflow description* tie together the elements of an ARC in the contexts of investigation and associated studies (in the ISA definition), captured in the files `isa.investigation.xlsx` in [ISA-XLSX format](#isa-xlsx-format), which MUST be present. Optionally, study-level metadata MAY be present in `isa.studies.xlsx`. Furthermore, top-level reproducibility information MUST be provided in the CWL `arc.cwl`, which also MUST exist.
+- *Top-level metadata and workflow description* tie together the elements of an ARC in the contexts of investigation and associated studies (in the ISA definition), captured in the files `isa.investigation.xlsx` in [ISA-XLSX format](#isa-xlsx-format), which MUST be present. Furthermore, top-level reproducibility information MUST be provided in the CWL `arc.cwl`, which also MUST exist.
 
 All other files contained in an ARC (e.g., a `README.txt`, a pre-print PDFs, additional annotation files, etc.) are referred to as *additional payload*, and MAY be located anywhere within the ARC structure. However, an ARC MUST be [reproducible](#reproducible-arcs) and [publishable](#shareable-and-publishable-arcs) even if these files are deleted. Further considerations on additional payload are described [below](#additional-payload).
 
@@ -82,9 +84,13 @@ Note:
 ``` 
 <top-level directory> 
 |   isa.investigation.xlsx 
-|   isa.studies.xlsx
 |   arc.cwl [optional]
 |   arc.yml [optional]            
+\--- studies
+    \--- <study_name> 
+            |    isa.study.xlsx  
+            \--- resources 
+            \--- protocol [optional / add. payload]
 \--- assays
     \--- <assay_name> 
             |    isa.assay.xlsx  
@@ -125,6 +131,12 @@ Notes:
 ### ISA-XLSX Format
 
 ISA-XLSX follows the ISA model specification (v1.0) saved in a XLSX format. The XLSX format uses the SpreadsheetML markup language and schema to represent a spreadsheet document. Conceptually, using the terminology of the Spreadsheet ML specification [ISO/IEC 29500-1](https://www.loc.gov/preservation/digital/formats/fdd/fdd000398.shtml#:~:text=The%20XLSX%20format%20uses%20the,a%20rectangular%20grid%20of%20cells.), the document comprises one or more worksheets in a workbook. Every worksheet MUST contain one table object storing the metadata. Comments or auxillary information MAY be stored alongside with table objects in a worksheet.
+
+### Study and resources
+
+The characteristics of all material and resources used within the investigation must be specified in a `study`. Studies must be placed into a unique subdirectory of the top-level `studies` folder. All ISA metadata specific to a single study MUST be annotated in the file `isa.study.xlsx` at the root of the study's subdirectory. This workbook MUST contain a single resources description that can be organized in one or many worksheets. Material or experimental samples can be stored in the form of virtual sample files (containing unique identifier) in the resources directory. Each external data file can be interpreted as a virtual samples and stored accordingly under resources. External data refers to data that is neither originating within the investigation scope of the ARC nor can be referenced externally, but is required to ensure reproducibility.
+
+Protocols that are necessary to describe the sample or material creating process can be placed under the protocol sub-folder.
 
 ### Assay Data and Metadata
 
@@ -220,16 +232,6 @@ Notes:
 - It is expected that run descriptions are authored semi-automatically, e.g. using the [arcCommander](https://github.com/nfdi4plants/arcCommander) tool.
 
 - It is strongly encouraged to include author and contributor metadata in run descriptions as [CWL metadata](https://www.commonwl.org/user_guide/17-metadata/index.html).
-
-### External Data
-
-External data refers to data that is neither originating within the investigation/study scope of the ARC nor can be referenced externally, but is required to ensure reproducability. Examples include early use of ontologies, mapping files, gene information, etc.. All correspondig data MUST be placed in the ARC's top-level `externals` directory.
-
-The union of external data forms a *virtual* assay; as such, it MUST adhere to the metadata requirements of assays and hence MUST contain, for each file, annotation in a file `isa.external.xlsx`, located under the top-level `externals` directory.
-
-Note:
-
-- Each external data file can be interpreted as a virtual sample in the *externals* assay. Due to the conceptual difference to the immutable measurements represented by the assays in `assays`, external files are stored in a different location to ensure that this distinction is explict.
 
 ### Additional Payload
 

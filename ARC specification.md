@@ -251,85 +251,87 @@ The study-level SHOULD define [ISA factors](https://isa-specs.readthedocs.io/en/
 
 #### Top-Level Run Description
 
-The file `arc.cwl` MUST exist at the root directory of each ARC. It describes which runs are executed (and specifically, their order) to produce the computational results contained within the ARC.
+The file `arc.cwl` MUST exist at the root directory of each ARC. It describes which runs are executed (and specifically, their order) to (re)produce the computational outputs contained within the ARC.
 
-`arc.cwl` MUST be a CWL v1.2 workflow description and adhere to the same requirements as [run descriptions](#run-description). In particular, references to assay data files, external data, nested workflows MUST use relative paths. An optional file `arc.yml` MAY be provided to specify input parameters. 
+`arc.cwl` MUST be a CWL v1.2 workflow description and adhere to the same requirements as [run descriptions](#run-description). In particular, references to study or assay data files, nested workflows MUST use relative paths. An optional file `arc.yml` MAY be provided to specify input parameters.
 
 ## Shareable and Publishable ARCs
+
 ARCs can be shared in any state. They are considered *publishable* (e.g. for the purpose of minting a DOI) when fulfilling the following conditions:
 
 - Investigation-level (administrative) metadata contains minimally the following terms:
 
-  - Investigation Identifier 
-  - Investigation Title 
-  - Investigation Description 
-  - INVESTIGATION CONTACTS section and/or [Comment]ORCID of the PI(s) 
-      - Investigation Person Last Name
-      - Investigation Person First Name
-      - Investigation Person Mid Initials
-      - Investigation Person Email      
-      - Investigation Person Affiliation
+  - Investigation Identifier
+  - Investigation Title
+  - Investigation Description
+  - INVESTIGATION CONTACTS section and/or [Comment]ORCID of the PI(s)
+    - Investigation Person Last Name
+    - Investigation Person First Name
+    - Investigation Person Mid Initials
+    - Investigation Person Email
+    - Investigation Person Affiliation
 
 - A *publishable* ARC MUST NOT be *empty*: it MUST contain minimally a single assay or a single workflow.
 
-- A *publishable* ARC MUST be [reproducible](#reproducible-arcs) 
+- A *publishable* ARC MUST be [reproducible](#reproducible-arcs)
 
-Notes: 
-  - The attribute *publishable* does not imply that data and metadata contained in an ARC are suitable for publication in a specific outlet (e.g. PRIDE, GEO, EBI) nor that metadata is complete or enables reusability of data. While it may be straightforward to convert the ARC schema into one required by specific publishers or repositories, additional metadata requirements may be enforced during conversion. These are intentionally not captured in this specification.
+Notes:
 
-   - It might be worthwhile to notice that experimental metadata necessary for publication in a specific outlet is encoded by templates that can be found [here](https://github.com/nfdi4plants/SWATE_templates).
+- The attribute *publishable* does not imply that data and metadata contained in an ARC are suitable for publication in a specific outlet (e.g. PRIDE, GEO, EBI) nor that metadata is complete or enables reusability of data. While it may be straightforward to convert the ARC schema into one required by specific publishers or repositories, additional metadata requirements may be enforced during conversion. These are intentionally not captured in this specification.
 
+- As noticed above experimental metadata necessary for publication in a specific outlet is encoded by templates that can be found [here](https://github.com/nfdi4plants/SWATE_templates).
 
-  - Minimal administrative metadata ensure compliance with DataCite for DOI creation
+- Minimal administrative metadata ensure compliance with DataCite for DOI creation
 
 ### Reproducible ARCs
 
-Reproducability of ARCs referes mainly to its *Runs*. Within an ARC, it MUST be possible to reproduce the *run* data. Therefore, necessary software MUST be available in *Workflows*. In the case of non-deterministic software the run results should represent typical examples.
+Reproducibility of ARCs refers mainly to its *runs*. Within an ARC, it MUST be possible to reproduce the *run* data. Therefore, necessary software MUST be available in *workflows*. In the case of non-deterministic software the run results should represent typical examples.
 
-
-## Mechanism for Quality Control of ARCs 
+## Mechanism for Quality Control of ARCs
 
 ARCs are supposed to be living research objects and are as such never complete. Nevertheless, a mechanism to report the current state and quality of an ARC is indispensable. Therefore, ARCs will be scored according to the amount of metadata information available (specifically with established minimal metadata standards such as MinSeqE, MIAPPE, etc.), the quality of data and metadata (this metric will be established in the next version), manual curation and review, and the reuse of ARCs by other researchers measured by physical includes of the data and referencing.
 
 To foster FAIRification, badges will be earned by reaching certain scores for a transparent review process.  
- 
+
 ## Best Practices
 
-In the next section we provide you with Best Practices to make the use of an ARC even more efficient and valuable for open science. 
+In the next section we provide you with Best Practices to make the use of an ARC even more efficient and valuable for open science.
 
-#### Community Specific Data Formats 
-It is recommend to use community specific data formats covering most common measurement techniques. 
-Using the following recommended formats will ensure improved accessibility and findability:   
-- mzML (raw data metabolomics and proteomics) 
+### Community Specific Data Formats
+
+It is recommend to use community specific data formats covering most common measurement techniques.
+Using the following recommended formats will ensure improved accessibility and findability:
+
+- mzML (raw data metabolomics and proteomics)
 - mzTAB (analysis data metabolomics and proteomics)
-- Fastq.gz (compressed NGS Short Read Sequencing, Long Read Sequencing) 
-- fastq (NGS Short Read Sequencing, Long Read Sequencing) 
+- fastq.gz (compressed NGS Short Read Sequencing, Long Read Sequencing)
+- fastq (NGS Short Read Sequencing, Long Read Sequencing)
 - SAM (Sequence Alignment/Map format)
 - BAM (Compressed binary version of a SAM file that is used to represent aligned sequences)
 
-Notes: 
-  - In case of storing vendor-specific data within an ARC, it is strongly encouraged to accompany them by the corresponding open formats or provide a workflow for conversion or processing where this is possible and considered standard.
+Notes:
 
-#### Compression and Encryption 
+- In case of storing vendor-specific data within an ARC, it is strongly encouraged to accompany them by the corresponding open formats or provide a workflow for conversion or processing where this is possible and considered standard.
 
-Compression is preferable to save disk space and speed up data transfers but not required. Without compression workflows are simpler as often no transparent compression and decompression is available. Uncompressed files are usually easier to index and better searchable. 
+### Compression and Encryption
+
+Compression is preferable to save disk space and speed up data transfers but not required. Without compression workflows are simpler as often no transparent compression and decompression is available. Uncompressed files are usually easier to index and better searchable.
 
 Encryption is not advised (but could be an option to share sensitive data in an otherwise open ARC).
 
-#### Directory and File Naming Conventions 
+### Directory and File Naming Conventions
 
-Required files defined in the ARC structure need to be named accordingly. Files and folders specified < > can be named freely. 
+Required files defined in the ARC structure need to be named accordingly. Files and folders specified < > can be named freely.
 As the ARC might be used by different persons and in different workflow contexts, we recommend concise filenames without blanks and special characters. Therefore, filenames SHOULD stick to small and capital letters without umlauts, accented and similar special characters. Numbers, hyphens, and underscores are suitable as well. Modern working environments can handle blanks in filenames but might confuse automatically run scripts and thus SHOULD be avoided. Depending on the intended amount of people the ARC is shared with, certain information might prove useful to provide a fast overview in human readable form in the filename, e.g. by providing abbreviations of the project, sub project, person creating or working on a particular dataset. Date and time information might be encoded as well if it provides a better ordering or information for the particular purpose.
-
 
 ## Appendix: Conversion of ARCs to RO Crates
 
-[Research Object (RO) Crate](https://www.researchobject.org/ro-crate/) is a lightweight approach, based on [schema.org](`https://schema.org`), to package research data together with their metadata. An ARC can be augmented into a RO Crate by placing a metadata file `ro-crate-metadata.json` into the top-level ARC folder, which must conform to the [RO Crate specification](https://www.researchobject.org/ro-crate/1.1/). The ARC root folder is then simultaneously the RO Crate Root. It is recommended to adhere to the following conventions when creating this file:
+[Research Object (RO) Crate](https://www.researchobject.org/ro-crate/) is a lightweight approach, based on [schema.org](https://schema.org), to package research data together with their metadata. An ARC can be augmented into an RO Crate by placing a metadata file `ro-crate-metadata.json` into the top-level ARC folder, which must conform to the [RO Crate specification](https://www.researchobject.org/ro-crate/1.1/). The ARC root folder is then simultaneously the RO Crate Root. It is RECOMMENDED to adhere to the following conventions when creating this file:
 
 - The root data entity description are taken from the "Investigation Description" term in `isa.investigation.xlsx`.
 - The root data entity authors are taken from the "Investigation Contacts" in `isa.investigation.xlsx`:
-- The root data entity citations are copied from the "Investigation Publications" section in `isa.investigation.xlsx`.
-- Per assay linked from `isa.investigation.xlsx`, one Dataset entity is provided in `ro-crate-metadata.json`. The Dataset id corresponds to the relative path of the assay ISA file under `assays/`, e.g. "sample-data/assay.isa.xlsx". Other metadata is taken from the corresponding terms in the corresponding `assay.isa.xlsx`.
-- The root data entity contains an child Dataset entity named `assays`, which lists the ids of all assays linked from `isa.investigation.xlsx`.
+- The root data entity citations are taken from the "Investigation Publications" section in `isa.investigation.xlsx`.
+- Per assay linked from `isa.investigation.xlsx`, one dataset entity is provided in `ro-crate-metadata.json`. The Dataset id corresponds to the relative path of the assay ISA file under `assays/`, e.g. "sample-data/isa.assay.xlsx". Other metadata is taken from the corresponding terms in the corresponding `isa.assay.xlsx`.
+- The root data entity contains an child dataset entity named `assays`, which lists the ids of all assays linked from `isa.investigation.xlsx`.
 
 It is expected that future versions of this specification will provide additional guidance on a comprehensive conversion of ARC metadata into RO-Crate metadata.

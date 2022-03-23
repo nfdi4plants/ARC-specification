@@ -193,7 +193,7 @@ Notes:
 
 *Workflows* in ARCs are computational steps that are used in computational analysis of an ARC's assays and other data transformation to generate a [run result](#run-description). Typical examples include data cleaning and preprocessing, computational analysis, or visualization. Workflows are used and combined to generate [run results](#run-description), and allow reuse of processing steps across multiple [run results](#run-description).
 
-Workflow execution and metadata MUST be described using the [Common Workflow Language](https://www.commonwl.org/) (CWL), [v1.2](https://www.commonwl.org/v1.2/) or higher, in a file `workflow.cwl`, which MUST be placed in the subdirectory containing all files specific to this workflow under the top-level `workflows` directory. This file MUST contain either of:
+Workflow execution and metadata MUST be described using the [Common Workflow Language](https://www.commonwl.org/) (CWL), [v1.2](https://www.commonwl.org/v1.2/) or higher, in a file `workflow.cwl`, which MUST be placed in the subdirectory containing all files specific to this workflow under the top-level `workflows` subdirectory. This file MUST contain either of:
 
 - A CWL [tool description](https://www.commonwl.org/v1.2/CommandLineTool.html). Tool descriptions must be self-contained and not refer to any files outside the workflow subdirectory. All paths used within the tool description MUST be relative to itself.
 
@@ -201,13 +201,13 @@ Workflow execution and metadata MUST be described using the [Common Workflow Lan
 
 Notes:
 
-- There are no requirements on the structure or granularity of workflows. An ARC may contain no workflows at all if it contains no [run results](#run-description), or may utilize a single workflow to generate a single run result containing all computational output.
+- There are no requirements on the structure or granularity of workflows. An ARC may contain no workflows at all if it contains no [run results](#run-description), or MAY utilize a single workflow to generate a single run result containing all computational output.
 
-- While workflows typically are (and should be) *generic*, i.e. a single workflow can be applied to different data of the same type, this is not a requirement. It is allowed to hard-code assay file paths and other parameters if workflow reuseability is not a priority.
+- While workflows typically are (and should be) *generic*, i.e. a single workflow can be applied to different data of the same type, this is not a requirement. It is allowed to hard-code assay file paths and other parameters if workflow reusability is not a priority.
 
-- It is highly recommended that tool descriptions contain a reproducable execution environment description in the form of a [Docker](https://www.commonwl.org/user_guide/07-containers/index.html) container description.
+- It is highly recommended that tool descriptions contain a reproducible execution environment description in the form of a [Docker](https://www.commonwl.org/user_guide/07-containers/index.html) container description.
 
-- It is expected that workflow and tool descriptions are be authored semi-automatically, e.g. using the [arcCommander](https://github.com/nfdi4plants/arcCommander) tool.
+- It is expected that workflow and tool descriptions are authored semi-automatically, e.g. using the [arcCommander](https://github.com/nfdi4plants/arcCommander) tool.
 
 - It is strongly encouraged to include author and contributor metadata in tool descriptions and workflow descriptions as [CWL metadata](https://www.commonwl.org/user_guide/17-metadata/index.html).
 
@@ -231,20 +231,23 @@ Notes:
 
 ### Additional Payload
 
-ARCs can include additional payload according to user requirements, e.g. presentations, reading material, or manuscripts. While these files can be placed anywhere in the ARC, it is strongly advised to organize these in additional subdirectories. 
-Especially for the storage of protocols, it is RECOMMENDED to place protocols (assay SOPs) in text form with the corresponding assay in /assays/<assay_name>/protocol/<protocol_name>. 
+ARCs can include additional payload according to user requirements, e.g. presentations, reading material, or manuscripts. While these files can be placed anywhere in the ARC, it is strongly advised to organize these in additional subdirectories.
+Especially for the storage of protocols, it is RECOMMENDED to place protocols (assay SOPs) in text form with the corresponding assay in /assays/<assay_name>/protocol/<protocol_name>.
 
 Note:
 
-- All data missing proper annotation (e.g. assays, workflows, runs, or externals) is considered additional payload independent of its location within the ARC. 
+- All data missing proper annotation (e.g. studies, assays, workflows or runs) is considered additional payload independent of its location within the ARC.
 
 ### Top-level Metadata and Workflow Description
 
-*Top-level metadata and workflow description* tie together the elements of an ARC in the contexts of investigation and associated studies (in the ISA definition), captured in the files `isa.investigation.xlsx` in [ISA-XLSX format](#isa-xlsx-format), which MUST be present. Optionally, study-level metadata MAY be present in `isa.studies.xlsx`. Furthermore, top-level reproducibility information MUST be provided in the CWL `arc.cwl`, which also MUST exist.
+*Top-level metadata and workflow description* tie together the elements of an ARC in the contexts of investigation and associated studies (in the ISA definition), captured in the files `isa.investigation.xlsx` in [ISA-XLSX format](#isa-xlsx-format), which MUST be present. Furthermore, top-level reproducibility information MUST be provided in the CWL `arc.cwl`, which also MUST exist.
 
 #### Investigation and Study Metadata
 
-The ARC root directory is identifiable by the presence of the `isa.investigation.xlsx` file in XLSX format. It contains top-level information about the investigation and MUST link all assays and studies within an ARC. Study and assay objects are registered and grouped with an investigation to record other metadata within the relevant contexts. The study file is optional and can be used to group assays into studies within one investigation. Multiple studies MUST be stored using one worksheet per study in `isa.studies.xlsx` in the root directory of the ARC. The study-level SHOULD define [ISA factors](https://isa-specs.readthedocs.io/en/latest/isamodel.html#study) of a study and MAY contain overlapping information also to be found in all assays grouped by the study.
+The ARC root directory is identifiable by the presence of the `isa.investigation.xlsx` file in XLSX format. It contains top-level information about the investigation and MUST link all assays and studies within an ARC. Study and assay objects are registered and grouped with an investigation to record other metadata within the relevant contexts.
+<!-- The study file is optional and can be used to group assays into studies within one investigation. 
+Multiple studies MUST be stored using one worksheet per study in `isa.studies.xlsx` in the root directory of the ARC. 
+The study-level SHOULD define [ISA factors](https://isa-specs.readthedocs.io/en/latest/isamodel.html#study) of a study and MAY contain overlapping information also to be found in all assays grouped by the study. -->
 
 #### Top-Level Run Description
 

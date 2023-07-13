@@ -2,7 +2,7 @@
 
 Please provide feedback via GitHub issues or a pull request.
 
-**GitHub repository:**  <https://github.com/nfdi4plants/ARC-specfication>
+**GitHub repository:**  <https://github.com/nfdi4plants/ARC-specification>
 
 This specification is Copyright 2022 by [DataPLANT](https://nfdi4plants.de).
 

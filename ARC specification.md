@@ -326,12 +326,18 @@ As the ARC might be used by different persons and in different workflow contexts
 
 ## Appendix: Conversion of ARCs to RO Crates
 
-[Research Object (RO) Crate](https://www.researchobject.org/ro-crate/) is a lightweight approach, based on [schema.org](https://schema.org), to package research data together with their metadata. An ARC can be augmented into an RO Crate by placing a metadata file `ro-crate-metadata.json` into the top-level ARC folder, which must conform to the [RO Crate specification](https://www.researchobject.org/ro-crate/1.1/). The ARC root folder is then simultaneously the RO Crate Root. It is RECOMMENDED to adhere to the following conventions when creating this file:
+[Research Object (RO) Crate](https://www.researchobject.org/ro-crate/) is a lightweight approach, based on [schema.org](https://schema.org), to package research data together with their metadata.
+An ARC can be augmented into an RO Crate by placing a metadata file `ro-crate-metadata.json` into the top-level ARC folder, which must conform to the [RO Crate specification](https://www.researchobject.org/ro-crate/1.1/).
+The ARC root folder is then simultaneously the RO Crate Root and represents an ISA investigation.
+The studies, assays and workflows are part of the investigation and linked to it using the typical RO-Crate methodology, e.g. the `hasPart` property of `http://schema.org/Dataset`.
+All four object types follow their corresponding profiles (WIP for studies, assays and workflows).
+It is RECOMMENDED to adhere to the following conventions when creating this file:
 
-- The root data entity description are taken from the "Investigation Description" term in `isa.investigation.xlsx`.
-- The root data entity authors are taken from the "Investigation Contacts" in `isa.investigation.xlsx`:
-- The root data entity citations are taken from the "Investigation Publications" section in `isa.investigation.xlsx`.
-- Per assay linked from `isa.investigation.xlsx`, one dataset entity is provided in `ro-crate-metadata.json`. The Dataset id corresponds to the relative path of the assay ISA file under `assays/`, e.g. "sample-data/isa.assay.xlsx". Other metadata is taken from the corresponding terms in the corresponding `isa.assay.xlsx`.
-- The root data entity contains an child dataset entity named `assays`, which lists the ids of all assays linked from `isa.investigation.xlsx`.
+- The root data entity follows the [ISA Investigation profile](https://github.com/nfdi4plants/arc-to-rocrate/blob/main/profiles/investigation.md).
+  - The root data entity description are taken from the "Investigation Description" term in `isa.investigation.xlsx`.
+  - The root data entity authors are taken from the "Investigation Contacts" in `isa.investigation.xlsx`:
+  - The root data entity citations are taken from the "Investigation Publications" section in `isa.investigation.xlsx`.
+- For each assay and study linked from `isa.investigation.xlsx`, one dataset entity is provided in `ro-crate-metadata.json`. The Dataset id corresponds to the relative path of the assay ISA file under `assays/`, e.g. "sample-data/isa.assay.xlsx". Other metadata is taken from the corresponding terms in the corresponding `isa.assay.xlsx` or `isa.study.xlsx`.
+- The root data entity is connected to each assay and study through the `hasPart` Property.
 
 It is expected that future versions of this specification will provide additional guidance on a comprehensive conversion of ARC metadata into RO-Crate metadata.

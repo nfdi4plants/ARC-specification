@@ -1,19 +1,15 @@
-# ISA-Tab format
+# ISA-XLSX format
 
 For detail on ISA framework terminology, please read the [ISA Abstract Model specification](isamodel.md).
 
-This document describes the ISA Abstract Model reference implementation specified in the ISA-Tab format. ISA-Tab files
-are [tab separated value](https://en.wikipedia.org/wiki/Tab-separated_values) (tsv) files, with specific labeled
-column structures specified below.
+This document describes the ISA Abstract Model reference implementation specified in the ISA-XLSX format. The XLSX format uses the SpreadsheetML markup language and schema to represent a spreadsheet document. Conceptually, using the terminology of the Spreadsheet ML specification [ISO/IEC 29500-1](https://www.loc.gov/preservation/digital/formats/fdd/fdd000398.shtml#:~:text=The%20XLSX%20format%20uses%20the,a%20rectangular%20grid%20of%20cells.), the document comprises one or more worksheets in a workbook. Every worksheet MUST contain one table object storing the metadata. Comments or auxillary information MAY be stored alongside with table objects in a worksheet.
 
-Below we provide the schemas and the content rules for valid ISA-Tab documents. Full examples of ISA content as
-ISA-Tab can be found in the ISA datasets repository, here [https://git.io/vD1vC](https://git.io/vD1vC) We recommend that you study
-these examples to better understand the structure of ISA-Tab documents.
+Below we provide the schemas and the content rules for valid ISA-XLSX documents. 
 
 ## Format
 
-ISA-Tab uses three types of file to capture the experimental metadata:
-: - Investigation file
+ISA-XLSX uses three types of file to capture the experimental metadata:
+  - Investigation file
   - Study file
   - Assay file (with associated data files)
 
@@ -22,25 +18,22 @@ experiment; experimental steps (or sequences of events) are described in the Stu
 Investigation file there may be one or more Studies defined with a corresponding Study file; for each Study there may
 be one or more Assays defined with corresponding Assay files.
 
-Files SHOULD be encoded using [UTF-8](http://www.fileformat.info/info/unicode/utf8.htm).
+In order to facilitate identification of ISA-XLSX component files, specific naming patterns MUST follow:
 
-Column delimiters SHOULD be the Unicode Horizontal Tab character (Unicode [U+0009](http://www.fileformat.info/info/unicode/char/0009/index.htm)).
+> - `isa.investigation.xlsx` for identifying the Investigation file
+> - `isa.study.xlsx` for identifying Study file(s)
+> - `isa.assay.xlsx` for identifying Assay file(s)
 
-In order to facilitate identification of ISA-Tab component files, specific naming patterns SHOULD follow:
+Sheets described in this specification MUST follow one of the two given formats:
 
-> - `i_*.txt` for identifying the Investigation file, e.g. `i_investigation.txt`
-> - `s_*.txt` for identifying Study file(s), e.g. `s_gene_survey.txt`
-> - `a_*.txt` for identifying Assay file(s), e.g. `a_transcription.txt`
+> - `Top-level metadata sheets` for listing top-level metadata
+> - `AnnotationTable sheets` for describing experimental workflows
+
+Sheets which do not follow any of these two formats are considerered additional payload and are ignored in this specification.
 
 All labels are case-sensitive:
 
-> - In the Investigation file, section headers MUST be completely written in upper case (e.g. STUDY), field headers MUST have the first letter of each word in upper case (e.g. Study Identifier); with the exception of the referencing label (REF).
-> - In the Study and Assay files, column headers MUST also have the first letter of each word in upper case, with the exception of the referencing label (REF).
-
 Dates SHOULD be supplied in the [ISO8601](http://www.iso.org/iso/home/standards/iso8601.htm) format.
-
-All values of cells MAY be enveloped with the Unicode Quotation Mark, Unicode
-[U+0022](http://www.fileformat.info/info/unicode/char/0022/index.htm)  (the `"` character).
 
 For maximal portability file names should only contain only ASCII characters not excluded
 already (that is `A-Za-z0-9._!#$%&+,;=@^(){}'[]` - we exclude space as many utilities
@@ -48,30 +41,9 @@ do not accept spaces in file paths): non-English alphabetic characters cannot be
 to be supported in all locales. It would be good practice to avoid the shell metacharacters
 `(){}'[]$."`.
 
-## Investigation File
+## Top-level metadata sheets
 
-The Investigation file fulfils four needs:
-
-1. to declare key entities, such as factors, protocols, which may be referenced in the other files
-2. to track provenance of the terminologies (controlled vocabularies or ontologies) there are used, where applicable
-3. to relate Assay files to Studies
-4. to relate each Study file to an Investigation (this only becomes necessary when two or more Study files need to be grouped).
-
-An Investigation file is structured as a table with vertical headings along the first column, and corresponding values
-in the subsequent columns. The following section headings MUST appear in the Investigation file (in order), and the study
-block (headings from `STUDY` to `STUDY CONTACTS`) can be repeated, one block per study associated with the investigation.
-
-> - `ONTOLOGY SOURCE REFERENCE`
-> - `INVESTIGATION`
-> - `INVESTIGATION PUBLICATIONS`
-> - `INVESTIGATION CONTACTS`
-> - `STUDY`
-> - `STUDY DESIGN DESCRIPTORS`
-> - `STUDY PUBLICATIONS`
-> - `STUDY FACTORS`
-> - `STUDY ASSAYS`
-> - `STUDY PROTOCOLS`
-> - `STUDY CONTACTS`
+The purpose of top-level metadata sheets is aggregating and listing top-level metadata. Each sheet consists of sections consisting of a section header and key-value fields. Section headers MUST be completely written in upper case (e.g. STUDY), field headers MUST have the first letter of each word in upper case (e.g. Study Identifier); with the exception of the referencing label (REF).
 
 In the following sections, examples of each section block are given beside the specification of each section.
 
@@ -442,7 +414,9 @@ Study Person Roles Term Accession Number	";;"	""	""	""	""	""	""
 Study Person Roles Term Source REF	";;"	""	""	""	""	""	""
 ```
 
-## Study and Assay files
+## Annotation Table sheets
+
+> - In the AnnotationTable sheets, column headers MUST also have the first letter of each word in upper case, with the exception of the referencing label (REF).
 
 `Study` and `Assay` Table files are structure with fields organized on a per-row basis. The first row MUST be used
 for column headers. Generally, objects such as Materials and Processes are indicated with `<entity> Name`, for example
@@ -696,3 +670,32 @@ repository.
 
 For submission or transfer, ISA-Tab files and associated data files MAY be packaged into an ISArchive, a zip file
 containing all the files together.
+
+## Investigation File
+
+The Investigation file fulfils four needs:
+
+1. to declare key entities, such as factors, protocols, which may be referenced in the other files
+2. to track provenance of the terminologies (controlled vocabularies or ontologies) there are used, where applicable
+3. to relate Assay files to Studies
+4. to relate each Study file to an Investigation (this only becomes necessary when two or more Study files need to be grouped).
+
+An Investigation file is structured as a table with vertical headings along the first column, and corresponding values
+in the subsequent columns. The following section headings MUST appear in the Investigation file (in order), and the study
+block (headings from `STUDY` to `STUDY CONTACTS`) can be repeated, one block per study associated with the investigation.
+
+> - `ONTOLOGY SOURCE REFERENCE`
+> - `INVESTIGATION`
+> - `INVESTIGATION PUBLICATIONS`
+> - `INVESTIGATION CONTACTS`
+> - `STUDY`
+> - `STUDY DESIGN DESCRIPTORS`
+> - `STUDY PUBLICATIONS`
+> - `STUDY FACTORS`
+> - `STUDY ASSAYS`
+> - `STUDY PROTOCOLS`
+> - `STUDY CONTACTS`
+
+## Study File
+
+## Assay File

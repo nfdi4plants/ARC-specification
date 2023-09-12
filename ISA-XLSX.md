@@ -8,7 +8,7 @@ Below we provide the schemas and the content rules for valid ISA-XLSX documents.
 
 ## Format
 
-ISA-XLSX uses three types of file to capture the experimental metadata:
+ISA-XLSX uses three types of files to capture the experimental metadata:
   - Investigation file
   - Study file
   - Assay file (with associated data files)
@@ -35,7 +35,7 @@ All labels are case-sensitive:
 
 Dates SHOULD be supplied in the [ISO8601](http://www.iso.org/iso/home/standards/iso8601.htm) format.
 
-For maximal portability file names should only contain only ASCII characters not excluded
+For maximal portability file names SHOULD contain only ASCII characters not excluded
 already (that is `A-Za-z0-9._!#$%&+,;=@^(){}'[]` - we exclude space as many utilities
 do not accept spaces in file paths): non-English alphabetic characters cannot be guaranteed
 to be supported in all locales. It would be good practice to avoid the shell metacharacters
@@ -49,19 +49,16 @@ In the following sections, examples of each section block are given beside the s
 
 For a full example of a complete Investigation File, please see [https://git.io/vD1va](https://git.io/vD1va).
 
-#### ATTENTION
-Rows in which the first character in the first column is Unicode
-[U+0023](http://www.fileformat.info/info/unicode/char/0023/index.htm)  (the `#` character) MUST be interpreted as
-comments, where reference implementation parsers SHOULD ignore those lines entirely.
+> #### ATTENTION
+> Rows in which the first character in the first column is Unicode
+> [U+0023](http://www.fileformat.info/info/unicode/char/0023/index.htm)  (the `#` character) > MUST be interpreted as
+> comments, where reference implementation parsers SHOULD ignore those lines entirely.
 
-Rows where the label `Comment[<comment name>]` appear can also appear within any of the section blocks. Where
-these appear, the comment name must be unique within the context of a single block (e.g. you cannot have multiple
-occurences of `Comment[external DB REF]` within `STUDY ASSAYS`. Also, the value cells MUST match the number of
-values indicated by the rest of the section in context.
+> Rows where the label `Comment[<comment name>]` appear can also appear within any of the > section blocks. Where these appear, the comment name must be unique within the context of a single block (e.g. you cannot have multiple occurences of `Comment[external DB REF]` within `STUDY ASSAYS`. Also, the value cells MUST match the number of values indicated by the rest of the section in context.
 
 ### Ontology Source Reference section
 
-The Ontology Source section of the Investigation file is used to declare Ontology Sources used elsewhere in the ISA-Tab
+The Ontology Source section of the Investigation file is used to declare Ontology Sources used elsewhere in the ISA-XLSX
 files within the context of an Investigation.
 
 Where a row labelled with `Term Source REF` suffixed in the Investigation
@@ -85,7 +82,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Term Source Version     | String                    | The version number of the Term Source to support terms tracking.                                                                                                                |
 | Term Source Description | String                    | Use for disambiguating resources when homologous prefixes have been used.                                                                                                       |
 
-For example, the `ONTOLOGY SOURCE REFERENCE` section of an ISA-Tab `i_*.txt` file may look as follows:
+For example, the `ONTOLOGY SOURCE REFERENCE` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
 ```default
 ONTOLOGY SOURCE REFERENCE
@@ -117,7 +114,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Investigation Submission Date     | String formatted as ISO8601 date YYYY-MM-DD | The date on which the investigation was reported to the repository.                          |
 | Investigation Public Release Date | String formatted as ISO8601 date YYYY-MM-DD | The date on which the investigation was released publicly.                                   |
 
-For example, the `INVESTIGATION` section of an ISA-Tab `i_*.txt` file may look as follows:
+For example, the `INVESTIGATION` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
 ```default
 INVESTIGATION
@@ -136,7 +133,7 @@ This section MUST contain the following labels, with the specified datatypes for
 
 | Label                                                  | Datatype                                                                                           | Description                                                                                                                                                                                |
 |--------------------------------------------------------|----------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Investigation PubMed ID                                | String formatted as valid PubMed ID                                                                | The PubMed IDs of the described publication(s) associated with this investigation.                                                                                                         |
+| Investigation Publication PubMed ID                                | String formatted as valid PubMed ID                                                                | The PubMed IDs of the described publication(s) associated with this investigation.                                                                                                         |
 | Investigation Publication DOI                          | String formatted as valid DOI                                                                      | A Digital Object Identifier (DOI) for that publication (where available).                                                                                                                  |
 | Investigation Publication Author List                  | String                                                                                             | The list of authors associated with that publication.                                                                                                                                      |
 | Investigation Publication Title                        | String                                                                                             | The title of publication associated with the investigation.                                                                                                                                |
@@ -144,11 +141,11 @@ This section MUST contain the following labels, with the specified datatypes for
 | Investigation Publication Status Term Accession Number | String or URI                                                                                      | The accession number from the Term Source associated with the selected term.                                                                                                               |
 | Investigation Publication Status Term Source REF       | String                                                                                             | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match one the Term Source Name declared in the in the Ontology Source Reference section. |
 
-For example, the `INVESTIGATION PUBLICATIONS` section of an ISA-Tab `i_*.txt` file may look as follows:
+For example, the `INVESTIGATION PUBLICATIONS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
 ```default
 INVESTIGATION PUBLICATIONS
-Investigation PubMed ID	"17439666"
+Investigation Publication PubMed ID	"17439666"
 Investigation Publication DOI	"doi:10.1186/jbiol54"
 Investigation Publication Author List	"Castrillo JI, Zeef LA, Hoyle DC, Zhang N, Hayes A, Gardner DC, Cornell MJ, Petty J, Hakes L, Wardleworth L, Rash B, Brown M, Dunn WB, Broadhurst D, O'Donoghue K, Hester SS, Dunkley TP, Hart SR, Swainston N, Li P, Gaskell SJ, Paton NW, Lilley KS, Kell DB, Oliver SG."
 Investigation Publication Title	"Growth control of the eukaryote cell: a systems biology study in yeast."
@@ -177,7 +174,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Investigation Person Roles Term Accession Number | String                                                                                      | The accession number from the Term Source associated with the selected term.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | Investigation Person Roles Term Source REF       | String                                                                                      | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match one of the Term Source Names declared in the Ontology Source Reference section.                                                                                                                                                                                                                                                                                                                                                                                        |
 
-For example, the `INVESTIGATION CONTACTS` section of an ISA-Tab `i_*.txt` file may look as follows:
+For example, the `INVESTIGATION CONTACTS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
 ```default
 INVESTIGATION CONTACTS
@@ -220,7 +217,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Study Public Release Date | String formatted as ISO8601 date     | The date on which the study SHOULD be released publicly.                                                                                                                                               |
 | Study File Name           | String formatted as file name or URI | A field to specify the name of the Study Table file corresponding the definition of that Study. There can be only one file per cell.                                                                   |
 
-For example, the `STUDY` section of an ISA-Tab `i_*.txt` file may look as follows:
+For example, the `STUDY` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
 ```default
 Study Identifier	"BII-S-3"
@@ -243,7 +240,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Study Design Type Term Accession Number | String     | The accession number from the Term Source associated with the selected term.                                                                                                                                                                                                                                                            |
 | Study Design Type Term Source REF       | String     | Identifies the controlled vocabulary or ontology that this term comes from. The Study Design Term Source REF has to match one the Term Source Name declared in the Ontology Source Reference section.                                                                                                                                   |
 
-For example, the `STUDY DESIGN DESCRIPTORS` section of an ISA-Tab `i_*.txt` file may look as follows:
+For example, the `STUDY DESIGN DESCRIPTORS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
 ```default
 STUDY DESIGN DESCRIPTORS
@@ -268,7 +265,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Study Publication Status Term Accession Number | String or URI                                                                                      | The accession number from the Term Source associated with the selected term.                                                                                                               |
 | Study Publication Status Term Source REF       | String                                                                                             | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match one the Term Source Name declared in the in the Ontology Source Reference section. |
 
-For example, the `STUDY PUBLICATIONS` section of an ISA-Tab `i_*.txt` file may look as follows:
+For example, the `STUDY PUBLICATIONS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
 ```default
 STUDY PUBLICATIONS
@@ -294,7 +291,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Study Factor Type Term Accession Number | String     | The accession number from the Term Source associated with the selected term.                                                                                                                                                                                                                                                                                                             |
 | Study Factor Type Term Source REF       | String     | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match one of the Term Source Name declared in the Ontology Source Reference section.                                                                                                                                                                                                   |
 
-For example, the `STUDY FACTORS` section of an ISA-Tab `i_*.txt` file may look as follows:
+For example, the `STUDY FACTORS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
 ```default
 STUDY FACTORS
@@ -321,7 +318,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Study Assay Technology Platform                    | String     | Manufacturer and platform name, e.g. Bruker AVANCE                                                                                                                                                                                                                                                                  |
 | Study Assay File Name                              | String     | A field to specify the name of the Assay Table file corresponding the definition of that assay. There can be only one file per cell.                                                                                                                                                                                |
 
-For example, the `STUDY ASSAYS` section of an ISA-Tab `i_*.txt` file may look as follows:
+For example, the `STUDY ASSAYS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
 ```default
 STUDY ASSAYS
@@ -358,7 +355,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Study Protocol Components Type Term Accession Number | String     | The accession number from the Source associated to the selected terms.                                                                                                                                                                                                                                                                                                                             |
 | Study Protocol Components Type Term Source REF       | String     | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match a Term Source Name previously declared in the ontology section                                                                                                                                                                                                                             |
 
-For example, the `STUDY PROTOCOLS` section of an ISA-Tab `i_*.txt` file may look as follows:
+For example, the `STUDY PROTOCOLS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
 ```default
 STUDY PROTOCOLS
@@ -384,21 +381,22 @@ This section MUST contain zero or more values.
 
 This section MUST contain the following labels, with the specified datatypes for values supported:
 
-| abel                                     | Datatype                                                                                    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| abel                                     | Datatype                                                                                    | Description                                                                                 |
 |------------------------------------------|---------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Study Person Last Name                   | String                                                                                      | The last name of a person associated with the study.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| Study Person First Name                  | String                                                                                      | Study Person Name                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| Study Person Mid Initials                | String                                                                                      | The middle initials of a person associated with the study.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| Study Person Email                       | String formatted as email                                                                   | The email address of a person associated with the study.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| Study Person Phone                       | String                                                                                      | The telephone number of a person associated with the study.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| IStudy Person Fax                        | String                                                                                      | The fax number of a person associated with the study.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| Study Person Address                     | String                                                                                      | The address of a person associated with the study.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| Study Person Affiliation                 | String                                                                                      | The organization affiliation for a person associated with the study.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| Study Person Last Name                   | String                                                                                      | The last name of a person associated with the study.                                                                                      |
+| Study Person First Name                  | String                                                                                      | Study Person Name                                                                                        |
+| Study Person Mid Initials                | String                                                                                      | The middle initials of a person associated with the study.                                                                              
+|
+| Study Person Email                       | String formatted as email                                                                   | The email address of a person associated with the study.                                                                                      |
+| Study Person Phone                       | String                                                                                      | The telephone number of a person associated with the study.                                                                                      |
+| IStudy Person Fax                        | String                                                                                      | The fax number of a person associated with the study.                                                                                      |
+| Study Person Address                     | String                                                                                      | The address of a person associated with the study.                                                                                      |
+| Study Person Affiliation                 | String                                                                                      | The organization affiliation for a person associated with the study.                                                                                      |
 | Study Person Roles                       | String or Ontology Annotation if accompanied by Term Accession Numbers and Term Source REFs | Term to classify the role(s) performed by this person in the context of the study, which means that the roles reported here need not correspond to roles held withing their affiliated organization. Multiple annotations or values attached to one person can be provided by using a semicolon (“;”) Unicode (U0003+B) as a separator (e.g.: submitter;funder;sponsor) .The term can be free text or from, for example, a controlled vocabulary or an ontology. If the latter source is used the Term Accession Number and Term Source REF fields below are required. |
-| Study Person Roles Term Accession Number | String                                                                                      | The accession number from the Term Source associated with the selected term.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| Study Person Roles Term Source REF       | String                                                                                      | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match one of the Term Source Names declared in the Ontology Source Reference section.                                                                                                                                                                                                                                                                                                                                                                                |
+| Study Person Roles Term Accession Number | String                                                                                      | The accession number from the Term Source associated with the selected term.                                                                                       |
+| Study Person Roles Term Source REF       | String                                                                                      | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match one of the Term Source Names declared in the Ontology Source Reference section.                                                                                    |
 
-For example, the `STUDY CONTACTS` section of an ISA-Tab `i_*.txt` file may look as follows:
+For example, the `STUDY CONTACTS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
 ```default
 Study Person Last Name	"Gilbert"	"Field"	"Huang"	"Edwards"	"Li"	"Gilna"	"Joint"
@@ -412,6 +410,82 @@ Study Person Affiliation	"Plymouth Marine Laboratory"	"NERC Centre for Ecology a
 Study Person Roles	"principal investigator role;SRA Inform On Status;SRA Inform On Error"	"principal investigator role"	"principal investigator role"	"principal investigator role"	"principal investigator role"	"principal investigator role"	"principal investigator role"
 Study Person Roles Term Accession Number	";;"	""	""	""	""	""	""
 Study Person Roles Term Source REF	";;"	""	""	""	""	""	""
+```
+
+### Assay section
+
+This section is organized in several subsections, described in detail below. The subsections in the block are arranged vertically; the intent being to enhance readability and presentation, and possibly to help with parsing. These subsections MUST remain within
+this block; the fields MUST remain within their subsection.
+
+These sections implement the metadata for an `Assay` from the ISA Abstract Model.
+
+**ASSAY**
+
+This section MUST contain zero or one values.
+
+This section MUST contain the following labels, with the specified datatypes for values supported:
+
+
+| Label                                              | Datatype   | Description                                                                                                                                                                                                                                                                                                         |
+|----------------------------------------------------|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Assay Measurement Type                       | String     | A term to qualify the endpoint, or what is being measured (e.g. gene expression profiling or protein identification). The term can be free text or from, for example, a controlled vocabulary or an ontology. If the latter source is used the Term Accession Number and Term Source REF fields below are required. |
+| Study Assay Measurement Type Term Accession Number | String     | The accession number from the Term Source associated with the selected term.                                                                                                                                                                                                                                        |
+| Assay Measurement Type Term Source REF       | String     | The Source REF has to match one of the Term Source Name declared in the Ontology Source Reference section.                                                                                                                                                                                                          |
+| Assay Technology Type                        | String     | Term to identify the technology used to perform the measurement, e.g. DNA microarray, mass spectrometry. The term can be free text or from, for example, a controlled vocabulary or an ontology. If the latter source is used the Term Accession Number and Term Source REF fields below are required.              |
+| Assay Technology Type Term Accession Number  | String     | The accession number from the Term Source associated with the selected term.                                                                                                                                                                                                                                        |
+| Assay Technology Type Term Source REF        | String     | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match one of the Term Source Names declared in the Ontology Source Reference section.                                                                                                                             |
+| Assay Technology Platform                    | String     | Manufacturer and platform name, e.g. Bruker AVANCE                                                                                                                                                                                                                                                                  |
+| Assay File Name                              | String     | A field to specify the name of the Assay Table file corresponding the definition of that assay. There can be only one file per cell.                                                                                                                                                                                |
+
+For example, the `ASSAY` section of an ISA-XLSX `isa.assay.xlsx` file may look as follows:
+
+```default
+ASSAY
+Study Assay File Name	"a_gilbert-assay-Gx.txt"	"a_gilbert-assay-Tx.txt"
+Study Assay Measurement Type	"metagenome sequencing"	"transcription profiling"
+Study Assay Measurement Type Term Accession Number	""	""
+Study Assay Measurement Type Term Source REF	"OBI"	"OBI"
+Study Assay Technology Type	"nucleotide sequencing"	"nucleotide sequencing"
+Study Assay Technology Type Term Accession Number	""	""
+Study Assay Technology Type Term Source REF	"OBI"	"OBI"
+Study Assay Technology Platform	"454 GS FLX"	"454 GS FLX"
+```
+
+**ASSAY PERFORMERS**
+
+This section MUST contain zero or more values.
+
+This section MUST contain the following labels, with the specified datatypes for values supported:
+
+| Label                                     | Datatype                                                                                    | Description                                                                                 |
+|------------------------------------------|---------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Assay Person Last Name                   | String                                                                                      | The last name of a person associated with the Assay.                                                                                      |
+| Assay Person First Name                  | String                                                                                      | Assay Person Name                                                                                        |
+| Assay Person Mid Initials                | String                                                                                      | The middle initials of a person associated with the Assay.                                                                              
+|
+| Assay Person Email                       | String formatted as email                                                                   | The email address of a person associated with the Assay.                                                                                      |
+| Assay Person Phone                       | String                                                                                      | The telephone number of a person associated with the Assay.                                                                                      |
+| Assay Person Fax                        | String                                                                                      | The fax number of a person associated with the assay.                                                                                      |
+| Assay Person Address                     | String                                                                                      | The address of a person associated with the assay.                                                                                      |
+| Assay Person Affiliation                 | String                                                                                      | The organization affiliation for a person associated with the assay.                                                                                      |
+| Assay Person Roles                       | String or Ontology Annotation if accompanied by Term Accession Numbers and Term Source REFs | Term to classify the role(s) performed by this person in the context of the assay, which means that the roles reported here need not correspond to roles held withing their affiliated organization. Multiple annotations or values attached to one person can be provided by using a semicolon (“;”) Unicode (U0003+B) as a separator (e.g.: submitter;funder;sponsor) .The term can be free text or from, for example, a controlled vocabulary or an ontology. If the latter source is used the Term Accession Number and Term Source REF fields below are required. |
+| Assay Person Roles Term Accession Number | String                                                                                      | The accession number from the Term Source associated with the selected term.                                                                                       |
+| Assay Person Roles Term Source REF       | String                                                                                      | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match one of the Term Source Names declared in the Ontology Source Reference section.                                                                                    |
+
+For example, the `ASSAY PERFORMERS` section of an ISA-XLSX `isa.assay.xlsx` file may look as follows:
+
+```default
+Assay Person Last Name	"Gilbert"	"Field"	"Huang"	"Edwards"	"Li"	"Gilna"	"Joint"
+Assay Person First Name	"Jack"	"Dawn"	"Ying"	"Rob"	"Weizhong"	"Paul"	"Ian"
+Assay Person Mid Initials	"A"	""	""	""	""	""	""
+Assay Person Email	"jagi@pml.ac.uk"	""	""	""	""	""	""
+Assay Person Phone	""	""	""	""	""	""	""
+Assay Person Fax	""	""	""	""	""	""	""
+Assay Person Address	"Prospect Place, Plymouth, United Kingdom"	"CEH Oxford, Oxford, United Kingdom"	"San Diego State University, San Diego, California, United States of America"	"Argonne National Laboratory, Argonne, Illinois, United States of America"	"San Diego State University, San Diego, California, United States of America"	"San Diego State University, San Diego, California, United States of America"	"Prospect Place, Plymouth, United Kingdom"
+Assay Person Affiliation	"Plymouth Marine Laboratory"	"NERC Centre for Ecology and Hydrology"	"California Institute for Telecommunications and Information Technology"	"Department of Computer Science, Mathematics and Computer Science Division,"	"California Institute for Telecommunications and Information Technology"	"California Institute for Telecommunications and Information Technology"	"Plymouth Marine Laboratory"
+Assay Person Roles	"principal investigator role;SRA Inform On Status;SRA Inform On Error"	"principal investigator role"	"principal investigator role"	"principal investigator role"	"principal investigator role"	"principal investigator role"	"principal investigator role"
+Assay Person Roles Term Accession Number	";;"	""	""	""	""	""	""
+Assay Person Roles Term Source REF	";;"	""	""	""	""	""	""
 ```
 
 ## Annotation Table sheets
@@ -598,68 +672,6 @@ For example,
 ```
 
 The Assay Table file implements the `Assay` graphs from the ISA Abstract Model.
-
-### Special cases
-
-**Assay with technology type: DNA microarray hybridization**
-
-If an Assay being described has a technology type of DNA microarray hybridization, the following additional nodes MAY apply.
-
-* **Hybridization Assay Name (in place of Assay Name):**
-  Used as an identifier within the Assay file. This column contains an user-defined name for each hybridization. Qualifying headers for Hybridization Assay Name item include Array Design REF or Array Design File.
-* **Scan Name:**
-  Used as an identifier within the Assay file. This column contains a user-defined name for each Scan event.
-* **Array Data File (in place of Raw Data File):**
-  Column to provide name (or URI) of raw array data files.
-* **Derived Array Data File (in place of Derived Data File):**
-  Column to provide name (or URI) of data files resulting from data transformation or processing.
-* **Array Data Matrix File:**
-  Column to provide name (or URI) of raw data matrix files.
-* **Derived Array Data Matrix File:**
-  Column to provide name (or URI) of processed data matrix files, resulting from data transformation or processing. Where data from multiple hybridizations is stored in a single file, the data should be mapped to the appropriate hybridization (or scan, or normalization) via the Data Matrix format itself
-* **Array Design File:**
-  Column to provide name of file containing the array design, used for a particular hybridization. For submission or transfer, ADF files can be packaged with ISA-TAB files into an ISArchive, see section 2.4.
-* **Array Design REF:**
-  This column is used to reference the identifier (or accession number) of an existing array design.
-
-**Assay file with technology type: Gel electrophoresis**
-
-If an Assay being described has a technology type of Gel electrophoresis, the following additional nodes MAY apply.
-
-* **Gel Electrophoresis Assay Name (in place of Assay Name):**
-  Used as an identifier within the Assay file. This column contains user-defined names for each electrophoresis gel assay. For 2-dimensional gels, the following qualifying headers can be used instead:
-* **First Dimension:**
-  The term can be free text or from, for example, a controlled vocabulary or an ontology. If the latter source is used the Term Accession Number and Term Source REF fields are required.
-* **Second Dimension:**
-  The term can be free text or from, for example, a controlled vocabulary or an ontology. If the latter source is used the Term Accession Number and Term Source REF fields are required.
-* **Scan Name:**
-  Used as an identifier within the Assay file. This column contains user-defined names for each Scan event.
-* **Spot Picking File:**
-  Column to provide name (or URI) of files file holding protein spot coordinates and metadata for use by spot picking instruments.
-
-**Assay file with technology type: Mass Spectrometry (MS)**
-
-If an Assay being described has a technology type of Mass Spectrometry, the following additional nodes MAY apply.
-
-* **MS Assay Name (in place of Assay Name):**
-  Used as an identifier within the Assay file. This column contains user-defined names for each MS Assay.
-* **Raw Spectral Data File (in place of Raw Data File):**
-  Column to provide name (or URI) of ‘raw’ spectral data files.
-* **Derived Spectral Data File (in place of Derived Data File):**
-  Column to provide name (or URI) of derived spectral data files, resulting from data transformation or processing.
-
-When Mass Spectrometry is used in proteomics the following data files are required, according to PSI specifications and Pride submission requirements (6, 10):
-
-* **Peptide Assignment File:**
-  Column to provide name (or URI) of file(s) containing peptide assignments.
-* **Protein Assignment File:**
-  Column to provide name (or URI) of file(s) containing protein assignments.
-* **Post Translational Modification Assignment File:**
-  Column to provide name (or URI) of file(s) containing posited post-translational modifications.
-
-Capturing data resulting from the use of mass spectrometry in metabol/nomics requires a settled definition for a
-Metabolite Assignment File (inter alia); such a file is currently under development in collaboration with the
-Metabolomics Standards Initiative (MSI).
 
 ### Data Files
 

@@ -6,28 +6,14 @@ This document describes the ISA Abstract Model reference implementation specifie
 
 **Table of contents**
 
-- [ISA-XLSX format](#isa-xlsx-format)
 - [Investigation File](#investigation-file)
 - [Study File](#study-file)
 - [Assay File](#assay-file)
 - [Top-level metadata sheets](#top-level-metadata-sheets)
   - [Ontology Source Reference section](#ontology-source-reference-section)
-    - [ONTOLOGY SOURCE REFERENCE](#ontology-source-reference)
   - [INVESTIGATION section](#investigation-section)
-    - [INVESTIGATION](#investigation)
-    - [INVESTIGATION PUBLICATIONS](#investigation-publications)
-    - [INVESTIGATION CONTACTS](#investigation-contacts)
   - [STUDY section](#study-section)
-    - [STUDY](#study)
-    - [STUDY DESIGN DESCRIPTORS](#study-design-descriptors)
-    - [STUDY PUBLICATIONS](#study-publications)
-    - [STUDY FACTORS](#study-factors)
-    - [STUDY ASSAYS](#study-assays)
-    - [STUDY PROTOCOLS](#study-protocols)
-    - [STUDY CONTACTS](#study-contacts)
   - [ASSAY section](#assay-section)
-    - [ASSAY](#assay)
-    - [ASSAY PERFORMERS](#assay-performers)
 - [Annotation Table sheets](#annotation-table-sheets)
   - [Inputs and Outputs](#inputs-and-outputs)
   - [Protocol Columns](#protocol-columns)
@@ -37,7 +23,7 @@ This document describes the ISA Abstract Model reference implementation specifie
   - [Factors](#factors)
   - [Components](#components)
   - [Parameters](#parameters)
-    - [Examples](#examples)
+  - [Examples](#examples)
 
 Below we provide the schemas and the content rules for valid ISA-XLSX documents. 
 
@@ -81,40 +67,19 @@ The `Investigation file` fulfils four needs:
 4. to relate each Study file to an Investigation (this only becomes necessary when two or more Study files need to be grouped).
 
 The `Investigation File` MUST contain one [`Top-Level Metadata sheet`](#top-level-metadata-sheets). This sheet MUST be named `isa_investigation` and MUST contain the following sections:
-
-- [ISA-XLSX format](#isa-xlsx-format)
-- [Investigation File](#investigation-file)
-- [Study File](#study-file)
-- [Assay File](#assay-file)
-- [Top-level metadata sheets](#top-level-metadata-sheets)
-  - [Ontology Source Reference section](#ontology-source-reference-section)
-    - [ONTOLOGY SOURCE REFERENCE](#ontology-source-reference)
-  - [INVESTIGATION section](#investigation-section)
-    - [INVESTIGATION](#investigation)
-    - [INVESTIGATION PUBLICATIONS](#investigation-publications)
-    - [INVESTIGATION CONTACTS](#investigation-contacts)
-  - [STUDY section](#study-section)
-    - [STUDY](#study)
-    - [STUDY DESIGN DESCRIPTORS](#study-design-descriptors)
-    - [STUDY PUBLICATIONS](#study-publications)
-    - [STUDY FACTORS](#study-factors)
-    - [STUDY ASSAYS](#study-assays)
-    - [STUDY PROTOCOLS](#study-protocols)
-    - [STUDY CONTACTS](#study-contacts)
-  - [ASSAY section](#assay-section)
-    - [ASSAY](#assay)
-    - [ASSAY PERFORMERS](#assay-performers)
-- [Annotation Table sheets](#annotation-table-sheets)
-  - [Inputs and Outputs](#inputs-and-outputs)
-  - [Protocol Columns](#protocol-columns)
-  - [Ontology Annotations](#ontology-annotations)
-  - [Unit](#unit)
-  - [Characteristics](#characteristics)
-  - [Factors](#factors)
-  - [Components](#components)
-  - [Parameters](#parameters)
-    - [Examples](#examples)
-
+ 
+- [`ONTOLOGY SOURCE REFERENCE`](#ontology-source-reference)
+- [`INVESTIGATION`](#investigation)
+- [`INVESTIGATION PUBLICATIONS`](#investigation-publications)
+- [`INVESTIGATION CONTACTS`](#investigation-contacts)
+- [`STUDY`](#study-section)
+- [`STUDY DESIGN DESCRIPTORS`](#study-design-descriptors)
+- [`STUDY PUBLICATIONS`](#study-publications)
+- [`STUDY FACTORS`](#study-factors)
+- [`STUDY ASSAYS`](#study-assays)
+- [`STUDY PROTOCOLS`](#study-protocols)
+- [`STUDY CONTACTS`](#study-contacts)
+  
 The `Investigation File` implements the [`Investigation`](https://isa-specs.readthedocs.io/en/latest/isamodel.html#investigation) graph from the ISA Abstract Model.
 
 # Study File
@@ -738,7 +703,7 @@ A `Component` is a consumable or reusable physical entity used in the experiment
 |--------------------------------|--------|-------------------|------------------------------------------------------|
 |                            300 | Kelvin | UO                | [http://…/obo/UO_0000032](http://purl.obolibrary.org/obo/UO_0000032) |
 
-### Examples
+## Examples
 
 For example, a simple [source](#inputs-and-outputs) to [sample](#inputs-and-outputs) may be represented as:
 

@@ -10,34 +10,21 @@ This document describes the ISA Abstract Model reference implementation specifie
 - [Top-level metadata sheets](#top-level-metadata-sheets)
   - [Ontology Source Reference section](#ontology-source-reference-section)
     - [ONTOLOGY SOURCE REFERENCE](#ontology-source-reference)
-      - [Example](#example)
   - [INVESTIGATION section](#investigation-section)
     - [INVESTIGATION](#investigation)
-      - [Example](#example-1)
     - [INVESTIGATION PUBLICATIONS](#investigation-publications)
-      - [Example](#example-2)
     - [INVESTIGATION CONTACTS](#investigation-contacts)
-      - [Example](#example-3)
   - [STUDY section](#study-section)
     - [STUDY](#study)
-      - [Example](#example-4)
     - [STUDY DESIGN DESCRIPTORS](#study-design-descriptors)
-      - [Example](#example-5)
     - [STUDY PUBLICATIONS](#study-publications)
-      - [Example](#example-6)
     - [STUDY FACTORS](#study-factors)
-      - [Example](#example-7)
     - [STUDY ASSAYS](#study-assays)
-      - [Example](#example-8)
     - [STUDY PROTOCOLS](#study-protocols)
-      - [Example](#example-9)
     - [STUDY CONTACTS](#study-contacts)
-      - [Example](#example-10)
   - [ASSAY section](#assay-section)
     - [ASSAY](#assay)
-      - [Example](#example-11)
     - [ASSAY PERFORMERS](#assay-performers)
-      - [Example](#example-12)
 - [Annotation Table sheets](#annotation-table-sheets)
   - [Inputs and Outputs](#inputs-and-outputs)
   - [Protocol Columns](#protocol-columns)
@@ -90,8 +77,6 @@ The purpose of top-level metadata sheets is aggregating and listing top-level me
 
 In the following sections, examples of each section block are given beside the specification of each section.
 
-For a full example of a complete Investigation File, please see [https://git.io/vD1va](https://git.io/vD1va).
-
 > ### ATTENTION
 > Rows in which the first character in the first column is Unicode
 > [U+0023](http://www.fileformat.info/info/unicode/char/0023/index.htm)  (the `#` character) > MUST be interpreted as
@@ -125,7 +110,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Term Source Version     | String                    | The version number of the Term Source to support terms tracking.                                                                                                                |
 | Term Source Description | String                    | Use for disambiguating resources when homologous prefixes have been used.                                                                                                       |
 
-#### Example
+**Example**
 
 For example, the `ONTOLOGY SOURCE REFERENCE` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
@@ -160,7 +145,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Investigation Submission Date     | String formatted as ISO8601 date YYYY-MM-DD | The date on which the investigation was reported to the repository.                          |
 | Investigation Public Release Date | String formatted as ISO8601 date YYYY-MM-DD | The date on which the investigation was released publicly.                                   |
 
-#### Example
+**Example**
 
 For example, the `INVESTIGATION` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
@@ -192,7 +177,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Investigation Publication Status Term Accession Number | String or URI                                                                                      | The accession number from the Term Source associated with the selected term.                                                                                       |
 | Investigation Publication Status Term Source REF       | String                                                                                             | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match one the Term Source Name declared in the in the Ontology Source Reference section. |
 
-#### Example
+**Example**
 
 For example, the `INVESTIGATION PUBLICATIONS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
@@ -228,7 +213,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Investigation Person Roles Term Accession Number | String                                                                                      | The accession number from the Term Source associated with the selected term.                                                                                       |
 | Investigation Person Roles Term Source REF       | String                                                                                      | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match one of the Term Source Names declared in the Ontology Source Reference section.                                                                                    |
 
-#### Example
+**Example**
 
 For example, the `INVESTIGATION CONTACTS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
@@ -273,7 +258,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Study Public Release Date | String formatted as ISO8601 date     | The date on which the study SHOULD be released publicly.                                                                                                                                               |
 | Study File Name           | String formatted as file name or URI | A field to specify the name of the Study Table file corresponding the definition of that Study. There can be only one file per cell.                                                                   |
 
-#### Example
+**Example**
 
 For example, the `STUDY` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
@@ -300,7 +285,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Study Design Type Term Accession Number | String     | The accession number from the Term Source associated with the selected term.                                                                                                                                                                                                                                                            |
 | Study Design Type Term Source REF       | String     | Identifies the controlled vocabulary or ontology that this term comes from. The Study Design Term Source REF has to match one the Term Source Name declared in the Ontology Source Reference section.                                                                                                                                   |
 
-#### Example
+**Example**
 
 For example, the `STUDY DESIGN DESCRIPTORS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
@@ -328,7 +313,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Study Publication Status Term Accession Number | String or URI                                                                                      | The accession number from the Term Source associated with the selected term.                                                                                                               |
 | Study Publication Status Term Source REF       | String                                                                                             | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match one the Term Source Name declared in the in the Ontology Source Reference section. |
 
-#### Example
+**Example**
 
 For example, the `STUDY PUBLICATIONS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
@@ -357,7 +342,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Study Factor Type Term Accession Number | String     | The accession number from the Term Source associated with the selected term.                                                                                                                                                                                                                                                                                                             |
 | Study Factor Type Term Source REF       | String     | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match one of the Term Source Name declared in the Ontology Source Reference section.                                                                                                                                                                                                   |
 
-#### Example
+**Example**
 
 For example, the `STUDY FACTORS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
@@ -387,7 +372,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Study Assay Technology Platform                    | String     | Manufacturer and platform name, e.g. Bruker AVANCE                                                                                                                                                                                                                                                                  |
 | Study Assay File Name                              | String     | A field to specify the name of the Assay Table file corresponding the definition of that assay. There can be only one file per cell.                                                                                                                                                                                |
 
-#### Example
+**Example**
 
 For example, the `STUDY ASSAYS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
@@ -427,7 +412,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Study Protocol Components Type Term Accession Number | String     | The accession number from the Source associated to the selected terms.                                                                                                                                                                                                                                                                                                                             |
 | Study Protocol Components Type Term Source REF       | String     | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match a Term Source Name previously declared in the ontology section                                                                                                                                                                                                                             |
 
-#### Example
+**Example**
 
 For example, the `STUDY PROTOCOLS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
@@ -471,7 +456,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Study Person Roles Term Accession Number | String                                                                                      | The accession number from the Term Source associated with the selected term.                                                                                       |
 | Study Person Roles Term Source REF       | String                                                                                      | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match one of the Term Source Names declared in the Ontology Source Reference section.                                                                                    |
 
-#### Example
+**Example**
 
 For example, the `STUDY CONTACTS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
@@ -516,7 +501,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Assay Technology Platform                    | String     | Manufacturer and platform name, e.g. Bruker AVANCE                                                                                                                                                                                                                                                                  |
 | Assay File Name                              | String     | A field to specify the name of the Assay Table file corresponding the definition of that assay. There can be only one file per cell.                                                                                                                                                                                |
 
-#### Example
+**Example**
 
 For example, the `ASSAY` section of an ISA-XLSX `isa.assay.xlsx` file may look as follows:
 
@@ -554,7 +539,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Assay Person Roles Term Accession Number | String                                                                                      | The accession number from the Term Source associated with the selected term.                                                                                       |
 | Assay Person Roles Term Source REF       | String                                                                                      | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match one of the Term Source Names declared in the Ontology Source Reference section.                                                                                    |
 
-#### Example
+**Example**
 
 For example, the `ASSAY PERFORMERS` section of an ISA-XLSX `isa.assay.xlsx` file may look as follows:
 

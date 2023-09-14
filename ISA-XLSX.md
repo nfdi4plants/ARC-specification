@@ -1,6 +1,6 @@
 # ISA-XLSX format
 
-For detail on ISA framework terminology, please read the [ISA Abstract Model specification](isamodel.md).
+For detail on ISA framework terminology, please read the [ISA Abstract Model specification]([isamodel.md](https://isa-specs.readthedocs.io/en/latest/isamodel.html)).
 
 This document describes the ISA Abstract Model reference implementation specified in the ISA-XLSX format. The XLSX format uses the SpreadsheetML markup language and schema to represent a spreadsheet document. Conceptually, using the terminology of the Spreadsheet ML specification [ISO/IEC 29500-1](https://www.loc.gov/preservation/digital/formats/fdd/fdd000398.shtml#:~:text=The%20XLSX%20format%20uses%20the,a%20rectangular%20grid%20of%20cells.), the document comprises one or more worksheets in a workbook. Every worksheet MUST contain one table object storing the metadata. Comments or auxillary information MAY be stored alongside with table objects in a worksheet.
 
@@ -13,10 +13,7 @@ ISA-XLSX uses three types of files to capture the experimental metadata:
   - Study file
   - Assay file (with associated data files)
 
-The Investigation file contains all the information needed to understand the overall goals and means used in an
-experiment; experimental steps (or sequences of events) are described in the Study and in the Assay file(s). For each
-Investigation file there may be one or more Studies defined with a corresponding Study file; for each Study there may
-be one or more Assays defined with corresponding Assay files.
+The Investigation file contains all the information needed to understand the overall goals and means used in an experiment; experimental steps (or sequences of events) are described in the Study and in the Assay file(s). For each Investigation file there may be one or more Studies defined with a corresponding Study file; for each Study there may be one or more Assays defined with corresponding Assay files; one assay file may be registered in different studies.
 
 In order to facilitate identification of ISA-XLSX component files, specific naming patterns MUST follow:
 
@@ -26,8 +23,8 @@ In order to facilitate identification of ISA-XLSX component files, specific nami
 
 Sheets described in this specification MUST follow one of the two given formats:
 
-> - `Top-level metadata sheets` for listing top-level metadata
-> - `Annotation Table sheets` for describing experimental workflows
+- `Top-level metadata sheets` for listing top-level metadata
+- `Annotation Table sheets` for describing experimental workflows
 
 Sheets which do not follow any of these two formats are considerered additional payload and are ignored in this specification.
 
@@ -528,7 +525,7 @@ An `Labeled Extract Material` MUST be indicated with the node type `Labeled Extr
 Where a value is an `Ontology Annotation` in a table file, `Term Accession Number` and `Term Source REF` fields MUST follow the column cell in which the value is entered. These two columns SHOULD contain further ontological information about the header. In this case, following the static header string, separated by a sinlge space, there MUST be a short ontology term identifier formatted as CURIEs (prefixed identifiers) of the form `<IDSPACE>:<LOCALID>` (specified [here](http://obofoundry.org/id-policy)) inside `()` brackets.
 For example, a characteristic type `organism` with a value of `Homo sapiens` can be qualified with an `Ontology Annotation` of a term from NCBI Taxonomy as follows:
 
-| Characteristics [organism]   | Term Source REF (OBI_0100026)  | Term Accession Number (OBI_0100026) |
+| Characteristics [organism]   | Term Source REF (OBI:0100026)  | Term Accession Number (OBI:0100026) |
 |-----------------------------|-------------------|------------------------------------------------------|
 | Homo sapiens                | NCBITaxon         | [http://…/NCBITAXON/9606](http://.../NCBITAXON/9606) |
 

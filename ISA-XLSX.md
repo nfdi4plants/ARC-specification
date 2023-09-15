@@ -633,11 +633,14 @@ An `Labeled Extract Material` MUST be indicated with the node type `Labeled Extr
 
 `Protocol REF` columns MAY be used to specify the name of the `Protocol` node implemented by the `Process` node. Per Annotation Table sheet there MUST be at most one `Protocol REF` column. The value MUST be free text.
 
-`Protocol Version` columns MAY be used to specify the version of the `Protocol` node implemented by the `Process` node. Per Annotation Table sheet there MUST be at most one `Protocol REF` column. The value MUST be free text.
+`Protocol Version` columns MAY be used to specify the version of the `Protocol` node implemented by the `Process` node. Per Annotation Table sheet there MUST be at most one `Protocol Version` column. The value MUST be free text.
 
-`Protocol Description` columns MAY be used to specify the description of the `Protocol` node implemented by the `Process` node. Per Annotation Table sheet there MUST be at most one `Protocol REF` column. The value MUST be free text.
+`Protocol Description` columns MAY be used to specify the description of the `Protocol` node implemented by the `Process` node. Per Annotation Table sheet there MUST be at most one `Protocol Description` column. The value MUST be free text.
 
-`Protocol Type` columns MAY be used to specify the type of the `Protocol` node implemented by the `Process` node. Per Annotation Table sheet there MUST be at most one `Protocol REF` column. The value MUST be free text, or an [`Ontology Annotation`](#ontology-annotations).
+`Protocol Uri` columns MAY be used to specify the uri of the `Protocol` node implemented by the `Process` node. Per Annotation Table sheet there MUST be at most one `Protocol Uri` column. The value MUST be free text.
+
+`Protocol Type` columns MAY be used to specify the type of the `Protocol` node implemented by the `Process` node. Per Annotation Table sheet there MUST be at most one `Protocol Type` column. The value MUST be free text, or an [`Ontology Annotation`](#ontology-annotations).
+
 
 ## Ontology Annotations
 

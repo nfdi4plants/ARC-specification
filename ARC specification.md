@@ -10,29 +10,31 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
 
 ## Table of Contents
 
-- [Introduction](#introduction)
-  - [Extensions](#extensions)
-- [ARC Structure and Content](#arc-structure-and-content)
-  - [High-Level Schema](#high-level-schema)
-  - [Example ARC structure](#example-arc-structure)
-  - [ARC Representation](#arc-representation)
-  - [ISA-XLSX Format](#isa-xlsx-format)
-  - [Study and Resources](#study-and-resources)
-  - [Assay Data and Metadata](#assay-data-and-metadata)
-  - [Workflow Description](#workflow-description)
-  - [Run Description](#run-description)
-  - [Additional Payload](#additional-payload)
-  - [Top-level Metadata and Workflow Description](#top-level-metadata-and-workflow-description)
-    - [Investigation and Study Metadata](#investigation-and-study-metadata)
-    - [Top-Level Run Description](#top-level-run-description)
-- [Shareable and Publishable ARCs](#shareable-and-publishable-arcs)
-  - [Reproducible ARCs](#reproducible-arcs)
-- [Mechanism for Quality Control of ARCs](#mechanism-for-quality-control-of-arcs)
-- [Best Practices](#best-practices)
-  - [Community Specific Data Formats](#community-specific-data-formats)
-  - [Compression and Encryption](#compression-and-encryption)
-  - [Directory and File Naming Conventions](#directory-and-file-naming-conventions)
-- [Appendix: Conversion of ARCs to RO Crates](#appendix-conversion-of-arcs-to-ro-crates)
+- [Annotated Research Context Specification, v1.1-rfc](#annotated-research-context-specification-v11-rfc)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+    - [Extensions](#extensions)
+  - [ARC Structure and Content](#arc-structure-and-content)
+    - [High-Level Schema](#high-level-schema)
+    - [Example ARC structure](#example-arc-structure)
+    - [ARC Representation](#arc-representation)
+    - [ISA-XLSX Format](#isa-xlsx-format)
+    - [Study and Resources](#study-and-resources)
+    - [Assay Data and Metadata](#assay-data-and-metadata)
+    - [Workflow Description](#workflow-description)
+    - [Run Description](#run-description)
+    - [Additional Payload](#additional-payload)
+    - [Top-level Metadata and Workflow Description](#top-level-metadata-and-workflow-description)
+      - [Investigation and Study Metadata](#investigation-and-study-metadata)
+      - [Top-Level Run Description](#top-level-run-description)
+  - [Shareable and Publishable ARCs](#shareable-and-publishable-arcs)
+    - [Reproducible ARCs](#reproducible-arcs)
+  - [Mechanism for Quality Control of ARCs](#mechanism-for-quality-control-of-arcs)
+  - [Best Practices](#best-practices)
+    - [Community Specific Data Formats](#community-specific-data-formats)
+    - [Compression and Encryption](#compression-and-encryption)
+    - [Directory and File Naming Conventions](#directory-and-file-naming-conventions)
+  - [Appendix: Conversion of ARCs to RO Crates](#appendix-conversion-of-arcs-to-ro-crates)
 
 ## Introduction
 
@@ -127,7 +129,7 @@ Notes:
 
 ### ISA-XLSX Format
 
-ISA-XLSX follows the ISA model specification (v1.0) saved in a XLSX format. The XLSX format uses the SpreadsheetML markup language and schema to represent a spreadsheet document. Conceptually, using the terminology of the Spreadsheet ML specification [ISO/IEC 29500-1](https://www.loc.gov/preservation/digital/formats/fdd/fdd000398.shtml#:~:text=The%20XLSX%20format%20uses%20the,a%20rectangular%20grid%20of%20cells.), the document comprises one or more worksheets in a workbook. Every worksheet MUST contain one table object storing the metadata. Comments or auxillary information MAY be stored alongside with table objects in a worksheet.
+https://github.com/nfdi4plants/ARC-specfication/blob/main/ISA-XLSX.md
 
 ### Study and Resources
 

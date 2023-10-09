@@ -199,11 +199,11 @@ For example, the `INVESTIGATION` section of an ISA-XLSX `isa.investigation.xlsx`
 |                              |                         |
 |------------------------------|-------------------------|
 | INVESTIGATION |
-| Investigation Identifier     | BII-I-1                 |
-| Investigation Title         | Growth control of the eukaryote cell: a systems biology study in yeast |
-| Investigation Description   | Background Cell growth underlies many key cellular and developmental processes, yet a limited number of studies have been carried out on cell-growth regulation. Comprehensive studies at the transcriptional, proteomic and metabolic levels under defined controlled conditions are currently lacking. Results Metabolic control analysis is being exploited in a systems biology study of the eukaryotic cell. Using chemostat culture, we have measured the impact of changes in flux (growth rate) on the transcriptome, proteome, endometabolome and exometabolome of the yeast Saccharomyces cerevisiae. Each functional genomic level shows clear growth-rate-associated trends and discriminates between carbon-sufficient and carbon-limited conditions. Genes consistently and significantly upregulated with increasing growth rate are frequently essential and encode evolutionarily conserved proteins of known function that participate in many protein-protein interactions. In contrast, more unknown, and fewer essential, genes are downregulated with increasing growth rate; their protein products rarely interact with one another. A large proportion of yeast genes under positive growth-rate control share orthologs with other eukaryotes, including humans. Significantly, transcription of genes encoding components of the TOR complex (a major controller of eukaryotic cell growth) is not subject to growth-rate regulation. Moreover, integrative studies reveal the extent and importance of post-transcriptional control, patterns of control of metabolic fluxes at the level of enzyme synthesis, and the relevance of specific enzymatic reactions in the control of metabolic fluxes during cell growth. Conclusion This work constitutes a first comprehensive systems biology study on growth-rate control in the eukaryotic cell. The results have direct implications for advanced studies on cell growth, in vivo regulation of metabolic fluxes for comprehensive metabolic engineering, and for the design of genome-scale systems biology models of the eukaryotic cell. |
-| Investigation Submission Date | 2007-04-30              |
-| Investigation Public Release Date | 2009-03-10           |
+| Investigation Identifier     | ChlamyHeatstress                 |
+| Investigation Title         | Systems-wide investigation of responses to moderate and acute high temperatures in the green alga Chlamydomonas reinhardtii. |
+| Investigation Description   | Algae cultures were grown mixotrophically (TAP). After 24h of 35°C/40°C the cells were shifted back to room temperature for 48h. 'omics samples were taken. |
+| Investigation Submission Date | 2022-05-13              |
+| Investigation Public Release Date |            |
 
 
 ### INVESTIGATION PUBLICATIONS
@@ -230,13 +230,13 @@ For example, the `INVESTIGATION PUBLICATIONS` section of an ISA-XLSX `isa.invest
 |                                        |                  |
 |----------------------------------------|------------------|
 | INVESTIGATION PUBLICATIONS |
-| Investigation Publication PubMed ID    | 17439666         |
-| Investigation Publication DOI          | doi:10.1186/jbiol54 |
-| Investigation Publication Author List  | Castrillo JI, Zeef LA, Hoyle DC, Zhang N, Hayes A, Gardner DC, Cornell MJ, Petty J, Hakes L, Wardleworth L, Rash B, Brown M, Dunn WB, Broadhurst D, O'Donoghue K, Hester SS, Dunkley TP, Hart SR, Swainston N, Li P, Gaskell SJ, Paton NW, Lilley KS, Kell DB, Oliver SG. |
-| Investigation Publication Title        | Growth control of the eukaryote cell: a systems biology study in yeast. |
-| Investigation Publication Status       | indexed in Pubmed |
-| Investigation Publication Status Term Accession Number |                |
-| Investigation Publication Status Term Source REF |                   |
+| Investigation Publication PubMed ID    | PMC9106746         |
+| Investigation Publication DOI          | 10.1038/s42003-022-03359-z |
+| Investigation Publication Author List  | Ningning Zhang, Erin M. Mattoon, Will McHargue, Benedikt Venn, David Zimmer, Kresti Pecani, Jooyeon Jeong, Cheyenne M. Anderson, Chen Chen, Jeffrey C. Berry, Ming Xia, Shin-Cheng Tzeng, Eric Becker, Leila Pazouki, Bradley Evans, Fred Cross, Jianlin Cheng, Kirk J. Czymmek, Michael Schroda, Timo Mühlhaus & Ru Zhang |
+| Investigation Publication Title        | Systems-wide analysis revealed shared and unique responses to moderate and acute high temperatures in the green alga Chlamydomonas reinhardtii |
+| Investigation Publication Status       | published |
+| Investigation Publication Status Term Accession Number | http://purl.org/spar/pso/published |
+| Investigation Publication Status Term Source REF | PSO |
 
 ### INVESTIGATION CONTACTS
 
@@ -265,15 +265,15 @@ For example, the `INVESTIGATION CONTACTS` section of an ISA-XLSX `isa.investigat
 |                                |          |          |       |
 |--------------------------------|----------|----------|-------|
 | INVESTIGATION CONTACTS |
-| Investigation Person Last Name | Stephen  | Castrillo | Zeef  |
-| Investigation Person First Name | Oliver   | Juan     | Leo   |
-| Investigation Person Mid Initials | G       | I        | A     |
-| Investigation Person Email     |          |          |       |
+| Investigation Person Last Name | Venn  | Zimmer | Mühlhaus  |
+| Investigation Person First Name | Benedikt   | David     | Timo   |
+| Investigation Person Mid Initials |        |         |      |
+| Investigation Person Email     | venn@bio.uni-kl.de         | davidzimmer91@gmail.com         | timo.muehlhaus@rptu.de      |
 | Investigation Person Phone     |          |          |       |
 | Investigation Person Fax       |          |          |       |
-| Investigation Person Address   | Oxford Road, Manchester M13 9PT, UK | Oxford Road, Manchester M13 9PT, UK | Oxford Road, Manchester M13 9PT, UK |
-| Investigation Person Affiliation | Faculty of Life Sciences, Michael Smith Building, University of Manchester | Faculty of Life Sciences, Michael Smith Building, University of Manchester | Faculty of Life Sciences, Michael Smith Building, University of Manchester |
-| Investigation Person Roles     | corresponding author | author | author |
+| Investigation Person Address   | TU Kaiserslautern, Kaiserslautern, 67663, Germany | TU Kaiserslautern, Kaiserslautern, 67663, Germany | TU Kaiserslautern, Kaiserslautern, 67663, Germany |
+| Investigation Person Affiliation | Computational Systems Biology | Computational Systems Biology | Computational Systems Biology |
+| Investigation Person Roles     | author | author | corresponding author |
 | Investigation Person Roles Term Accession Number |          |          |       |
 | Investigation Person Roles Term Source REF |          |          |       |
 
@@ -310,12 +310,12 @@ For example, the `STUDY` section of an ISA-XLSX `isa.investigation.xlsx` file ma
 |                        |          |
 |------------------------|----------|
 | STUDY |
-| Study Identifier       | BII-S-3  |
-| Study Title            | Metagenomes and Metatranscriptomes of phytoplankton blooms from an ocean acidification mesocosm experiment |
-| Study Description      | Sequencing the metatranscriptome can provide information about the response of organisms to varying environmental conditions. We present a methodology for obtaining random whole-community mRNA from a complex microbial assemblage using Pyrosequencing. The metatranscriptome had, with minimum contamination by ribosomal RNA, significant coverage of abundant transcripts, and included significantly more potentially novel proteins than in the metagenome. This experiment is part of a much larger experiment. We have produced 4 454 metatranscriptomic datasets and 6 454 metagenomic datasets. These were derived from 4 samples. |
-| Study Submission Date  | 2008-08-15 |
-| Study Public Release Date | 2008-08-15 |
-| Study File Name        | studies/BII-S-3/isa.study.xlsx |
+| Study Identifier       | HeatstressExperiment  |
+| Study Title            | Systems-wide investigation of responses to moderate and acute high temperatures in the green alga Chlamydomonas reinhardtii. |
+| Study Description      | Algae cultures were grown mixotrophically (TAP). After 24h of 35°C/40°C the cells were shifted back to room temperature for 48h. 'omics samples were taken. |
+| Study Submission Date  | 2022-05-13 |
+| Study Public Release Date |  |
+| Study File Name        | studies/HeatstressExperiment/isa.study.xlsx |
 
 
 ### STUDY DESIGN DESCRIPTORS
@@ -334,12 +334,12 @@ This section MUST contain the following labels, with the specified datatypes for
 
 For example, the `STUDY DESIGN DESCRIPTORS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
-|                                |                   |
-|--------------------------------|-------------------|
+|                                |                   | |
+|--------------------------------|-------------------|-|
 | STUDY DESIGN DESCRIPTORS |
-| Study Design Type              | time series design |
-| Study Design Type Term Accession Number | http://purl.obolibrary.org/obo/OBI_0500020 |
-| Study Design Type Term Source REF | OBI               |
+| Study Design Type              | time series design | heat exposure |
+| Study Design Type Term Accession Number | http://purl.obolibrary.org/obo/OBI_0500020 | http://purl.obolibrary.org/obo/XCO_0000308 |
+| Study Design Type Term Source REF | OBI               | |
 
 
 ### STUDY PUBLICATIONS
@@ -362,16 +362,16 @@ This section MUST contain the following labels, with the specified datatypes for
 
 For example, the `STUDY PUBLICATIONS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
-|                            |                                         |                                           |
-|----------------------------|-----------------------------------------|-------------------------------------------|
-|  STUDY PUBLICATIONS |
-| Study PubMed ID            | 18725995                                | 18783384                                  |
-| Study Publication DOI      | 10.1371/journal.pone.0003042             | 10.1111/j.1462-2920.2008.01745.x         |
-| Study Publication Author List | Gilbert JA, Field D, Huang Y, Edwards R, Li W, Gilna P, Joint I. | Gilbert JA, Thomas S, Cooley NA, Kulakova A, Field D, Booth T, McGrath JW, Quinn JP, Joint I. |
-| Study Publication Title    | Detection of large numbers of novel sequences in the metatranscriptomes of complex marine microbial communities. | Potential for phosphonoacetate utilization by marine bacteria in temperate coastal waters. |
-| Study Publication Status   | indexed in PubMed                       | indexed in PubMed                         |
-| Study Publication Status Term Accession Number |                                          |                                           |
-| Study Publication Status Term Source REF     |                                          |                                           |
+|                                        |                  |
+|----------------------------------------|------------------|
+| STUDY PUBLICATIONS |
+| Study Publication PubMed ID    | PMC9106746         |
+| Study Publication DOI          | 10.1038/s42003-022-03359-z |
+| Study Publication Author List  | Ningning Zhang, Erin M. Mattoon, Will McHargue, Benedikt Venn, David Zimmer, Kresti Pecani, Jooyeon Jeong, Cheyenne M. Anderson, Chen Chen, Jeffrey C. Berry, Ming Xia, Shin-Cheng Tzeng, Eric Becker, Leila Pazouki, Bradley Evans, Fred Cross, Jianlin Cheng, Kirk J. Czymmek, Michael Schroda, Timo Mühlhaus & Ru Zhang |
+| Study Publication Title        | Systems-wide analysis revealed shared and unique responses to moderate and acute high temperatures in the green alga Chlamydomonas reinhardtii |
+| Study Publication Status       | published |
+| Study Publication Status Term Accession Number | http://purl.org/spar/pso/published |
+| Study Publication Status Term Source REF | PSO |
 
 
 ### STUDY FACTORS
@@ -391,13 +391,13 @@ This section MUST contain the following labels, with the specified datatypes for
 
 For example, the `STUDY FACTORS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
-|                             |                    |                   |                  |
-|-----------------------------|--------------------|-------------------|------------------|
+|                             |                    |                   | 
+|-----------------------------|--------------------|-------------------|
 | STUDY FACTORS |
-| Study Factor Name           | dose               | compound          | collection time  |
-| Study Factor Type           | dose               | chemical substance | time             |
-| Study Factor Type Term Accession Number | http://www.ebi.ac.uk/efo/EFO_0000428 | http://purl.obolibrary.org/obo/CHEBI_59999 | http://purl.obolibrary.org/obo/PATO_0000165 |
-| Study Factor Type Term Source REF | EFO                | CHEBI             | PATO             |
+| Study Factor Name | temperature | collection time  |
+| Study Factor Type | temperature | time             |
+| Study Factor Type Term Accession Number | http://purl.obolibrary.org/obo/PATO_0000146 | http://purl.obolibrary.org/obo/PATO_0000165 |
+| Study Factor Type Term Source REF | PATO  | PATO |
 
 
 ### STUDY ASSAYS
@@ -421,17 +421,17 @@ This section MUST contain the following labels, with the specified datatypes for
 
 For example, the `STUDY ASSAYS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
-|                              |                                             |                           |
-|------------------------------|---------------------------------------------|---------------------------|
+|                     |                                      |                              |
+|---------------------|--------------------------------------|------------------------------|
 | STUDY ASSAYS |
-| Study Assay File Name        | assays/gilbert-Gx/isa.assay.xlsx           | assays/gilbert-Tx/isa.assay.xlsx |
-| Study Assay Measurement Type | metagenome sequencing                        | transcription profiling  |
-| Study Assay Measurement Type Term Accession Number |                                             |                           |
-| Study Assay Measurement Type Term Source REF | OBI                                         | OBI                       |
-| Study Assay Technology Type  | nucleotide sequencing                        | nucleotide sequencing     |
-| Study Assay Technology Type Term Accession Number |                                             |                           |
-| Study Assay Technology Type Term Source REF | OBI                                         | OBI                       |
-| Study Assay Technology Platform | 454 GS FLX                                   | 454 GS FLX                |
+| Study Assay File Name     | assays/Proteomics/isa.assay.xlsx     | assays/Transcriptomics/isa.assay.xlsx |
+| Study Assay Measurement Type | Proteomics | transcription profiling      |
+| Study Assay Measurement Type Term Accession Number | http://purl.obolibrary.org/obo/NCIT_C20085 | http://purl.obolibrary.org/obo/OBI_0000424 |
+| Study Assay Measurement Type Term Source REF     | NCIT | OBI                          |
+| Study Assay Technology Type | Mass Spectrometry                | nucleotide sequencing         |
+| Study Assay Technology Type Term Accession Number | http://purl.obolibrary.org/obo/NCIT_C17156 | http://purl.obolibrary.org/obo/OBI_0000626 |
+| Study Assay Technology Type Term Source REF  | NCIT | OBI                          |
+| Study Assay Technology Platform | Orbitrap Fusion Lumos  | Illumina HiSeq 2000 Rapid Run |
 
 
 ### STUDY PROTOCOLS
@@ -461,23 +461,23 @@ This section MUST contain the following labels, with the specified datatypes for
 
 For example, the `STUDY PROTOCOLS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
-|                              |                                 |                                   |                                        |                                         |                      |                                           |                                         |
-|------------------------------|---------------------------------|-----------------------------------|----------------------------------------|-----------------------------------------|----------------------|-------------------------------------------|-----------------------------------------|
+| | | | |
+|--|-|--|---|
 | STUDY PROTOCOLS |
-| Study Protocol Name           | environmental material collection - standard procedure 1 | nucleic acid extraction - standard procedure 2 | mRNA extraction - standard procedure 3   | genomic DNA extraction - standard procedure 4 | reverse transcription | library construction                        | pyrosequencing - standard procedure 6     | sequence analysis - standard procedure 7 |
-| Study Protocol Type           | sample collection               | nucleic acid extraction         | nucleic acid extraction                | nucleic acid extraction                 | reverse transcription | library construction                        | nucleic acid sequencing                     | data transformation                      |
-| Study Protocol Type Term Accession Number |                                 |                                 |                                 |                                 |                      |                                 |                                 | |
-| Study Protocol Type Term Source REF |                                 |                                 |                                 |                                 |                      |                                 |                                 | |
-| Study Protocol Description    | Waters samples were prefiltered through a 1.6 um GF/A glass fibre filter to reduce Eukaryotic contamination. Filtrate was then collected on a 0.2 um Sterivex (millipore) filter which was frozen in liquid nitrogen until nucelic acid extraction. CO2 bubbled through 11000 L mesocosm to simulate ocean acidification predicted conditions. Then phosphate and nitrate were added to induce a phytoplankton bloom. | Total nucleic acid extraction was done as quickly as possible using the method of Neufeld et al, 2007. | RNA MinElute + substrative Hybridization + MEGAclear For transcriptomics, total RNA was separated from the columns using the RNA MinElute clean-up kit (Qiagen) and checked for integrity of rRNA using an Agilent bioanalyser (RNA nano6000 chip). High integrity rRNA is essential for subtractive hybridization. Samples were treated with Turbo DNA-free enzyme (Ambion) to remove contaminating DNA. The rRNA was removed from mRNA by subtractive hybridization (Microbe Express Kit, Ambion), and absence of rRNA and DNA contamination was confirmed using the Agilent bioanalyser. The mRNA was further purified with the MEGAclearTM kit (Ambion). Reverse transcription of mRNA was performed using the SuperScript III enzyme (Invitrogen) with random hexamer primers (Promega). The cDNA was treated with RiboShredderTM RNase Blend (Epicentre) to remove trace RNA contaminants. To improve the yield of cDNA, samples were subjected to random amplification using the GenomiPhi V2 method (GE Healthcare). GenomiPhi technology produces branched DNA molecules that are recalcitrant to the pyrosequencing methodology. Therefore amplified samples were treated with S1 nuclease using the method of Zhang et al.2006. |                                 | superscript+random hexamer primer |                                 | 1. Sample Input and Fragmentation: The Genome Sequencer FLX System supports the sequencing of samples from a wide variety of starting materials including genomic DNA, PCR products, BACs, and cDNA. Samples such as genomic DNA and BACs are fractionated into small, 300- to 800-base pair fragments. For smaller samples, such as small non-coding RNA or PCR amplicons, fragmentation is not required. Instead, short PCR products amplified using Genome Sequencer fusion primers can be used for immobilization onto DNA capture beads as shown below. | |
-| Study Protocol URI            |                                 |                                 |                                 |                                 |                      |                                 |                                 | |
-| Study Protocol Version        |                                 |                                 |                                 |                                 |                      |                                 |                                 | |
-| Study Protocol Parameters Name | filter pore size                |                                 |                                 |                                 |                      | library strategy;library layout;library selection | sequencing instrument                  | |
-| Study Protocol Parameters Name Term Accession Number |                                 |                                 |                                 |                                 |                      | ; ;                                 |                                 | |
-| Study Protocol Parameters Name Term Source REF |                                 |                                 |                                 |                                 |                      | ; ;                                 |                                 | |
-| Study Protocol Components Name |                                 |                                 |                                 |                                 |                      |                                 |                                 | |
-| Study Protocol Components Type |                                 |                                 |                                 |                                 |                      |                                 |                                 | |
-| Study Protocol Components Type Term Accession Number |                                 |                                 |                                 |                                 |                      |                                 |                                 | |
-| Study Protocol Components Type Term Source REF |                                 |                                 |                                 |                                 |                      |                                 |                                 | |
+| Study Protocol Name           | Harvesting | Protein extraction | Measurement |
+| Study Protocol Type           | Biospecimen Collection | nucleic acid extraction         | nucleic acid extraction  | 
+| Study Protocol Type Term Accession Measurement Number | http://purl.obolibrary.org/obo/NCIT_C70945 |  |  | 
+| Study Protocol Type Term Source REF | NCIT |  |   | | 
+| Study Protocol Description    | Extraction and storage of algae cells from photo-bio reactor. Extracted and centrifuged cell pellets were frozen in liquid nitrogen. | Proteins were extracted from cells using a combination of chemical (lysis buffer) and physical (sonicator) methods. Digested peptides were purified and resuspended in LC loading buffer. | Peptides were separated by a nanoHPLC (C18 column) and detected using an Orbitrap mass spectrometry device. |
+| Study Protocol URI            | | | |
+| Study Protocol Version        | |
+| Study Protocol Parameters Name | Centrifugation Time;sample volume setting  | Freqency; duration  | duration;flow rate
+| Study Protocol Parameters Name Term Accession Number | http://purl.obolibrary.org/obo/NCIT_C178881;http://purl.allotrope.org/ontologies/result#AFR_0002492 | http://purl.obolibrary.org/obo/PATO_0000044;http://purl.obolibrary.org/obo/PATO_0001309 | http://purl.obolibrary.org/obo/PATO_0001309;http://purl.obolibrary.org/obo/PATO_0001574 |
+| Study Protocol Parameters Name Term Source REF | NCIT;AFO | PATO;PATO | PATO;PATO |
+| Study Protocol Components Name | liquid nitrogen |  Sonicator; Extraction Kit | HPLC; Column; MS
+| Study Protocol Components Type | Liquid Nitrogen | VWR Aquasonic 250D; IST sample preparation kit (PreOmics GmbH, Germany) |  U3000 RSLCnano HPLC; C18 column (Fritted Glass Column, 25 cm × 75 μm); Orbitrap Fusion Lumos
+| Study Protocol Components Type Term Accession Number | http://purl.obolibrary.org/obo/NCIT_C68796 | | ;;http://purl.obolibrary.org/obo/MS_1002732
+| Study Protocol Components Type Term Source REF | NCIT | | ;;MS
 
 
 ### STUDY CONTACTS
@@ -486,7 +486,7 @@ This section MUST contain zero or more values.
 
 This section MUST contain the following labels, with the specified datatypes for values supported:
 
-| abel                                     | Datatype                                                                                    | Description                                                                                 |
+| Label                                     | Datatype                                                                                    | Description                                                                                 |
 |------------------------------------------|---------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Study Person Last Name                   | String                                                                                      | The last name of a person associated with the study.                                                                                      |
 | Study Person First Name                  | String                                                                                      | Study Person Name                                                                                        |
@@ -505,20 +505,20 @@ This section MUST contain the following labels, with the specified datatypes for
 
 For example, the `STUDY CONTACTS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
 
-|                              |         |       |        |        |        |      |       |
-|------------------------------|---------|-------|--------|--------|--------|------|-------|
+|                                |          |          |       |
+|--------------------------------|----------|----------|-------|
 | STUDY CONTACTS |
-| Study Person Last Name       | Gilbert | Field | Huang  | Edwards | Li     | Gilna | Joint |
-| Study Person First Name      | Jack    | Dawn  | Ying   | Rob    | Weizhong | Paul | Ian   |
-| Study Person Mid Initials    | A       |       |        |        |        |      |       |
-| Study Person Email           | jagi@pml.ac.uk |       |        |        |        |      |       |
-| Study Person Phone           |         |       |        |        |        |      |       |
-| Study Person Fax             |         |       |        |        |        |      |       |
-| Study Person Address         | Prospect Place, Plymouth, United Kingdom | CEH Oxford, Oxford, United Kingdom | San Diego State University, San Diego, California, United States of America | Argonne National Laboratory, Argonne, Illinois, United States of America | San Diego State University, San Diego, California, United States of America | San Diego State University, San Diego, California, United States of America | Prospect Place, Plymouth, United Kingdom |
-| Study Person Affiliation     | Plymouth Marine Laboratory | NERC Centre for Ecology and Hydrology | California Institute for Telecommunications and Information Technology | Department of Computer Science, Mathematics and Computer Science Division | California Institute for Telecommunications and Information Technology | California Institute for Telecommunications and Information Technology | Plymouth Marine Laboratory |
-| Study Person Roles           | principal investigator role;SRA Inform On Status;SRA Inform On Error | principal investigator role | principal investigator role | principal investigator role | principal investigator role | principal investigator role | principal investigator role |
-| Study Person Roles Term Accession Number | ;;      |       |        |        |        |      |       |
-| Study Person Roles Term Source REF | ;;      |       |        |        |        |      |       |
+| Study Person Last Name | Venn  | Zimmer | Mühlhaus  |
+| Study Person First Name | Benedikt   | David     | Timo   |
+| Study Person Mid Initials |        |         |      |
+| Study Person Email     | venn@bio.uni-kl.de         | davidzimmer91@gmail.com         | timo.muehlhaus@rptu.de      |
+| Study Person Phone     |          |          |       |
+| Study Person Fax       |          |          |       |
+| Study Person Address   | TU Kaiserslautern, Kaiserslautern, 67663, Germany | TU Kaiserslautern, Kaiserslautern, 67663, Germany | TU Kaiserslautern, Kaiserslautern, 67663, Germany |
+| Study Person Affiliation | Computational Systems Biology | Computational Systems Biology | Computational Systems Biology |
+| Study Person Roles     | author | author | corresponding author |
+| Study Person Roles Term Accession Number |          |          |       |
+| Study Person Roles Term Source REF |          |          |       |
 
 
 ## ASSAY section
@@ -550,17 +550,17 @@ This section MUST contain the following labels, with the specified datatypes for
 
 For example, the `ASSAY` section of an ISA-XLSX `isa.assay.xlsx` file may look as follows:
 
-|                     |                                      |                              |
-|---------------------|--------------------------------------|------------------------------|
+|                     |                                      |
+|---------------------|--------------------------------------|
 | ASSAY |
-| Assay File Name     | assays/gilbert-Gx/isa.assay.xlsx     | assays/gilbert-Tx/isa.assay.xlsx |
-| Assay Measurement Type | metagenome sequencing                | transcription profiling      |
-| Assay Measurement Type Term Accession Number |                                      |                              |
-| Assay Measurement Type Term Source REF     | OBI                                  | OBI                          |
-| Assay Technology Type | nucleotide sequencing                | nucleotide sequencing         |
-| Assay Technology Type Term Accession Number |                                      |                              |
-| Assay Technology Type Term Source REF     | OBI                                  | OBI                          |
-| Assay Technology Platform | 454 GS FLX                         | 454 GS FLX                   |
+| Assay File Name     | assays/Proteomics/isa.assay.xlsx     | 
+| Assay Measurement Type | Proteomics | transcription profiling      |
+| Assay Measurement Type Term Accession Number | http://purl.obolibrary.org/obo/NCIT_C20085 |
+| Assay Measurement Type Term Source REF | NCIT | 
+| Assay Technology Type | Mass Spectrometry | 
+| Assay Technology Type Term Accession Number | http://purl.obolibrary.org/obo/NCIT_C17156 | 
+| Assay Technology Type Term Source REF  | NCIT |
+| Assay Technology Platform | Orbitrap Fusion Lumos  |
 
 
 ### ASSAY PERFORMERS
@@ -571,37 +571,36 @@ This section MUST contain the following labels, with the specified datatypes for
 
 | Label                                     | Datatype                                                                                    | Description                                                                                 |
 |------------------------------------------|---------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Assay Person Last Name                   | String                                                                                      | The last name of a person associated with the Assay.                                                                                      |
-| Assay Person First Name                  | String                                                                                      | Assay Person Name                                                                                        |
-| Assay Person Mid Initials                | String                                                                                      | The middle initials of a person associated with the Assay.                                                                              
-|
-| Assay Person Email                       | String formatted as email                                                                   | The email address of a person associated with the Assay.                                                                                      |
-| Assay Person Phone                       | String                                                                                      | The telephone number of a person associated with the Assay.                                                                                      |
-| Assay Person Fax                        | String                                                                                      | The fax number of a person associated with the assay.                                                                                      |
-| Assay Person Address                     | String                                                                                      | The address of a person associated with the assay.                                                                                      |
-| Assay Person Affiliation                 | String                                                                                      | The organization affiliation for a person associated with the assay.                                                                                      |
-| Assay Person Roles                       | String or Ontology Annotation if accompanied by Term Accession Numbers and Term Source REFs | Term to classify the role(s) performed by this person in the context of the assay, which means that the roles reported here need not correspond to roles held withing their affiliated organization. Multiple annotations or values attached to one person can be provided by using a semicolon (“;”) Unicode (U0003+B) as a separator (e.g.: submitter;funder;sponsor) .The term can be free text or from, for example, a controlled vocabulary or an ontology. If the latter source is used the Term Accession Number and Term Source REF fields below are required. |
-| Assay Person Roles Term Accession Number | String                                                                                      | The accession number from the Term Source associated with the selected term.                                                                                       |
-| Assay Person Roles Term Source REF       | String                                                                                      | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match one of the Term Source Names declared in the Ontology Source Reference section.                                                                                    |
+| Assay Person Last Name | String  | The last name of a person associated with the Assay.  |
+| Assay Person First Name  | String | Assay Person Name |
+| Assay Person Mid Initials  | String  | The middle initials of a person associated with the Assay.|
+| Assay Person Email | String formatted as email | The email address of a person associated with the Assay. |
+| Assay Person Phone  | String | The telephone number of a person associated with the Assay. |
+| Assay Person Fax  | String | The fax number of a person associated with the assay.  |
+| Assay Person Address  | String | The address of a person associated with the assay. |
+| Assay Person Affiliation | String | The organization affiliation for a person associated with the assay. |
+| Assay Person Roles | String or Ontology Annotation if accompanied by Term Accession Numbers and Term Source REFs | Term to classify the role(s) performed by this person in the context of the assay, which means that the roles reported here need not correspond to roles held withing their affiliated organization. Multiple annotations or values attached to one person can be provided by using a semicolon (“;”) Unicode (U0003+B) as a separator (e.g.: submitter;funder;sponsor) .The term can be free text or from, for example, a controlled vocabulary or an ontology. If the latter source is used the Term Accession Number and Term Source REF fields below are required. |
+| Assay Person Roles Term Accession Number | String | The accession number from the Term Source associated with the selected term. |
+| Assay Person Roles Term Source REF | String | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match one of the Term Source Names declared in the Ontology Source Reference section. |
 
 **Example**
 
 For example, the `ASSAY PERFORMERS` section of an ISA-XLSX `isa.assay.xlsx` file may look as follows:
 
-|                            |         |       |        |        |        |      |       |
-|----------------------------|---------|-------|--------|--------|--------|------|-------|
+|                            |         |       | |
+|----------------------------|---------|-------|-|
 | ASSAY PERFORMERS |
-| Assay Person Last Name     | Gilbert | Field | Huang  | Edwards | Li     | Gilna | Joint |
-| Assay Person First Name    | Jack    | Dawn  | Ying   | Rob    | Weizhong | Paul | Ian   |
-| Assay Person Mid Initials  | A       |       |        |        |        |      |       |
-| Assay Person Email         | jagi@pml.ac.uk |       |        |        |        |      |       |
-| Assay Person Phone         |         |       |        |        |        |      |       |
-| Assay Person Fax           |         |       |        |        |        |      |       |
-| Assay Person Address       | Prospect Place, Plymouth, United Kingdom | CEH Oxford, Oxford, United Kingdom | San Diego State University, San Diego, California, United States of America | Argonne National Laboratory, Argonne, Illinois, United States of America | San Diego State University, San Diego, California, United States of America | San Diego State University, San Diego, California, United States of America | Prospect Place, Plymouth, United Kingdom |
-| Assay Person Affiliation   | Plymouth Marine Laboratory | NERC Centre for Ecology and Hydrology | California Institute for Telecommunications and Information Technology | Department of Computer Science, Mathematics and Computer Science Division | California Institute for Telecommunications and Information Technology | California Institute for Telecommunications and Information Technology | Plymouth Marine Laboratory |
-| Assay Person Roles         | principal investigator role;SRA Inform On Status;SRA Inform On Error | principal investigator role | principal investigator role | principal investigator role | principal investigator role | principal investigator role | principal investigator role |
-| Assay Person Roles Term Accession Number |      |       |        |        |        |      |       |
-| Assay Person Roles Term Source REF |      |       |        |        |        |      |       |
+| Assay Person Last Name     | Zhang | Tzeng | Evans |
+| Assay Person First Name    | Ningning    | Shin-Cheng  | Bradley |
+| Assay Person Mid Initials  |       |       |
+| Assay Person Email         |  |       |
+| Assay Person Phone         |         |       |
+| Assay Person Fax           |         |       |
+| Assay Person Address       | St. Louis, Missouri 63132, USA | St. Louis, Missouri 63132, USA | St. Louis, Missouri 63132, USA |
+| Assay Person Affiliation   | Donald Danforth Plant Science Center | Donald Danforth Plant Science Center | Donald Danforth Plant Science Center |
+| Assay Person Roles         | Investigator | Laboratory Technologist | Laboratory Technologist |
+| Assay Person Roles Term Accession Number | http://purl.obolibrary.org/obo/NCIT_C25936 | http://purl.obolibrary.org/obo/NCIT_C51830 | http://purl.obolibrary.org/obo/NCIT_C51830 |
+| Assay Person Roles Term Source REF       | NCIT | NCIT | NCIT |
 
 
 # Annotation Table sheets

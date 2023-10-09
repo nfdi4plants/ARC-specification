@@ -2,7 +2,7 @@
 
 For detail on ISA framework terminology, please read the [ISA Abstract Model specification](https://isa-specs.readthedocs.io/en/latest/isamodel.html).
 
-This document describes the ISA Abstract Model reference implementation specified in the ISA-XLSX format. The XLSX format uses the SpreadsheetML markup language and schema to represent a spreadsheet document. Conceptually, using the terminology of the Spreadsheet ML specification [ISO/IEC 29500-1](https://www.loc.gov/preservation/digital/formats/fdd/fdd000398.shtml#:~:text=The%20XLSX%20format%20uses%20the,a%20rectangular%20grid%20of%20cells.), the document comprises one or more worksheets in a workbook. Every worksheet MUST contain one table object storing the metadata. Comments or auxillary information MAY be stored alongside with table objects in a worksheet.
+This document describes the ISA Abstract Model reference implementation specified in the ISA-XLSX format. The XLSX format uses the SpreadsheetML markup language and schema to represent a spreadsheet document. Conceptually, using the terminology of the Spreadsheet ML specification [ISO/IEC 29500-1](https://www.loc.gov/preservation/digital/formats/fdd/fdd000398.shtml#:~:text=The%20XLSX%20format%20uses%20the,a%20rectangular%20grid%20of%20cells.), the document comprises one or more worksheets in a workbook. Every worksheet MUST contain one table object storing the metadata. Comments or auxiliary information MAY be stored alongside with table objects in a worksheet.
 
 **Table of contents**
 
@@ -45,7 +45,7 @@ Sheets described in this specification MUST follow one of the two given formats:
 - [`Top-level metadata sheets`](#top-level-metadata-sheets) for listing top-level metadata
 - [`Annotation Table sheets`](#annotation-table-sheets) for describing experimental workflows
 
-Sheets which do not follow any of these two formats are considerered additional payload and are ignored in this specification.
+Sheets which do not follow any of these two formats are considered additional payload and are ignored in this specification.
 
 All labels are case-sensitive:
 
@@ -128,7 +128,7 @@ In the following sections, examples of each section block are given beside the s
 > [U+0023](http://www.fileformat.info/info/unicode/char/0023/index.htm)  (the `#` character) > MUST be interpreted as
 > comments, where reference implementation parsers SHOULD ignore those lines entirely.
 
-> Rows where the label `Comment[<comment name>]` appear can also appear within any of the > section blocks. Where these appear, the comment name must be unique within the context of a single block (e.g. you cannot have multiple occurences of `Comment[external DB REF]` within `STUDY ASSAYS`. Also, the value cells MUST match the number of values indicated by the rest of the section in context.
+> Rows where the label `Comment[<comment name>]` appear can also appear within any of the > section blocks. Where these appear, the comment name must be unique within the context of a single block (e.g. you cannot have multiple occurrences of `Comment[external DB REF]` within `STUDY ASSAYS`. Also, the value cells MUST match the number of values indicated by the rest of the section in context.
 
 ## Ontology Source Reference section
 
@@ -268,7 +268,7 @@ For example, the `INVESTIGATION CONTACTS` section of an ISA-XLSX `isa.investigat
 | Investigation Person Last Name | Venn  | Zimmer | Mühlhaus  |
 | Investigation Person First Name | Benedikt   | David     | Timo   |
 | Investigation Person Mid Initials |        |         |      |
-| Investigation Person Email     | venn@bio.uni-kl.de         | davidzimmer91@gmail.com         | timo.muehlhaus@rptu.de      |
+| Investigation Person Email     | venn@rptu.de         | d_zimmer@rptu.de         | timo.muehlhaus@rptu.de      |
 | Investigation Person Phone     |          |          |       |
 | Investigation Person Fax       |          |          |       |
 | Investigation Person Address   | TU Kaiserslautern, Kaiserslautern, 67663, Germany | TU Kaiserslautern, Kaiserslautern, 67663, Germany | TU Kaiserslautern, Kaiserslautern, 67663, Germany |
@@ -471,7 +471,7 @@ For example, the `STUDY PROTOCOLS` section of an ISA-XLSX `isa.investigation.xls
 | Study Protocol Description    | Extraction and storage of algae cells from photo-bio reactor. Extracted and centrifuged cell pellets were frozen in liquid nitrogen. | Proteins were extracted from cells using a combination of chemical (lysis buffer) and physical (sonicator) methods. Digested peptides were purified and resuspended in LC loading buffer. | Peptides were separated by a nanoHPLC (C18 column) and detected using an Orbitrap mass spectrometry device. |
 | Study Protocol URI            | | | |
 | Study Protocol Version        | |
-| Study Protocol Parameters Name | Centrifugation Time;sample volume setting  | Freqency; duration  | duration;flow rate
+| Study Protocol Parameters Name | Centrifugation Time;sample volume setting  | frequency; duration  | duration;flow rate
 | Study Protocol Parameters Name Term Accession Number | http://purl.obolibrary.org/obo/NCIT_C178881;http://purl.allotrope.org/ontologies/result#AFR_0002492 | http://purl.obolibrary.org/obo/PATO_0000044;http://purl.obolibrary.org/obo/PATO_0001309 | http://purl.obolibrary.org/obo/PATO_0001309;http://purl.obolibrary.org/obo/PATO_0001574 |
 | Study Protocol Parameters Name Term Source REF | NCIT;AFO | PATO;PATO | PATO;PATO |
 | Study Protocol Components Name | liquid nitrogen |  Sonicator; Extraction Kit | HPLC; Column; MS
@@ -511,7 +511,7 @@ For example, the `STUDY CONTACTS` section of an ISA-XLSX `isa.investigation.xlsx
 | Study Person Last Name | Venn  | Zimmer | Mühlhaus  |
 | Study Person First Name | Benedikt   | David     | Timo   |
 | Study Person Mid Initials |        |         |      |
-| Study Person Email     | venn@bio.uni-kl.de         | davidzimmer91@gmail.com         | timo.muehlhaus@rptu.de      |
+| Study Person Email     | venn@bio.rptu.de         | d_zimmer@rptu.de         | timo.muehlhaus@rptu.de      |
 | Study Person Phone     |          |          |       |
 | Study Person Fax       |          |          |       |
 | Study Person Address   | TU Kaiserslautern, Kaiserslautern, 67663, Germany | TU Kaiserslautern, Kaiserslautern, 67663, Germany | TU Kaiserslautern, Kaiserslautern, 67663, Germany |
@@ -643,7 +643,7 @@ An `Labeled Extract Material` MUST be indicated with the node type `Labeled Extr
 
 ## Ontology Annotations
 
-Where a value is an `Ontology Annotation` in a table file, `Term Accession Number` and `Term Source REF` fields MUST follow the column cell in which the value is entered. These two columns SHOULD contain further ontological information about the header. In this case, following the static header string, separated by a sinlge space, there MUST be a short ontology term identifier formatted as CURIEs (prefixed identifiers) of the form `<IDSPACE>:<LOCALID>` (specified [here](http://obofoundry.org/id-policy)) inside `()` brackets.
+Where a value is an `Ontology Annotation` in a table file, `Term Accession Number` and `Term Source REF` fields MUST follow the column cell in which the value is entered. These two columns SHOULD contain further ontological information about the header. In this case, following the static header string, separated by a single space, there MUST be a short ontology term identifier formatted as CURIEs (prefixed identifiers) of the form `<IDSPACE>:<LOCALID>` (specified [here](http://obofoundry.org/id-policy)) inside `()` brackets.
 For example, a characteristic type `organism` with a value of `Homo sapiens` can be qualified with an `Ontology Annotation` of a term from NCBI Taxonomy as follows:
 
 | Characteristics [organism]   | Term Source REF (OBI:0100026)  | Term Accession Number (OBI:0100026) |
@@ -699,7 +699,7 @@ A `Component` is a consumable or reusable physical entity used in the experiment
 
 ## Parameters
 
-`Parameters` are all additional information about the experimental setup, that do not fall under the aformentioned 3 categories. It is formatted in the pattern `Parameter [<category term>]`. The value MUST be free text, numeric, or an [`Ontology Annotation`](#ontology-annotations).
+`Parameters` are all additional information about the experimental setup, that do not fall under the aforementioned 3 categories. It is formatted in the pattern `Parameter [<category term>]`. The value MUST be free text, numeric, or an [`Ontology Annotation`](#ontology-annotations).
 
 | Parameter [time] | Unit   | Term Source REF (PATO_0000165)  | Term Accession Number (PATO:0000165)  |
 |--------------------------------|--------|-------------------|------------------------------------------------------|

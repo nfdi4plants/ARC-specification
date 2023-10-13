@@ -1,4 +1,4 @@
-# Annotated Research Context Specification, v1.1-rfc
+# Annotated Research Context Specification, v1.2
 
 Please provide feedback via GitHub issues or a pull request.
 
@@ -10,8 +10,7 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
 
 ## Table of Contents
 
-- [Annotated Research Context Specification, v1.1-rfc](#annotated-research-context-specification-v11-rfc)
-  - [Table of Contents](#table-of-contents)
+- [Annotated Research Context Specification, v1.2](#annotated-research-context-specification-v12)
   - [Introduction](#introduction)
     - [Extensions](#extensions)
   - [ARC Structure and Content](#arc-structure-and-content)
@@ -128,6 +127,8 @@ Notes:
 - Removing the `.git` top-level subdirectory (and thereby all provenance information captured within the Git history) from a working copy invalidates an ARC.
 
 ### ISA-XLSX Format
+
+The ISA-XLSX specification is currently part of the ARC specification. Its version therefore follows the version of the ARC specification.
 
 https://github.com/nfdi4plants/ARC-specfication/blob/main/ISA-XLSX.md
 

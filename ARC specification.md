@@ -134,49 +134,19 @@ https://github.com/nfdi4plants/ARC-specfication/blob/main/ISA-XLSX.md
 
 ### Study and Resources
 
-The characteristics of all material and resources used within the investigation must be specified in a study. Studies must be placed into a unique subdirectory of the top-level `studies` subdirectory. All ISA metadata specific to a single study MUST be annotated in the file `isa.study.xlsx` at the root of the study's subdirectory. This workbook MUST contain a single resources description that can be organized in one or multiple worksheets. Material or experimental samples can be stored in the form of virtual sample files (containing unique identifiers) in the resources directory. Each external data file can be interpreted as a virtual sample and stored accordingly under resources. External data refers to data that is neither originating within the investigation scope of the ARC nor can be referenced externally, but is required to ensure reproducibility.
+The characteristics of all material and resources used within the investigation must be specified in a study. Studies must be placed into a unique subdirectory of the top-level `studies` subdirectory. All ISA metadata specific to a single study MUST be annotated in the file `isa.study.xlsx` at the root of the study's subdirectory. This workbook MUST contain a single resources description that can be organized in one or multiple worksheets. 
+
+The `study` file MUST follow the [ISA-XLSX study file specification](ISA-XLSX.md#study-file).
+
+ Material or experimental samples can be stored in the form of virtual sample files (containing unique identifiers) in the resources directory. Each external data file can be interpreted as a virtual sample and stored accordingly under resources. External data refers to data that is neither originating within the investigation scope of the ARC nor can be referenced externally, but is required to ensure reproducibility.
 
 Protocols that are necessary to describe the sample or material creating process can be placed under the protocols directory.
 
 ### Assay Data and Metadata
 
-All measurement data sets are considered as assays and are considered immutable input data. Assay data MUST be placed into a unique subdirectory of the top-level `assays` subdirectory. All ISA metadata specific to a single assay MUST be annotated in the file `isa.assay.xlsx` at the root of the assay's subdirectory. This workbook MUST contain a single assay that can be organized in one or multiple worksheets. Worksheets MUST be named uniquely within the same workbook. A worksheet named `Assay` MUST store the STUDY ASSAYS section defined on investigation-level of the ISA model and is not required in the `isa.investigation.xlsx`. These include the terms `Study Assay Measurement Type`, `Study Assay Measurement Type Term Accession Number`, `Study Assay Measurement Type Term Source REF`, `Study Assay Technology Type`, `Study Assay Technology Type Term Accession Number`, `Study Assay Technology Type Term Source REF`, and `Study Assay Technology Platform`.
-Additional worksheets MUST contain a table object with fields organized on a per-row basis. The first row of the table object MUST be used for column headers. A `Source` MUST be indicated with the column heading `Source Name`. Every table object MUST define one source per row and MUST contain at least one source. A `Sample` MUST be indicated with the column heading `Sample Name`. The source-sample-relation MUST follow a unique path in a directed acyclic graph, but MAY be distributed across different worksheets.
+All measurement data sets are considered as assays and are considered immutable input data. Assay data MUST be placed into a unique subdirectory of the top-level `assays` subdirectory. All ISA metadata specific to a single assay MUST be annotated in the file `isa.assay.xlsx` at the root of the assay's subdirectory. This workbook MUST contain a single assay that can be organized in one or multiple worksheets. 
 
-<table>
-
-<tr><td>
-
-|   |   |
-|-|-|
-| Study Assay Measurement Type | "value" |
-| Study Assay Measurement Type Term Accession Number | "value" |
-| Study Assay Measurement Type Term Source REF | "value" |
-| ... | ... |
-
-</td><td>
-
-| Source Name | building block* | Sample Name |
-|-|-|-|
-mrv1 | descriptorA | s1 |
-mrv2 | descriptorB | s2 |
-_
-
-</td><td>
-
-| Source Name | building block* | Sample Name |
-|-|-|-|
-s1 | descriptorC | n1 |
-s1 | descriptorD | n2 |
-s2 | descriptorD | n3 |
-
-</td></tr>
-    <tr>
-        <th style="text-align:center">[assay]</th>
-        <th style="text-align:center">[worksheet1]</th>
-        <th style="text-align:center">[worksheet2]</th>
-    </tr>
-</table>
+The `assay` file MUST follow the [ISA-XLSX assay file specification](ISA-XLSX.md#assay-file).
 
 Notes:
 
@@ -184,7 +154,7 @@ Notes:
 
 - To ensure reusability of assays, it is strongly RECOMMENDED to include necessary metadata mandated by typical metadata schemes necessary for reproduction. This process is facilitated by the use of templates that can be found [here](https://github.com/nfdi4plants/SWATE_templates).
 
-- It is RECOMMENDED to order worksheets according to the source-sample-relation for readability.
+- It is RECOMMENDED to order worksheets according to the input-output-relation for readability.
 
 - It is RECOMMENDED to adopt the structure outlined [below](#best-practices) to organize assay data files and other supporting information.
 
@@ -243,7 +213,11 @@ Note:
 
 ### Top-level Metadata and Workflow Description
 
-*Top-level metadata and workflow description* tie together the elements of an ARC in the contexts of investigation and associated studies (in the ISA definition), captured in the files `isa.investigation.xlsx` in [ISA-XLSX format](#isa-xlsx-format), which MUST be present. Furthermore, top-level reproducibility information MUST be provided in the CWL `arc.cwl`, which also MUST exist.
+*Top-level metadata and workflow description* tie together the elements of an ARC in the contexts of an investigation captured in the `isa.investigation.xlsx` file, which MUST be present. 
+
+The `investigation` file MUST follow the [ISA-XLSX investigation file specification](ISA-XLSX.md#investigation-file).
+
+Furthermore, top-level reproducibility information MUST be provided in the CWL `arc.cwl`, which also MUST exist.
 
 #### Investigation and Study Metadata
 

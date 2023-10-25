@@ -705,6 +705,10 @@ A `Component` is a consumable or reusable physical entity used in the experiment
 |--------------------------------|--------|-------------------|------------------------------------------------------|
 |                            300 | Kelvin | UO                | [http://…/obo/UO_0000032](http://purl.obolibrary.org/obo/UO_0000032) |
 
+## Others
+
+Columns whose headers do not follow any of the formats described above are considered additional payload and are ignored in this specification.
+
 ## Examples
 
 For example, a simple [source](#inputs-and-outputs) to [sample](#inputs-and-outputs) may be represented as:

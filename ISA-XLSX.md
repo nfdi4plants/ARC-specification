@@ -2,7 +2,7 @@
 
 For detail on ISA framework terminology, please read the [ISA Abstract Model specification](https://isa-specs.readthedocs.io/en/latest/isamodel.html).
 
-This document describes the ISA Abstract Model reference implementation specified in the ISA-XLSX format. The XLSX format uses the SpreadsheetML markup language and schema to represent a spreadsheet document. Conceptually, using the terminology of the Spreadsheet ML specification [ISO/IEC 29500-1](https://www.loc.gov/preservation/digital/formats/fdd/fdd000398.shtml#:~:text=The%20XLSX%20format%20uses%20the,a%20rectangular%20grid%20of%20cells.), the document comprises one or more worksheets in a workbook. Every worksheet MUST contain one table object storing the metadata. Comments or auxiliary information MAY be stored alongside with table objects in a worksheet.
+This document describes the ISA Abstract Model reference implementation specified in the ISA-XLSX format. The XLSX format uses the SpreadsheetML markup language and schema to represent a spreadsheet document. Conceptually, using the terminology of the Spreadsheet ML specification [ISO/IEC 29500-1](https://www.loc.gov/preservation/digital/formats/fdd/fdd000398.shtml#:~:text=The%20XLSX%20format%20uses%20the,a%20rectangular%20grid%20of%20cells.), the document comprises one or more worksheets in a workbook.
 
 **Table of contents**
 
@@ -30,11 +30,11 @@ Below we provide the schemas and the content rules for valid ISA-XLSX documents.
 ISA-XLSX uses three types of files to capture the experimental metadata:
   - Investigation file
   - Study file
-  - Assay file (with associated data files)
+  - Assay file
 
 The Investigation file contains all the information needed to understand the overall goals and means used in an experiment; experimental steps (or sequences of events) are described in the Study and in the Assay file(s). For each Investigation file there may be one or more Studies defined with a corresponding Study file; for each Study there may be one or more Assays defined with corresponding Assay files; one assay file may be registered in different studies.
 
-In order to facilitate identification of ISA-XLSX component files, specific naming patterns MUST follow:
+In order to facilitate identification of ISA-XLSX component files, specific naming patterns MUST be followed:
 
 - `isa.investigation.xlsx` for identifying the [Investigation file](#investigation-file)
 - `isa.study.xlsx` for identifying [Study file(s)](#study-file)
@@ -54,7 +54,7 @@ Dates SHOULD be supplied in the [ISO8601](http://www.iso.org/iso/home/standards/
 For maximal portability file names SHOULD contain only ASCII characters not excluded
 already (that is `A-Za-z0-9._!#$%&+,;=@^(){}'[]` - we exclude space as many utilities
 do not accept spaces in file paths): non-English alphabetic characters cannot be guaranteed
-to be supported in all locales. It would be good practice to avoid the shell metacharacters
+to be supported in all locales. It is recommended to avoid the shell metacharacters
 `(){}'[]$."`.
 
 # Investigation File
@@ -62,9 +62,9 @@ to be supported in all locales. It would be good practice to avoid the shell met
 The `Investigation file` fulfils four needs:
 
 1. to declare key entities, such as factors, protocols, which may be referenced in the other files
-2. to track provenance of the terminologies (controlled vocabularies or ontologies) there are used, where applicable
+2. to track provenance of the used terminologies (controlled vocabularies or ontologies), where applicable
 3. to relate Assay files to Studies
-4. to relate each Study file to an Investigation (this only becomes necessary when two or more Study files need to be grouped).
+4. to select those Studies, that are considered part of the investigation.
 
 The `Investigation File` MUST contain one [`Top-Level Metadata sheet`](#top-level-metadata-sheets). This sheet MUST be named `isa_investigation` and MUST contain the following sections:
  
@@ -96,7 +96,7 @@ The `Study File` MUST contain one [`Top-Level Metadata sheet`](#top-level-metada
 - [`STUDY PROTOCOLS`](#study-protocols)
 - [`STUDY CONTACTS`](#study-contacts)
 
-Additionally, the `Study File` SHOULD contain one or more [`Annotation Table sheets`](#annotation-table-sheets), which record provenance of biological samples, from source material through a collection process to sample material.
+Additionally, the `Study File` SHOULD contain one or more [`Annotation Table sheet(s)`](#annotation-table-sheets), which MAY record provenance of biological samples, from source material through a collection process to sample material.
 
 Therefore, the main entities of the `Study File` should be `Sources` and `Samples`.
 
@@ -104,14 +104,14 @@ The `Study File` implements the [`Study`](https://isa-specs.readthedocs.io/en/la
 
 # Assay File
 
-The `Assay` represents one experimental measurement. An `Assay File` metadata about the assay design, information about the people performing the experiment, and most importantly, details about the preparation execution of the experimental measurement.
+The `Assay` represents one experimental measurement. An `Assay File` metadata about the assay design, information about the people performing the experiment, and most importantly, details about the preparation and/or execution of the experimental measurement.
 
 The `Assay File` MUST contain one [`Top-Level Metadata sheet`](#top-level-metadata-sheets). This sheet MUST be named `isa_assay` and MUST contain the following sections:
 
 - [`ASSAY`](#assay-section)
 - [`ASSAY PERFORMERS`](#assay-performers)
 
-Additionally, the `Assay File` SHOULD contain one or more [`Annotation Table sheets`](#annotation-table-sheets), which record preparation of biological samples, measurement of these samples and basic computations performed on the resulting data.
+Additionally, the `Assay File` SHOULD contain one or more [`Annotation Table sheet(s)`](#annotation-table-sheets), which MAY record preparation of biological samples, measurement of these samples and basic computations performed on the resulting data.
 
 Therefore, the main entities of the `Assay File` should be `Samples` and `Data`.
 
@@ -170,11 +170,9 @@ For example, the `ONTOLOGY SOURCE REFERENCE` section of an ISA-XLSX `isa.investi
 
 ## INVESTIGATION section
 
-This section is organized in several subsections, described in detail below. The Investigation section provides a
-flexible mechanism for grouping two or more Study files where required. When only one Study is created, the values in
-this section SHOULD be left empty and the relevant metadata values recorded in the Study section only.
+This section is organized in several subsections, described in detail below.
 
-These sections implement an `Investigation` from the ISA Abstract Model.
+This section implements an `Investigation` from the ISA Abstract Model.
 
 ### INVESTIGATION
 
@@ -643,7 +641,7 @@ Each annotation table sheet MUST contain an `Input` and an `Output` column, whic
 
 `Protocol Description` columns MAY be used to specify the description of the `Protocol` node implemented by the `Process` node. Per Annotation Table sheet there MUST be at most one `Protocol Description` column. The value MUST be free text.
 
-`Protocol Uri` columns MAY be used to specify the uri of the `Protocol` node implemented by the `Process` node. Per Annotation Table sheet there MUST be at most one `Protocol Uri` column. The value MUST be free text.
+`Protocol Uri` columns MAY be used to specify the uri of the `Protocol` node implemented by the `Process` node. Per Annotation Table sheet there MUST be at most one `Protocol Uri` column. The value MUST be either a URI or a file path corresponding to a relevant protocol file location.
 
 `Protocol Type` columns MAY be used to specify the type of the `Protocol` node implemented by the `Process` node. Per Annotation Table sheet there MUST be at most one `Protocol Type` column. The value MUST be free text, or an [`Ontology Annotation`](#ontology-annotations).
 
@@ -677,7 +675,7 @@ in the Ontology Sources with `UO`:
 
 ## Characteristics
 
-`Characteristics` are used as an attribute column following [`Sources`](#inputs-and-outputs) and [`Samples`](#inputs-and-outputs). This column contains terms describing each material according to the characteristics category indicated in the column header in the pattern `Characteristic [<category term>]`.
+A `Characteristic` is used as an attribute column following [`Sources`](#inputs-and-outputs) and [`Samples`](#inputs-and-outputs). This column contains terms describing each material according to the characteristics category indicated in the column header in the pattern `Characteristic [<category term>]`.
 For example, a column header `Characteristic [organ part]` would contain terms describing an organ part. `Characteristic` SHOULD be used as an attribute column following `Input [Source Name]`, or `Input [Sample Name]`. The value MUST be free text, numeric, or an [`Ontology Annotation`](#ontology-annotations).
 
 For example, a characteristic type Organism with a value of Homo sapiens can be qualified with an [`Ontology Annotation`](#ontology-annotations) of a term from NCBI Taxonomy as follows:
@@ -688,8 +686,7 @@ For example, a characteristic type Organism with a value of Homo sapiens can be 
 
 ## Factors
 
-A `Factor` is an independent variable manipulated by an experimentalist with the intention to affect biological systems in a way that can be measured by an assay. This field holds the actual data for the `Factor` named between the
-square brackets (as declared in the `Study Factors` section of a top-level metadata sheet) so MUST match; for example, `Factor [compound]`. The value MUST be free text, numeric, or an [`Ontology Annotation`](#ontology-annotations).
+A `Factor` is an independent variable manipulated by an experimentalist with the intention to affect biological systems in a way that can be measured by an assay. This field holds the actual data for the `Factor` named between the square brackets (as declared in the `Study Factors` section of a top-level metadata sheet) so MUST match, for example, `Factor [compound]`. The value MUST be free text, numeric, or an [`Ontology Annotation`](#ontology-annotations).
 
 | Factor [Gender]   | Term Source REF (NCIT:C17357)  | Term Accession Number (NCIT:C17357)  |
 |------------------------|-------------------|-------------------------|
@@ -706,7 +703,7 @@ A `Component` is a consumable or reusable physical entity used in the experiment
 
 ## Parameters
 
-`Parameters` are all additional information about the experimental setup, that do not fall under the aforementioned 3 categories. It is formatted in the pattern `Parameter [<category term>]`. The value MUST be free text, numeric, or an [`Ontology Annotation`](#ontology-annotations).
+A `Parameter` can be used to specify any additional information about the experimental setup, that does not fall under the aforementioned 3 categories. It is formatted in the pattern `Parameter [<category term>]`. The value MUST be free text, numeric, or an [`Ontology Annotation`](#ontology-annotations).
 
 | Parameter [time] | Unit   | Term Source REF (PATO_0000165)  | Term Accession Number (PATO:0000165)  |
 |--------------------------------|--------|-------------------|------------------------------------------------------|
@@ -714,7 +711,7 @@ A `Component` is a consumable or reusable physical entity used in the experiment
 
 ## Others
 
-Columns whose headers do not follow any of the formats described above are considered additional payload and are ignored in this specification.
+Columns whose headers do not follow any of the formats described above are considered additional payload and are out of the scope of this specification.
 
 ## Examples
 

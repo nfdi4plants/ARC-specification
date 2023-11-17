@@ -611,7 +611,7 @@ The content of the annotation table MUST be placed in an `xlsx table` whose name
 
 ## Inputs and Outputs
 
-Each annotation table sheet MUST contain an `Input` and an `Output` column, which denote the Input and Output node of the `Process` node respectively. They MUST be formatted in the pattern `Input [<NodeType>]` and `Output [<NodeType>]`.
+Each annotation table sheet MUST contain at most one `Input` and at most one `Output` column, which denote the Input and Output node of the `Process` node respectively. They MUST be formatted in the pattern `Input [<NodeType>]` and `Output [<NodeType>]`.
 
 `NodeTypes` MUST be one of the following:
 
@@ -619,9 +619,7 @@ Each annotation table sheet MUST contain an `Input` and an `Output` column, whic
 
 - A `Sample` MUST be indicated with the node type `Sample Name`.
 
-- An `Extract Material` MUST be indicated with the node type `Extract Name`.
-
-- A `Labeled Extract Material` MUST be indicated with the node type `Labeled Extract Name`.
+- An `Extract Material` MUST be indicated with the node type `Material Name`.
 
 - An `Image File` MUST be indicated with the node type `Image File`.
 
@@ -629,7 +627,7 @@ Each annotation table sheet MUST contain an `Input` and an `Output` column, whic
 
 - A `Derived Data File` MUST be indicated with the node type `Derived Data File`.
 
-`Source Names`, `Sample Names`, `Extract Names` and `Labeled Extract Names` MUST be unique across an ARC. If two of these entities with the same name exist in the same ARC, they are considered the same entity.
+`Source Names`, `Sample Names`, `Material Names` MUST be unique across an ARC. If two of these entities with the same name exist in the same ARC, they are considered the same entity.
 
 `Image File`, `Raw Data File` or `Derived Data File` node types MUST correspond to a relevant file location. 
 

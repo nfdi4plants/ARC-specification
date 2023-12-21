@@ -23,6 +23,7 @@ This document describes the ISA Abstract Model reference implementation specifie
   - [Factors](#factors)
   - [Components](#components)
   - [Parameters](#parameters)
+  - [Comments](#comments)
   - [Examples](#examples)
 
 Below we provide the schemas and the content rules for valid ISA-XLSX documents. 
@@ -708,6 +709,14 @@ A `Parameter` can be used to specify any additional information about the experi
 | Parameter [time] | Unit   | Term Source REF (PATO_0000165)  | Term Accession Number (PATO:0000165)  |
 |--------------------------------|--------|-------------------|------------------------------------------------------|
 |                            300 | Kelvin | UO                | [http://…/obo/UO_0000032](http://purl.obolibrary.org/obo/UO_0000032) |
+
+## Comments
+
+A `Comment` can be used to provide some additional information. Columns headed with `Comment[<comment name>]` MAY appear after any named node in the Annotation Table. The value MUST be free text.
+
+| Comment [Answer to everything] |
+|--------------------------------|
+|                      forty-two |
 
 ## Others
 

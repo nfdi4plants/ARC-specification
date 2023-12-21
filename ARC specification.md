@@ -72,7 +72,7 @@ Metadata that describe the characteristics of material and resources follow the 
 
 - *Runs* capture data products (i.e., outputs of computational analyses) derived from assays, other runs, or study materials using workflows (located in the aforementioned *workflows* subdirectory). Each run is a collection of files, stored in the top-level `runs` subdirectory. It MUST be accompanied by a per-run CWL workflow description, stored in `<run_name>.cwl` as further described [below](#run-description).
 
-- *Top-level metadata and workflow description* tie together the elements of an ARC in the contexts of investigation and associated studies (in the ISA definition), captured in the file `isa.investigation.xlsx` in [ISA-XLSX format](#isa-xlsx-format), which MUST be present. Furthermore, top-level reproducibility information MUST be provided in the CWL `arc.cwl`, which also MUST exist.
+- *Top-level metadata and workflow description* tie together the elements of an ARC in the contexts of investigation and associated studies (in the ISA definition), captured in the file `isa.investigation.xlsx` in [ISA-XLSX format](#isa-xlsx-format), which MUST be present. Furthermore, top-level reproducibility information SHOULD be provided in the CWL `arc.cwl`.
 
 All other files contained in an ARC (e.g., a `README.txt`, pre-print PDFs, additional annotation files) are referred to as *additional payload*, and MAY be located anywhere within the ARC structure. However, an ARC MUST be [reproducible](#reproducible-arcs) and [publishable](#shareable-and-publishable-arcs) even if these files are deleted. Further considerations on additional payload are described [below](#additional-payload).
 
@@ -217,7 +217,7 @@ Note:
 
 The `investigation` file MUST follow the [ISA-XLSX investigation file specification](ISA-XLSX.md#investigation-file).
 
-Furthermore, top-level reproducibility information MUST be provided in the CWL `arc.cwl`, which also MUST exist.
+Furthermore, top-level reproducibility information SHOULD be provided in the CWL `arc.cwl`.
 
 #### Investigation and Study Metadata
 
@@ -228,7 +228,7 @@ The study-level SHOULD define [ISA factors](https://isa-specs.readthedocs.io/en/
 
 #### Top-Level Run Description
 
-The file `arc.cwl` MUST exist at the root directory of each ARC. It describes which runs are executed (and specifically, their order) to (re)produce the computational outputs contained within the ARC.
+The file `arc.cwl` SHOULD exist at the root directory of each ARC. It describes which runs are executed (and specifically, their order) to (re)produce the computational outputs contained within the ARC.
 
 `arc.cwl` MUST be a CWL v1.2 workflow description and adhere to the same requirements as [run descriptions](#run-description). In particular, references to study or assay data files, nested workflows MUST use relative paths. An optional file `arc.yml` MAY be provided to specify input parameters.
 

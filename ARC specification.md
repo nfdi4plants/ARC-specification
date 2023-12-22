@@ -26,6 +26,7 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
     - [Top-level Metadata and Workflow Description](#top-level-metadata-and-workflow-description)
       - [Investigation and Study Metadata](#investigation-and-study-metadata)
       - [Top-Level Run Description](#top-level-run-description)
+    - [Data Path Annotation](#data-path-annotation)
   - [Shareable and Publishable ARCs](#shareable-and-publishable-arcs)
     - [Reproducible ARCs](#reproducible-arcs)
   - [Mechanism for Quality Control of ARCs](#mechanism-for-quality-control-of-arcs)
@@ -231,6 +232,37 @@ The study-level SHOULD define [ISA factors](https://isa-specs.readthedocs.io/en/
 The file `arc.cwl` MUST exist at the root directory of each ARC. It describes which runs are executed (and specifically, their order) to (re)produce the computational outputs contained within the ARC.
 
 `arc.cwl` MUST be a CWL v1.2 workflow description and adhere to the same requirements as [run descriptions](#run-description). In particular, references to study or assay data files, nested workflows MUST use relative paths. An optional file `arc.yml` MAY be provided to specify input parameters.
+
+### Data Path Annotation
+
+All metadata references to files or directories located inside the ARC MUST follow the following patterns:
+
+- The `general pattern`, which is always applicable and SHOULD always be used is to specify the path relative to the ARC root
+
+- The `folder specific pattern`, which MAY be used. This pattern dependes on the metadata context:
+  - Data nodes in `isa.assay.xlsx` files: The path MAY be specified relative to the `dataset` sub-folder of the assay
+  - Data nodes in `isa.study.xlsx` files: The path MAY be specified relative to the `resources` sub-folder of the study
+
+#### Examples
+
+In this example, there are two `assays`, with `Assay1`containing a measurement of a `Source` material, producing an output `Raw Data file`. `Assay2` references this `Data file` for producing a new `Derived Data File`
+
+Use of `general pattern` relative paths from the arc root folder:
+
+`assays/Assay1/isa.assay.xlsx`:
+
+| Input [Source Name] | Parameter[Instrument model]          | Output [Raw Data File] | 
+|-------------|---------------------------------|----------------------------------|
+| input       | Bruker 500 Avance | assays/Assay1/dataset/measurement.txt |
+
+`assays/Assay2/isa.assay.xlsx`:
+
+| Input [Raw Data File] | Parameter[script file]          | Output [Derived Data File] |
+|----------------------------------|---------------------------------|----------------------------------|
+| assays/Assay1/dataset/measurement.txt | assays/Assay2/dataset/script.sh | assays/Assay2/dataset/result.txt |
+
+
+
 
 ## Shareable and Publishable ARCs
 

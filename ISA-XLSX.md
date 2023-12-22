@@ -631,7 +631,7 @@ Each annotation table sheet MUST contain an `Input` and an `Output` column, whic
 
 `Source Names`, `Sample Names`, `Extract Names` and `Labeled Extract Names` MUST be unique across an ARC. If two of these entities with the same name exist in the same ARC, they are considered the same entity.
 
-`Image File`, `Raw Data File` or `Derived Data File` node types MUST correspond to a relevant file location. 
+`Image File`, `Raw Data File` or `Derived Data File` node types MUST correspond to a relevant file location, following the [Data Path Annotation](/ARC%20specification.md#data-path-annotation) patterns.
 
 ## Protocol Columns
 

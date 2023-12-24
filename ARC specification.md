@@ -237,7 +237,7 @@ The file `arc.cwl` MUST exist at the root directory of each ARC. It describes wh
 
 All metadata references to files or directories located inside the ARC MUST follow the following patterns:
 
-- The `general pattern`, which is always applicable and SHOULD always be used is to specify the path relative to the ARC root
+- The `general pattern`, which is universally applicable and SHOULD be used is to specify the path relative to the ARC root
 
 - The `folder specific pattern`, which MAY be used. This pattern dependes on the metadata context:
   - Data nodes in `isa.assay.xlsx` files: The path MAY be specified relative to the `dataset` sub-folder of the assay

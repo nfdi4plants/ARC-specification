@@ -241,7 +241,7 @@ ARCs can be shared in any state. They are considered *publishable* (e.g. for the
   - Investigation Identifier
   - Investigation Title
   - Investigation Description
-  - INVESTIGATION CONTACTS section and/or [Comment]ORCID of the PI(s)
+  - INVESTIGATION CONTACTS section and/or Comment[ORCID] of the PI(s)
     - Investigation Person Last Name
     - Investigation Person First Name
     - Investigation Person Mid Initials

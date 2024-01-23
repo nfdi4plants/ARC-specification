@@ -712,7 +712,7 @@ A `Parameter` can be used to specify any additional information about the experi
 
 ## Comments
 
-A `Comment` can be used to provide some additional information. Columns headed with `Comment[<comment name>]` MAY appear after any named node in the Annotation Table. The value MUST be free text.
+A `Comment` can be used to provide some additional information. Columns headed with `Comment[<comment name>]` MAY appear anywhere in the Annotation Table. The comment always refers to the Annotation Table. The value MUST be free text.
 
 | Comment [Answer to everything] |
 |--------------------------------|

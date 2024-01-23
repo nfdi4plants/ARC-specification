@@ -620,15 +620,27 @@ Each annotation table sheet MUST contain at most one `Input` and at most one `Ou
 
 - An `Extract Material` MUST be indicated with the node type `Material Name`.
 
-- An `Image File` MUST be indicated with the node type `Image File`.
-
-- A `Raw Data File` MUST be indicated with the node type `Raw Data File`.
-
-- A `Derived Data File` MUST be indicated with the node type `Derived Data File`.
+- A `Data` object MUST be indicated with the node type `Data`.
 
 `Source Names`, `Sample Names`, `Material Names` MUST be unique across an ARC. If two of these entities with the same name exist in the same ARC, they are considered the same entity.
 
-`Image File`, `Raw Data File` or `Derived Data File` node types MUST correspond to a relevant file location, following the [Data Path Annotation](/ARC%20specification.md#data-path-annotation) patterns.
+The `Data` node type MUST correspond to a relevant data resource location, following the [Data Path Annotation](/ARC%20specification.md#data-path-annotation) patterns. If the annotation of the `Data` node refers not to the complete resource, but a part of it, a `Selector` MAY added. This Selector MUST be separated from the location using a `#`— with no whitespace between: `location#selector`. 
+
+`Data Format` SHOULD be expressed using a [MIME format](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types), most commonly consisting of two parts: a type and a subtype, separated by a slash (/) — with no whitespace between: `type/subtype`. If appropriate, a format from the list composed by [IANA](https://www.iana.org/assignments/media-types/media-types.xhtml)
+SHOULD be picked. Unregistered or niche encoding and file formats MAY be indicated instead via the most appropriate URL.
+
+## Examples
+
+In this example, there are two `assays`, with `Assay1`containing a measurement of a `Source` material, producing an output `Raw Data file`. `Assay2` references this `Data file` for producing a new `Derived Data File`
+
+Use of `general pattern` relative paths from the arc root folder:
+
+`assays/Assay1/isa.assay.xlsx`:
+
+| Input [Sample Name] | Output [Data]          | Output Data Format | Output Data Selector | 
+|-------------|---------------------------------|----------------------------------|--|
+| input1       | result.csv#col=1 | text/csv | https://datatracker.ietf.org/doc/html/rfc7111 |
+| input2       | result.csv#col=2 | text/csv | https://datatracker.ietf.org/doc/html/rfc7111 |
 
 ## Protocol Columns
 

@@ -11,6 +11,7 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
 ## Table of Contents
 
 - [Annotated Research Context Specification, v1.2](#annotated-research-context-specification-v12)
+  - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
     - [Extensions](#extensions)
   - [ARC Structure and Content](#arc-structure-and-content)
@@ -27,9 +28,12 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
       - [Investigation and Study Metadata](#investigation-and-study-metadata)
       - [Top-Level Run Description](#top-level-run-description)
     - [Data Path Annotation](#data-path-annotation)
+      - [Examples](#examples)
   - [Shareable and Publishable ARCs](#shareable-and-publishable-arcs)
     - [Reproducible ARCs](#reproducible-arcs)
   - [Mechanism for Quality Control of ARCs](#mechanism-for-quality-control-of-arcs)
+    - [Structure of the validation branch](#structure-of-the-validation-branch)
+    - [Structure of the validation\_targets.yml file](#structure-of-the-validation_targetsyml-file)
   - [Best Practices](#best-practices)
     - [Community Specific Data Formats](#community-specific-data-formats)
     - [Compression and Encryption](#compression-and-encryption)
@@ -298,9 +302,19 @@ Reproducibility of ARCs refers mainly to its *runs*. Within an ARC, it MUST be p
 
 ## Mechanism for Quality Control of ARCs
 
-ARCs are supposed to be living research objects and are as such never complete. Nevertheless, a mechanism to report the current state and quality of an ARC is indispensable. Therefore, ARCs will be scored according to the amount of metadata information available (specifically with established minimal metadata standards such as MinSeqE, MIAPPE, etc.), the quality of data and metadata (this metric will be established in the next version), manual curation and review, and the reuse of ARCs by other researchers measured by physical includes of the data and referencing.
+ARCs are supposed to be living research objects and are as such never complete. Nevertheless, a mechanism to continuously report the current state and quality of an ARC is indispensable. This process is further referred to as _validation_ of the ARC against a _target_, where the _target_ is a arbitrary set of validation cases that the ARC MUST pass to qualify as _valid_ in regard to the _target_. A reference implementation of a framework to create and run targets for ARC validation is provided in the [arc-validate repository]().
 
-To foster FAIRification, badges will be earned by reaching certain scores for a transparent review process.  
+ARCs MAY be validated against 0 or more targets defined in a [validation_targets.yml file](#structure-of-the-validation_targetsyml-file), where the folowing criteria MUST be met for each target:
+- the target MUST have a unique _name_ across all validation targets used the ARC.
+- the target MUST create a `validation_report.*` file that summarizes the results of validating the ARC against the cases defined in the target. The format of this file is arbitrary, but SHOULD be of an established test result format such as [JUnit XML](https://github.com/windyroad/JUnit-Schema) or [TAP](https://testanything.org/).
+- the target MUST create a `badge.svg` file that visually summarizes the results of validating the ARC against the cases defined in the target. The information displayed SHOULD be derivable from the `validation_report.*` file and MUST include the _name_ of the target.
+
+
+### Structure of the validation branch
+
+To make sure that the result of validating ARCs are 
+
+### Structure of the validation_targets.yml file
 
 ## Best Practices
 

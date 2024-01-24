@@ -629,7 +629,7 @@ The `Data` node type MUST correspond to a relevant data resource location, follo
 The format of the data resource MAY be further qualified using a `Data Format` column. The `Data Format` SHOULD be expressed using a [MIME format](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types), most commonly consisting of two parts: a type and a subtype, separated by a slash (/) — with no whitespace between: `type/subtype`. If appropriate, a format from the list composed by [IANA](https://www.iana.org/assignments/media-types/media-types.xhtml)
 SHOULD be picked. Unregistered or niche encoding and file formats MAY be indicated instead via the most appropriate URL.
 
-The format and usage info about the Selector MAY be further qualified using a `Data Selector` column. The `Data Selector` SHOULD point to a web resource containing instructions about how the Selector is formatted and how it should be interpreted.
+The format and usage info about the Selector MAY be further qualified using a `Data Selector Format` column. The `Data Selector Format` SHOULD point to a web resource containing instructions about how the Selector is formatted and how it should be interpreted.
 
 
 ## Examples
@@ -639,7 +639,7 @@ The format and usage info about the Selector MAY be further qualified using a `D
 In this example, there is a measurement of two `Samples`, namely `input1` and `input2`. The values measured are both written into the same data resource in the location `result.csv`, whichs formatting is tabular, according to the `Data Format` being `text/csv`. To distinguish between the measurement values stemming from the different inputs, selectors were added to the resource location (seperated by a `#`), namely `col=1` and `col=2`. The specification about the formatting of these selectors can be found in the provided link, namely `https://datatracker.ietf.org/`.
 
 
-| Input [Sample Name] | Output [Data]          | Data Format | Data Selector | 
+| Input [Sample Name] | Output [Data]          | Data Format | Data Selector Format | 
 |-------------|---------------------------------|----------------------------------|--|
 | input1       | result.csv#col=1 | text/csv | https://datatracker.ietf.org/doc/html/rfc7111 |
 | input2       | result.csv#col=2 | text/csv | https://datatracker.ietf.org/doc/html/rfc7111 |

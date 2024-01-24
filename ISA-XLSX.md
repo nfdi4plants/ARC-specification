@@ -624,10 +624,14 @@ Each annotation table sheet MUST contain at most one `Input` and at most one `Ou
 
 `Source Names`, `Sample Names`, `Material Names` MUST be unique across an ARC. If two of these entities with the same name exist in the same ARC, they are considered the same entity.
 
-The `Data` node type MUST correspond to a relevant data resource location, following the [Data Path Annotation](/ARC%20specification.md#data-path-annotation) patterns. If the annotation of the `Data` node refers not to the complete resource, but a part of it, a `Selector` MAY added. This Selector MUST be separated from the location using a `#`— with no whitespace between: `location#selector`. 
+The `Data` node type MUST correspond to a relevant data resource location, following the [Data Path Annotation](/ARC%20specification.md#data-path-annotation) patterns. If the annotation of the `Data` node refers not to the complete resource, but a part of it, a `Selector` MAY be added. This Selector MUST be separated from the resource location using a `#`— with no whitespace between: `location#selector`. If appropriate, the Selector SHOULD be formatted according to IRI fragment selectors specified by [W3](https://www.w3.org/TR/annotation-model/#fragment-selector).
 
-`Data Format` SHOULD be expressed using a [MIME format](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types), most commonly consisting of two parts: a type and a subtype, separated by a slash (/) — with no whitespace between: `type/subtype`. If appropriate, a format from the list composed by [IANA](https://www.iana.org/assignments/media-types/media-types.xhtml)
+The format of the data resource MAY be further qualified using a `Data Format` column. The `Data Format` SHOULD be expressed using a [MIME format](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types), most commonly consisting of two parts: a type and a subtype, separated by a slash (/) — with no whitespace between: `type/subtype`. If appropriate, a format from the list composed by [IANA](https://www.iana.org/assignments/media-types/media-types.xhtml)
 SHOULD be picked. Unregistered or niche encoding and file formats MAY be indicated instead via the most appropriate URL.
+
+The format and usage info about the selector MAY be further qualified using a `Data Selector` column. The `Data Selector` SHOULD point to a web resource containing instructions about how the selector is formatted and how it should be interpreted.
+
+
 
 ## Examples
 
@@ -637,7 +641,7 @@ Use of `general pattern` relative paths from the arc root folder:
 
 `assays/Assay1/isa.assay.xlsx`:
 
-| Input [Sample Name] | Output [Data]          | Output Data Format | Output Data Selector | 
+| Input [Sample Name] | Output [Data]          | Data Format | Data Selector | 
 |-------------|---------------------------------|----------------------------------|--|
 | input1       | result.csv#col=1 | text/csv | https://datatracker.ietf.org/doc/html/rfc7111 |
 | input2       | result.csv#col=2 | text/csv | https://datatracker.ietf.org/doc/html/rfc7111 |

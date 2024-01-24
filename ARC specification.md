@@ -245,19 +245,21 @@ All metadata references to files or directories located inside the ARC MUST foll
 
 #### Examples
 
-In this example, there are two `assays`, with `Assay1`containing a measurement of a `Source` material, producing an output `Raw Data file`. `Assay2` references this `Data file` for producing a new `Derived Data File`
+##### General Pattern
+
+In this example, there are two `assays`, with `Assay1`containing a measurement of a `Source` material, producing an output `Data`. `Assay2` references this `Data` for producing a new `Data`.
 
 Use of `general pattern` relative paths from the arc root folder:
 
 `assays/Assay1/isa.assay.xlsx`:
 
-| Input [Source Name] | Parameter[Instrument model]          | Output [Raw Data File] | 
+| Input [Source Name] | Parameter[Instrument model]          | Output [Data] | 
 |-------------|---------------------------------|----------------------------------|
 | input       | Bruker 500 Avance | assays/Assay1/dataset/measurement.txt |
 
 `assays/Assay2/isa.assay.xlsx`:
 
-| Input [Raw Data File] | Parameter[script file]          | Output [Derived Data File] |
+| Input [Data] | Parameter[script file]          | Output [Data] |
 |----------------------------------|---------------------------------|----------------------------------|
 | assays/Assay1/dataset/measurement.txt | assays/Assay2/dataset/script.sh | assays/Assay2/dataset/result.txt |
 

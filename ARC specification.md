@@ -302,7 +302,7 @@ Reproducibility of ARCs refers mainly to its *runs*. Within an ARC, it MUST be p
 
 ## Mechanism for Quality Control of ARCs
 
-ARCs are supposed to be living research objects and are as such never complete. Nevertheless, a mechanism to continuously report the current state and quality of an ARC is indispensable. This process is further referred to as _validation_ of the ARC against a _target_, where the _target_ is an arbitrary set of validation cases that the ARC MUST pass to qualify as _valid_ in regard to the _target_. A reference implementation of a framework to create and run targets for ARC validation is provided in the [arc-validate repository]().
+ARCs are supposed to be living research objects and are as such never complete. Nevertheless, a mechanism to continuously report the current state and quality of an ARC is indispensable. This process is further referred to as _validation_ of the ARC against a _target_, where the _target_ is an arbitrary set of validation cases that the ARC MUST pass to qualify as _valid_ in regard to the _target_. A reference implementation of a framework to create and run targets for ARC validation is provided in the [arc-validate repository](https://github.com/nfdi4plants/arc-validate).
 
 ARCs MAY be validated against 0 or more targets defined in a [validation_targets.yml file](#structure-of-the-validation_targetsyml-file), where the following criteria MUST be met for each target:
 - the target MUST have a unique _name_ across all validation targets used the ARC. This name MUST used for specifying the target in the [validation_targets.yml file](#structure-of-the-validation_targetsyml-file) and the subfolder names in the [validation branch](#structure-of-the-validation-branch)

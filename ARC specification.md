@@ -304,17 +304,89 @@ Reproducibility of ARCs refers mainly to its *runs*. Within an ARC, it MUST be p
 
 ARCs are supposed to be living research objects and are as such never complete. Nevertheless, a mechanism to continuously report the current state and quality of an ARC is indispensable. This process is further referred to as _validation_ of the ARC against a _target_, where the _target_ is a arbitrary set of validation cases that the ARC MUST pass to qualify as _valid_ in regard to the _target_. A reference implementation of a framework to create and run targets for ARC validation is provided in the [arc-validate repository]().
 
-ARCs MAY be validated against 0 or more targets defined in a [validation_targets.yml file](#structure-of-the-validation_targetsyml-file), where the folowing criteria MUST be met for each target:
-- the target MUST have a unique _name_ across all validation targets used the ARC.
-- the target MUST create a `validation_report.*` file that summarizes the results of validating the ARC against the cases defined in the target. The format of this file is arbitrary, but SHOULD be of an established test result format such as [JUnit XML](https://github.com/windyroad/JUnit-Schema) or [TAP](https://testanything.org/).
+ARCs MAY be validated against 0 or more targets defined in a [validation_targets.yml file](#structure-of-the-validation_targetsyml-file), where the following criteria MUST be met for each target:
+- the target MUST have a unique _name_ across all validation targets used the ARC. This name MUST used for specifying the target in the [validation_targets.yml file](#structure-of-the-validation_targetsyml-file) and the subfolder names in the [validation branch](#structure-of-the-validation-branch)
+- target MUST create a `validation_report.*` file that summarizes the results of validating the ARC against the cases defined in the target. The format of this file SHOULD be of an established test result format such as [JUnit XML](https://github.com/windyroad/JUnit-Schema) or [TAP](https://testanything.org/).
 - the target MUST create a `badge.svg` file that visually summarizes the results of validating the ARC against the cases defined in the target. The information displayed SHOULD be derivable from the `validation_report.*` file and MUST include the _name_ of the target.
-
 
 ### Structure of the validation branch
 
-To make sure that the result of validating ARCs are 
+To make sure that validation results are bundled with the ARC but do not pollute the commit history, validation results MUST be stored in a separate branch of the ARC repository. This branch:
+- MUST be named `validation`
+- MUST be an orphan branch
+- MUST NOT be merged into the `main` branch. 
+- MUST contain the following folder structure:
+
+  `{$branch}/{$commithash}/{$target}`:
+
+  ```
+  validation branch root
+  └── {$branch}
+      └── {$commithash}
+          └── {$target}
+              ├── badge.svg
+              └── validation_report.xml
+  ```
+  
+  where:
+  - `{$branch}` is the name of the branch the validation was run on
+  - `{$commithash}` is the full hash of the commit the validation was run on. See 
+  - `{$target}` is the name of the target the validation was run against. This folder then MUST contain the files `validation_report.*` and `badge.svg` as described [above](#mechanism-for-quality-control-of-arcs).
+
+  example:
+
+  > This example shows the validation results of the `main` and `branch-1` branches of the ARC repository against the `target1` and `target2` targets for  two commits per branch:
+
+  ```
+  validation-branch-root
+  ├── branch-1
+  │   ├── ca82a6dff817ec66f44342007202690a93763949
+  │   │   ├── target1
+  │   │   │   ├── badge.svg
+  │   │   │   └── validation_report.xml
+  │   │   └── target2
+  │   │       ├── badge.svg
+  │   │       └── validation_report.xml
+  │   └── 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7
+  │       ├── target1
+  │       │   ├── badge.svg
+  │       │   └── validation_report.xml
+  │       └── target2
+  │           ├── badge.svg
+  │           └── validation_report.xml
+  └── main
+      ├── 1234567890abcdef1234567890abcdef12345678
+      │   ├── target1
+      │   │   ├── badge.svg
+      │   │   └── validation_report.xml
+      │   └── target2
+      │       ├── badge.svg
+      │       └── validation_report.xml
+      └── a11bef06a3f659402fe7563abf99ad00de2209e6
+          ├── target1
+          │   ├── badge.svg
+          │   └── validation_report.xml
+          └── target2
+              ├── badge.svg
+              └── validation_report.xml
+  ```
 
 ### Structure of the validation_targets.yml file
+
+The `validation_targets.yml` specifies the targets that the branch containing the file will be validated against. Each branch of an ARC MAY contain 0 or 1 `validation_targets.yml` file. If the file is present, it:
+  - MUST be located in an `.arc` folder in the root of the ARC
+  - MUST contain the `targets` key which is a list of target names that the current branch will be validated against.
+
+example:
+
+> This example shows a `validation_targets.yml` file that specifies that the current branch will be validated against the `target1` and `target2` targets.
+
+```yaml
+targets:
+  - target1
+  - target2
+```
+
 
 ## Best Practices
 

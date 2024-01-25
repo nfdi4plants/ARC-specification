@@ -313,7 +313,7 @@ ARCs MAY be validated against 0 or more targets defined in a [validation_targets
 
 To make sure that validation results are bundled with the ARC but do not pollute the commit history, validation results MUST be stored in a separate branch of the ARC repository. This branch:
 - MUST be named `validation`
-- MUST be an orphan branch
+- MUST be an [orphan branch](https://git-scm.com/docs/git-checkout#Documentation/git-checkout.txt---orphanltnew-branchgt)
 - MUST NOT be merged into the `main` branch. 
 - MUST contain the following folder structure:
 

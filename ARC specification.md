@@ -335,7 +335,7 @@ To make sure that validation results are bundled with the ARC but do not pollute
 
   example:
 
-  > This example shows the validation results of the `main` and `branch-1` branches of the ARC repository against the `target1` and `target2` targets for  two commits per branch:
+  > This example shows the validation results of the `main` and `branch-1` branches of the ARC repository against the `target1` and `target2` targets for two commits per branch:
 
   ```
   validation-branch-root

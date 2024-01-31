@@ -356,7 +356,7 @@ Validation packages
 
 ### Reference implementation
 
-A reference implementation for creating validation cases, validation packages, and validating ARCs against them is provided in the [arc-validate software suit](https://github.com/nfdi4plants/arc-validate)
+A reference implementation for creating validation cases, validation packages, and validating ARCs against them is provided in the [arc-validate software suite](https://github.com/nfdi4plants/arc-validate)
 
 ## Continuous quality control
 
@@ -365,7 +365,7 @@ This process is further referred to as _Continuous Quality Control_ (CQC) of the
 
 ### The cqc branch
 
-To make sure that validation results are bundled with the ARC but do not pollute their commit history, validation results MUST be stored in a separate branch of the ARC repository.
+To make sure that validation results are bundled with ARCs but do not pollute their commit history, validation results MUST be stored in a separate branch of the ARC repository.
 This branch:
 - MUST be named `cqc`
 - MUST be an [orphan branch](https://git-scm.com/docs/git-checkout#Documentation/git-checkout.txt---orphanltnew-branchgt)
@@ -428,7 +428,7 @@ This branch:
 ### The validation_packages.yml file
 
 The `validation_packages.yml` specifies the validation packages that the branch containing the file will be validated against.
-Each branch of an ARC MAY contain 0 or 1 `validation_packages.yml` file. 
+Each branch of an ARC MAY contain 0 or 1 `validation_packages.yml` files.
 If the file is present, it:
   - MUST be located in the `.arc` folder in the root of the ARC
   - MUST contain the `validation_packages` key which is a list of validation package names that the current branch will be validated against.
@@ -445,7 +445,7 @@ validation_packages:
 
 ### Reference implementation
 
-PLANTDataHUB performs Continuous Quality Control of ARCs using the [arc-validate software suit]() as described in our 2023 paper [PLANTdataHUB: a collaborative platform for continuous FAIR data sharing in plant research](https://doi.org/10.1111/tpj.16474).
+PLANTDataHUB performs Continuous Quality Control of ARCs using the [arc-validate software suite]() as described in our 2023 paper [PLANTdataHUB: a collaborative platform for continuous FAIR data sharing in plant research](https://doi.org/10.1111/tpj.16474).
 
 # Best Practices
 

@@ -445,7 +445,7 @@ validation_packages:
 
 ### Reference implementation
 
-PLANTDataHUB performs Continuous Quality Control of ARCs using the [arc-validate software suite]() as described in our 2023 paper [PLANTdataHUB: a collaborative platform for continuous FAIR data sharing in plant research](https://doi.org/10.1111/tpj.16474).
+PLANTDataHUB performs Continuous Quality Control of ARCs using the [arc-validate software suite](https://github.com/nfdi4plants/arc-validate) as described in our 2023 paper [PLANTdataHUB: a collaborative platform for continuous FAIR data sharing in plant research](https://doi.org/10.1111/tpj.16474).
 
 # Best Practices
 

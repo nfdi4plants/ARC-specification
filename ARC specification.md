@@ -433,16 +433,23 @@ The `validation_packages.yml` specifies the validation packages that the branch 
 Each branch of an ARC MAY contain 0 or 1 `validation_packages.yml` files.
 If the file is present, it:
   - MUST be located in the `.arc` folder in the root of the ARC
-  - MUST contain the `validation_packages` key which is a list of validation package names that the current branch will be validated against.
+  - MUST contain the `validation_packages` key which is a list of validation packages that the current branch will be validated against.
+
+values of the `validation_packages` list are objects with the following fields:
+  - `name`: the name of the validation package. This field is mandatory and MUST be included for each validation package object.
+  - `version`: the version of the validation package. This field is optional and MAY be included for each validation package object. If included, it MUST be a valid [semantic version](https://semver.org/), restricted to MAJOR.MINOR.PATCH format. If not included, this indicates that the latest available version of the validation package will be used.
 
 example:
 
-> This example shows a `validation_packages.yml` file that specifies that the current branch will be validated against the `package1` and `package2` targets.
+> This example shows a `validation_packages.yml` file that specifies that the current branch will be validated against version `1.0.0` of `package1`, version `2.0.0` of `package2`, and the latest available version of `package3`.
 
 ```yaml
 validation_packages:
-  - package1
-  - package2
+  - name: package1
+    version: 1.0.0
+  - name: package2
+    version: 2.0.0
+  - name: package3
 ```
 
 ### Reference implementation

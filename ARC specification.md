@@ -493,14 +493,15 @@ As the ARC might be used by different persons and in different workflow contexts
 An ARC can be augmented into an RO Crate by placing a metadata file `ro-crate-metadata.json` into the top-level ARC folder, which must conform to the [RO Crate specification](https://www.researchobject.org/ro-crate/1.1/).
 The ARC root folder is then simultaneously the RO Crate Root and represents an ISA investigation.
 The studies, assays and workflows are part of the investigation and linked to it using the typical RO-Crate methodology, e.g. the `hasPart` property of `http://schema.org/Dataset`.
-All four object types follow their corresponding profiles (WIP for studies, assays and workflows).
+All four object types follow their [corresponding profiles](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md).
 It is RECOMMENDED to adhere to the following conventions when creating this file:
 
-- The root data entity follows the [ISA Investigation profile](https://github.com/nfdi4plants/arc-to-rocrate/blob/main/profiles/investigation.md).
+- The root data entity follows the [ISA Investigation profile]([https://github.com/nfdi4plants/arc-to-rocrate/blob/main/profiles/investigation.md](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md)).
   - The root data entity description are taken from the "Investigation Description" term in `isa.investigation.xlsx`.
   - The root data entity authors are taken from the "Investigation Contacts" in `isa.investigation.xlsx`:
   - The root data entity citations are taken from the "Investigation Publications" section in `isa.investigation.xlsx`.
 - For each assay and study linked from `isa.investigation.xlsx`, one dataset entity is provided in `ro-crate-metadata.json`. The Dataset id corresponds to the relative path of the assay ISA file under `assays/`, e.g. "sample-data/isa.assay.xlsx". Other metadata is taken from the corresponding terms in the corresponding `isa.assay.xlsx` or `isa.study.xlsx`.
 - The root data entity is connected to each assay and study through the `hasPart` Property.
+- The assay and study entities follow the [ISA Assay Profile](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md) or the [ISA Study Profile](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md), respectively.
 
 It is expected that future versions of this specification will provide additional guidance on a comprehensive conversion of ARC metadata into RO-Crate metadata.

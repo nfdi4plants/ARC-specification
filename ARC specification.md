@@ -369,63 +369,49 @@ This process is further referred to as _Continuous Quality Control_ (CQC) of the
 
 To make sure that validation results are bundled with ARCs but do not pollute their commit history, validation results MUST be stored in a separate branch of the ARC repository.
 This branch:
+
 - MUST be named `cqc`
 - MUST be an [orphan branch](https://git-scm.com/docs/git-checkout#Documentation/git-checkout.txt---orphanltnew-branchgt)
 - MUST NOT be merged into any other branch. 
 - MUST contain the following folder structure:
 
-  `{$branch}/{$commithash}/{$package}`:
+  `{$branch}/{$package}`:
 
   ```
   cqc branch root
   └── {$branch}
-      └── {$commithash}
-          └── {$package}
+      └── {$package}
   ```
   
   where:
   - `{$branch}` is the name of the branch the validation was run on
-  - `{$commithash}` is the full hash of the commit the validation was run on. 
   - `{$package}` is the name of the validation package the validation was run against. 
     this folder then MUST contain the files `validation_report.*` and `badge.svg` as described in the [validation package specification](#validation-packages).
+    This folder MAY also be suffixed by the version of the validation package via a `@` character followed by the version number of the validation package: `{$package}@{$version}`, e.g. `package1@1.0.0`.
 
   example:
 
-  > This example shows the validation results of the `main` and `branch-1` branches of the ARC repository against the `package1` and `package2` validation packages for two commits per branch:
+  > This example shows the validation results of the `main` and `branch-1` branches of the ARC repository against the `package1` and `package2` validation packages. for `package2`, an optional version hint of the package is included in the folder name:
 
   ```
   cqc-branch-root
   ├── branch-1
-  │   ├── ca82a6dff817ec66f44342007202690a93763949
-  │   │   ├── package1
-  │   │   │   ├── badge.svg
-  │   │   │   └── validation_report.xml
-  │   │   └── package2
-  │   │       ├── badge.svg
-  │   │       └── validation_report.xml
-  │   └── 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7
-  │       ├── package1
-  │       │   ├── badge.svg
-  │       │   └── validation_report.xml
-  │       └── package2
-  │           ├── badge.svg
-  │           └── validation_report.xml
+  │   ├── package1
+  │   │   ├── badge.svg
+  │   │   └── validation_report.xml
+  │   └── package2@2.0.0
+  │       ├── badge.svg
+  │       └── validation_report.xml
   └── main
-      ├── 1234567890abcdef1234567890abcdef12345678
-      │   ├── package1
-      │   │   ├── badge.svg
-      │   │   └── validation_report.xml
-      │   └── package2
-      │       ├── badge.svg
-      │       └── validation_report.xml
-      └── a11bef06a3f659402fe7563abf99ad00de2209e6
-          ├── package1
-          │   ├── badge.svg
-          │   └── validation_report.xml
-          └── package2
-              ├── badge.svg
-              └── validation_report.xml
+      ├── package1
+      │   ├── badge.svg
+      │   └── validation_report.xml
+      └── package2@2.0.0
+          ├── badge.svg
+          └── validation_report.xml
   ```
+
+Commits to the `cqc` branch MUST contain the commit hash of the commit that was validated in the commit message.
 
 ### The validation_packages.yml file
 
@@ -436,7 +422,7 @@ If the file is present, it:
   - MUST contain the `validation_packages` key which is a list of validation packages that the current branch will be validated against.
 
 values of the `validation_packages` list are objects with the following fields:
-  - `name`: the name of the validation package. This field is mandatory and MUST be included for each validation package object.
+  - `name`: the name of the validation package. This field is mandatory and MUST be included for each validation package object. This name MUST be unique across all validation packages object, which means that only one version of a package can be contained in the file.
   - `version`: the version of the validation package. This field is optional and MAY be included for each validation package object. If included, it MUST be a valid [semantic version](https://semver.org/), restricted to MAJOR.MINOR.PATCH format. If not included, this indicates that the latest available version of the validation package will be used.
 
 example:

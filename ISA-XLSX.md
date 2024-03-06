@@ -73,6 +73,9 @@ The `Investigation File` MUST contain one [`Top-Level Metadata sheet`](#top-leve
 - [`INVESTIGATION`](#investigation)
 - [`INVESTIGATION PUBLICATIONS`](#investigation-publications)
 - [`INVESTIGATION CONTACTS`](#investigation-contacts)
+
+Additionally, it MAY contain the following sections:
+
 - [`STUDY`](#study-section)
 - [`STUDY DESIGN DESCRIPTORS`](#study-design-descriptors)
 - [`STUDY PUBLICATIONS`](#study-publications)
@@ -92,10 +95,13 @@ The `Study File` MUST contain one [`Top-Level Metadata sheet`](#top-level-metada
 - [`STUDY`](#study-section)
 - [`STUDY DESIGN DESCRIPTORS`](#study-design-descriptors)
 - [`STUDY PUBLICATIONS`](#study-publications)
+- [`STUDY CONTACTS`](#study-contacts)
+
+Additionally, it MAY contain the following sections:
+
 - [`STUDY FACTORS`](#study-factors)
 - [`STUDY ASSAYS`](#study-assays)
 - [`STUDY PROTOCOLS`](#study-protocols)
-- [`STUDY CONTACTS`](#study-contacts)
 
 Additionally, the `Study File` SHOULD contain one or more [`Annotation Table sheet(s)`](#annotation-table-sheets), which MAY record provenance of biological samples, from source material through a collection process to sample material.
 

@@ -29,6 +29,7 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
     - [Top-Level Run Description](#top-level-run-description)
   - [Data Path Annotation](#data-path-annotation)
     - [Examples](#examples)
+      - [General Pattern](#general-pattern)
 - [Shareable and Publishable ARCs](#shareable-and-publishable-arcs)
 - [Reproducible ARCs](#reproducible-arcs)
 - [Mechanisms for ARC Quality Control](#mechanisms-for-arc-quality-control)
@@ -255,7 +256,7 @@ All metadata references to files or directories located inside the ARC MUST foll
 
 ### Examples
 
-##### General Pattern
+#### General Pattern
 
 In this example, there are two `assays`, with `Assay1`containing a measurement of a `Source` material, producing an output `Data`. `Assay2` references this `Data` for producing a new `Data`.
 
@@ -272,9 +273,6 @@ Use of `general pattern` relative paths from the arc root folder:
 | Input [Data] | Parameter[script file]          | Output [Data] |
 |----------------------------------|---------------------------------|----------------------------------|
 | assays/Assay1/dataset/measurement.txt | assays/Assay2/dataset/script.sh | assays/Assay2/dataset/result.txt |
-
-
-
 
 # Shareable and Publishable ARCs
 
@@ -418,18 +416,22 @@ Commits to the `cqc` branch MUST contain the commit hash of the commit that was 
 The `validation_packages.yml` specifies the validation packages that the branch containing the file will be validated against.
 Each branch of an ARC MAY contain 0 or 1 `validation_packages.yml` files.
 If the file is present, it:
-  - MUST be located in the `.arc` folder in the root of the ARC
-  - MUST contain the `validation_packages` key which is a list of validation packages that the current branch will be validated against.
 
-values of the `validation_packages` list are objects with the following fields:
+- MAY contain a `specification` key which, when present, MUST contain the version of the ARC specification that the ARC should be validated against. Schema specification should be tied to specification releases, and be directly integrated into tools that can perform  validation against validation packages.
+- MUST be located in the `.arc` folder in the root of the ARC
+- MUST contain the `validation_packages` key which is a list of validation packages that the current branch will be validated against.
+
+  values of the `validation_packages` list are objects with the following fields:
+
   - `name`: the name of the validation package. This field is mandatory and MUST be included for each validation package object. This name MUST be unique across all validation packages object, which means that only one version of a package can be contained in the file.
   - `version`: the version of the validation package. This field is optional and MAY be included for each validation package object. If included, it MUST be a valid [semantic version](https://semver.org/), restricted to MAJOR.MINOR.PATCH format. If not included, this indicates that the latest available version of the validation package will be used.
 
 example:
 
-> This example shows a `validation_packages.yml` file that specifies that the current branch will be validated against version `1.0.0` of `package1`, version `2.0.0` of `package2`, and the latest available version of `package3`.
+> This example shows a `validation_packages.yml` file that specifies that the current branch will be validated against: version `2.0.0-draft` of the ARC specification, version `1.0.0` of `package1`, version `2.0.0` of `package2`, and the latest available version of `package3`.
 
 ```yaml
+arc_specification: 2.0.0-draft
 validation_packages:
   - name: package1
     version: 1.0.0

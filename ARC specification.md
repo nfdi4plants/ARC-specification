@@ -75,9 +75,9 @@ ARCs are based on a strict separation of data and metadata content into study ma
 Each ARC is a directory containing the following elements:
 
 - *Studies* are collections of material and resources used within the investigation.
-Metadata that describe the characteristics of material and resources follow the ISA study model. Study-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a file `isa.study.xlsx`, which MUST exist to specify the input material or data resources. Resources MAY include biological materials (e.g. plant samples, analytical standards) created during the current investigation. Resources MAY further include external data (e.g., knowledge files, results files) that need to be included and cannot be referenced due to external limitations. Resources described in a study file can be the input for one or multiple assays. Further details on `isa.study.xlsx` are specified [below](#study-and-resources). Resource (descriptor) files MUST be placed in a `resources` subdirectory.
+Metadata that describe the characteristics of material and resources follow the ISA study model. Study-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.study.xlsx` file, which MUST exist to specify the input material or data resources. Resources MAY include biological materials (e.g. plant samples, analytical standards) created during the current investigation. Resources MAY further include external data (e.g., knowledge files, results files) that need to be included and cannot be referenced due to external limitations. Resources described in a study file can be the input for one or multiple assays. Further details on `isa.study.xlsx` are specified [below](#study-and-resources). Resource (descriptor) files MUST be placed in a `resources` subdirectory. Further explications about data entities defined in the study MAY be stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file, which SHOULD exist for studies containing data. Further details on `isa.datamap.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
 
-- *Assays* correspond to outcomes of experimental assays or analytical measurements (in the interpretation of the ISA model) and are treated as immutable data. Each assay is a collection of files, together with a corresponding metadata file, stored in a subdirectory of the top-level subdirectory `assays`. Assay-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a file `isa.assay.xlsx`, which MUST exist for each assay. Further details on `isa.assay.xlsx` are specified [below](#assay-data-and-metadata). Assay data files MUST be placed in a `dataset` subdirectory.
+- *Assays* correspond to outcomes of experimental assays or analytical measurements (in the interpretation of the ISA model) and are treated as immutable data. Each assay is a collection of files, together with a corresponding metadata file, stored in a subdirectory of the top-level subdirectory `assays`. Assay-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.assay.xlsx` file, which MUST exist for each assay. Further details on `isa.assay.xlsx` are specified [below](#assay-data-and-metadata). Assay data files MUST be placed in a `dataset` subdirectory. Further explications about data entities defined in the assay MAY be stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file, which SHOULD exist for each assay. Further details on `isa.datamap.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
 
 - *Workflows* represent data analysis routines (in the sense of CWL tools and workflows) and are a collection of files, together with a corresponding CWL description, stored in a single directory under the top-level `workflows` subdirectory. A per-workflow executable CWL description is stored in `workflow.cwl`, which MUST exist for all ARC workflows. Further details on workflow descriptions are given [below](#workflow-description).
 
@@ -101,11 +101,13 @@ Note:
 \--- studies
     \--- <study_name> 
             |    isa.study.xlsx  
+            |    isa.datamap.xlsx  
             \--- resources 
             \--- protocol [optional / add. payload]
 \--- assays
     \--- <assay_name> 
             |    isa.assay.xlsx  
+            |    isa.datamap.xlsx  
             \--- dataset 
             \--- protocol [optional / add. payload]
 \--- workflows  
@@ -153,11 +155,15 @@ The `study` file MUST follow the [ISA-XLSX study file specification](ISA-XLSX.md
 
 Protocols that are necessary to describe the sample or material creating process can be placed under the protocols directory.
 
+Further explications about data entities defined in the assay MAY be stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file, which SHOULD exist for each assay. Further details on `isa.datamap.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
+
 ## Assay Data and Metadata
 
 All measurement data sets are considered as assays and are considered immutable input data. Assay data MUST be placed into a unique subdirectory of the top-level `assays` subdirectory. All ISA metadata specific to a single assay MUST be annotated in the file `isa.assay.xlsx` at the root of the assay's subdirectory. This workbook MUST contain a single assay that can be organized in one or multiple worksheets. 
 
 The `assay` file MUST follow the [ISA-XLSX assay file specification](ISA-XLSX.md#assay-file).
+
+Further explications about data entities defined in the assay MAY be stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file, which SHOULD exist for each assay. Further details on `isa.datamap.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
 
 Notes:
 

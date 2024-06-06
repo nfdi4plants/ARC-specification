@@ -40,6 +40,7 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
   - [Continuous quality control](#continuous-quality-control)
     - [The cqc branch](#the-cqc-branch)
     - [The validation\_packages.yml file](#the-validation_packagesyml-file)
+    - [ARC Apps](#arc-apps)
     - [Reference implementation](#reference-implementation-1)
 - [Best Practices](#best-practices)
   - [Community Specific Data Formats](#community-specific-data-formats)
@@ -354,11 +355,128 @@ Validation packages
 
 - SHOULD be versioned using [semantic versioning](https://semver.org/)
 
+- MUST be enriched with the following mandatory metadata in an appropriate way (e.g. via yaml frontmatter, tables in a database, etc.):
+  | Field | Type | Description |
+  | --- | --- | --- |
+  | Name | string | the name of the package |
+  | Version | string | the version of the package |
+  | Summary | string | a single sentence description (<=50 words) of the package |
+  | Description | string | an unconstrained free text description of the package |
+
+- MAY be enriched with the following optional metadata in an appropriate way (e.g. via yaml frontmatter, tables in a database, etc.):
+  | Field | Type | Description |
+  | --- | --- | --- |
+  | HookEndpoint | string | An URL to trigger subsequent events based on the result of executing the validation package in a CQC context, see [Continuous quality control](#continuous-quality-control) and [ARC Apps](#arc-apps) |
+
+- MAY be enriched with any additional metadata in an appropriate way (e.g. via yaml frontmatter, tables in a database, etc.).
+
 - MUST create a `validation_report.*` file upon execution that summarizes the results of validating the ARC against the cases defined in the validation package.
   The format of this file SHOULD be of an established test result format such as [JUnit XML](https://github.com/windyroad/JUnit-Schema) or [TAP](https://testanything.org/).
 
 - MUST create a `badge.svg` file upon execution that visually summarizes the results of validating the ARC against the validation cases defined in the validation package.
-  The information displayed SHOULD be derivable from the `validation_report.*` file and MUST include the _name_ of the validation package.
+  The information displayed SHOULD be derivable from the `validation_report.*` file and MUST include the _Name_ of the validation package.
+
+- MUST create a `validation_summary.json` file upon execution, which contains the mandatory and optional metadata specified above, and a high-level summary of the execution of the validation package following this schema:
+  <details>
+  <summary>validation_summary.json schema</summary>
+
+  ```json
+  {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "Critical": {
+        "type": "object",
+        "properties": {
+          "HasFailures": {
+            "type": "boolean"
+          },
+          "Total": {
+            "type": "integer"
+          },
+          "Passed": {
+            "type": "integer"
+          },
+          "Failed": {
+            "type": "integer"
+          },
+          "Errored": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "HasFailures",
+          "Total",
+          "Passed",
+          "Failed",
+          "Errored"
+        ]
+      },
+      "NonCritical": {
+        "type": "object",
+        "properties": {
+          "HasFailures": {
+            "type": "boolean"
+          },
+          "Total": {
+            "type": "integer"
+          },
+          "Passed": {
+            "type": "integer"
+          },
+          "Failed": {
+            "type": "integer"
+          },
+          "Errored": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "HasFailures",
+          "Total",
+          "Passed",
+          "Failed",
+          "Errored"
+        ]
+      },
+      "ValidationPackage": {
+        "type": "object",
+        "properties": {
+          "Name": {
+            "type": "string"
+          },
+          "Version": {
+            "type": "string"
+          },
+          "Summary": {
+            "type": "string"
+          },
+          "Description": {
+            "type": "string"
+          },
+          "HookEndpoint": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "Name",
+          "Version",
+          "Summary",
+          "Description"
+        ]
+      }
+    },
+    "required": [
+      "Critical",
+      "NonCritical",
+      "ValidationPackage"
+    ]
+  }
+  ```
+
+  </details>
+
+- SHOULD aggregate the result files in an appropriately named subdirectory.
 
 ### Reference implementation
 
@@ -446,9 +564,47 @@ validation_packages:
   - name: package3
 ```
 
+### ARC Apps
+
+Continuous Quality Control enables to check at any time in the ARC life cycle whether it passes certain criteria or not.
+
+However, **if** an ARC is valid for a given _target_ is only half of the equation - the other being taking some kind of action based on this information. One large field of actions here is the publication of the ARC or (some) of it's contents to an **endpoint repository (ER)** (e.g. [PRIDE](https://www.ebi.ac.uk/pride/), [ENA](https://www.ebi.ac.uk/ena/browser/home)).
+
+In this example, a validation package SHOULD only determine if the content _COULD_ be published to the ER, and a subsequent service SHOULD then take the respective action based on the reported result of that package (e.g. fixing errors based on the report, or publish the content to the ER).
+
+**ARC apps** are services that provide URLs called _(CQC) Hook Endpoints_ that be triggered manually or by the result of a validation package. They are intended to automate the process of taking action based on the result of a validation package.
+
 ### Reference implementation
 
 PLANTDataHUB performs Continuous Quality Control of ARCs using the [arc-validate software suite](https://github.com/nfdi4plants/arc-validate) as described in our 2023 paper [PLANTdataHUB: a collaborative platform for continuous FAIR data sharing in plant research](https://doi.org/10.1111/tpj.16474).
+
+The following sequence diagram shows the conceptual implementation of CQC pipelines in conjunction with ARC Apps connected via CQC Hooks on the reference DataHUB instance with the following participants:
+
+- **User**: The user who works on an ARC published on the DataHUB
+- **ARC**: The ARC repository on the DataHUB
+- **DataHUB**: The DataHUB instance
+- **ARC App**: A service that provides a CQC Hook Endpoint to perform actions based on validation results and/or user input
+
+```mermaid
+sequenceDiagram
+
+    participant User
+    participant ARC
+    participant DataHUB
+    participant ARC App
+
+    Note over User, DataHUB: Validation (CQC pipeline)
+    User ->> ARC : commit
+    DataHUB ->> DataHUB : trigger validation for commit
+    DataHUB ->> ARC : commit validation results <br> to cqc branch
+    DataHUB ->> ARC : create badge
+    Note over User, ARC App: QCQ Hooks
+    User ->> ARC App : click on badge link
+    DataHUB ->> ARC App : trigger some action based on validation results
+    ARC App ->> DataHUB : Request relevant information
+    DataHUB ->> ARC App : send relevant information (when granted access)
+    ARC App ->> ARC App : Perform action with retrieved data
+```
 
 # Best Practices
 

@@ -598,7 +598,7 @@ sequenceDiagram
     DataHUB ->> DataHUB : trigger validation for commit
     DataHUB ->> ARC : commit validation results <br> to cqc branch
     DataHUB ->> ARC : create badge
-    Note over User, ARC App: QCQ Hooks
+    Note over User, ARC App: CQC Hooks
     User ->> ARC App : click on badge link
     DataHUB ->> ARC App : trigger some action based on validation results
     ARC App ->> DataHUB : Request relevant information

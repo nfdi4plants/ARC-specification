@@ -791,7 +791,7 @@ If we pool two sources into a single sample, we might represent this as:
 
 In the `Datamap Table sheets`, column headers MUST have the first letter of each word in upper case, with the exception of the referencing label (REF).
 
-The content of the datamap table MUST be placed in an `xlsx table` whose name starts with `datamapTable`. Each sheet MUST contain at most one such annotation table. Only cells inside this table are considered as part of the formatted metadata.
+The content of the datamap table MUST be placed in an `xlsx table` whose name equals `datamapTable`. Each sheet MUST contain at most one such datamap table. Only cells inside this table are considered as part of the formatted metadata.
 
 `Datamap Table sheets` are structured with fields organized on a per-row basis. The first row MUST be used for column headers. Each body row is an implementation of a `data` node.
 

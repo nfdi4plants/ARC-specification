@@ -76,10 +76,9 @@ ARCs are based on a strict separation of data and metadata content into study ma
 
 Each ARC is a directory containing the following elements:
 
-- *Studies* are collections of material and resources used within the investigation.
-Metadata that describe the characteristics of material and resources follow the ISA study model. Study-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.study.xlsx` file, which MUST exist to specify the input material or data resources. Resources MAY include biological materials (e.g. plant samples, analytical standards) created during the current investigation. Resources MAY further include external data (e.g., knowledge files, results files) that need to be included and cannot be referenced due to external limitations. Resources described in a study file can be the input for one or multiple assays. Further details on `isa.study.xlsx` are specified [below](#study-and-resources). Resource (descriptor) files MUST be placed in a `resources` subdirectory. Further explications about data entities defined in the study MAY be stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file, which SHOULD exist for studies containing data. Further details on `isa.datamap.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
+- *Studies* are collections of material and resources used within the investigation. Study-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.study.xlsx` file, which MUST exist to specify the input material or data resources. Resources MAY include biological materials (e.g. plant samples, analytical standards) created during the current investigation. Resources MAY further include external data (e.g., knowledge files, results files) that need to be included and cannot be referenced due to external limitations. Resources described in a study file can be the input for one or multiple assays. Further details on `isa.study.xlsx` are specified [below](#study-and-resources). Resource (descriptor) files MUST be placed in a `resources` subdirectory. Further explications about data entities defined in the study are stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file, which SHOULD exist for studies containing data. Further details on `isa.datamap.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
 
-- *Assays* correspond to outcomes of experimental assays or analytical measurements (in the interpretation of the ISA model) and are treated as immutable data. Each assay is a collection of files, together with a corresponding metadata file, stored in a subdirectory of the top-level subdirectory `assays`. Assay-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.assay.xlsx` file, which MUST exist for each assay. Further details on `isa.assay.xlsx` are specified [below](#assay-data-and-metadata). Assay data files MUST be placed in a `dataset` subdirectory. Further explications about data entities defined in the assay MAY be stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file, which SHOULD exist for each assay. Further details on `isa.datamap.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
+- *Assays* correspond to outcomes of experimental assays or analytical measurements (in the interpretation of the ISA model) and are treated as immutable data. Each assay is a collection of files, together with a corresponding metadata file, stored in a subdirectory of the top-level subdirectory `assays`. Assay-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.assay.xlsx` file, which MUST exist for each assay. Further details on `isa.assay.xlsx` are specified [below](#assay-data-and-metadata). Assay data files MUST be placed in a `dataset` subdirectory. Further explications about data entities defined in the assay are stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file, which SHOULD exist for each assay. Further details on `isa.datamap.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
 
 - *Workflows* represent data analysis routines (in the sense of CWL tools and workflows) and are a collection of files, together with a corresponding CWL description, stored in a single directory under the top-level `workflows` subdirectory. A per-workflow executable CWL description is stored in `workflow.cwl`, which MUST exist for all ARC workflows. Further details on workflow descriptions are given [below](#workflow-description).
 
@@ -103,13 +102,13 @@ Note:
 \--- studies
     \--- <study_name> 
             |    isa.study.xlsx  
-            |    isa.datamap.xlsx  
+            |    isa.datamap.xlsx [optional]
             \--- resources 
             \--- protocol [optional / add. payload]
 \--- assays
     \--- <assay_name> 
             |    isa.assay.xlsx  
-            |    isa.datamap.xlsx  
+            |    isa.datamap.xlsx [optional]
             \--- dataset 
             \--- protocol [optional / add. payload]
 \--- workflows  
@@ -255,7 +254,7 @@ The file `arc.cwl` SHOULD exist at the root directory of each ARC. It describes 
 
 All metadata references to files or directories located inside the ARC MUST follow the following patterns:
 
-- The `general pattern`, which is universally applicable and SHOULD be used is to specify the path relative to the ARC root.
+- The `general pattern`, which is universally applicable and SHOULD be used to specify the path relative to the ARC root.
 
 - The `folder specific pattern`, which MAY be used only in specific metadata contexts:
   - Data nodes in `isa.assay.xlsx` files: The path MAY be specified relative to the `dataset` sub-folder of the assay
@@ -265,21 +264,41 @@ All metadata references to files or directories located inside the ARC MUST foll
 
 #### General Pattern
 
-In this example, there are two `assays`, with `Assay1`containing a measurement of a `Source` material, producing an output `Data`. `Assay2` references this `Data` for producing a new `Data`.
+In this example, there are two `assays`, with `Assay1` containing a measurement of a `Source` material, producing an output `Data`. `Assay2` references this `Data` for producing a new `Data`.
 
 Use of `general pattern` relative paths from the arc root folder:
 
 `assays/Assay1/isa.assay.xlsx`:
 
-| Input [Source Name] | Parameter[Instrument model]          | Output [Data] | 
+| Input [Source Name] | Component [Instrument model]          | Output [Data] | 
 |-------------|---------------------------------|----------------------------------|
 | input       | Bruker 500 Avance | assays/Assay1/dataset/measurement.txt |
 
 `assays/Assay2/isa.assay.xlsx`:
 
-| Input [Data] | Parameter[script file]          | Output [Data] |
+| Input [Data] | Component [script file]          | Output [Data] |
 |----------------------------------|---------------------------------|----------------------------------|
 | assays/Assay1/dataset/measurement.txt | assays/Assay2/dataset/script.sh | assays/Assay2/dataset/result.txt |
+
+#### Folder Specific Pattern
+
+In this example, there are two `assays`, with `Assay1` containing a measurement of a `Source` material, producing an output `Data`. `Assay2` references this `Data` for producing a new `Data`.
+
+Use of `folder specific pattern` relative paths from `Assay1` and `Assay2` `Dataset` folders, respectively:
+
+`assays/Assay1/isa.assay.xlsx`:
+
+| Input [Source Name] | Component [Instrument model]          | Output [Data] | 
+|-------------|---------------------------------|----------------------------------|
+| input       | Bruker 500 Avance | measurement.txt |
+
+`assays/Assay2/isa.assay.xlsx`:
+
+| Input [Data] | Component [script file]          | Output [Data] |
+|----------------------------------|---------------------------------|----------------------------------|
+| assays/Assay1/dataset/measurement.txt | script.sh | result.txt |
+
+Note, that to reference `Data` which is part of `Assays1` in `Assay2`, the `general pattern` is necessary either way. Therefore it is considered the more broadly applicable and recommended pattern.
 
 # Shareable and Publishable ARCs
 

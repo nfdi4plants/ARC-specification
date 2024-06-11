@@ -1,4 +1,4 @@
-# Annotated Research Context Specification, v1.2
+# Annotated Research Context Specification, v2.0
 
 Please provide feedback via GitHub issues or a pull request.
 
@@ -10,7 +10,7 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
 
 # Table of Contents
 
-- [Annotated Research Context Specification, v1.2](#annotated-research-context-specification-v12)
+- [Annotated Research Context Specification, v2.0](#annotated-research-context-specification-v12)
 - [Table of Contents](#table-of-contents)
 - [Introduction](#introduction)
   - [Extensions](#extensions)

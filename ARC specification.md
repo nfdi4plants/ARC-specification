@@ -200,9 +200,15 @@ Notes:
 
 - It is expected that workflow and tool descriptions are authored semi-automatically, e.g. using the [arcCommander](https://github.com/nfdi4plants/arcCommander) tool.
 
-### Metadata
+### Workflow Metadata
 
-- It is strongly encouraged to include author and contributor metadata in tool descriptions and workflow descriptions as [CWL metadata](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html).
+- For metadata annotation, it is encouraged to reference namespaces and schemas, as shown in the [CWL metadata user guide](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html)
+
+- It is strongly encouraged to include author and contributor metadata in tool descriptions and workflow descriptions as CWL metadata.
+
+    - The referenced authors and contributors must be the ones involved in the creation of the tool description or workflow description, not the person executing the [processing unit](https://www.commonwl.org/user_guide/introduction/basic-concepts.html#processes-and-requirements).
+
+- It is encouraged, to add metadata relevant to the tool description or workflow description. This metadata must be limited to only metadata that directly describes the processing unit. Metadata describing the run parameters must be added to the `run.yml` parameter file.
 
 ## Run Description
 
@@ -220,7 +226,15 @@ Notes:
 
 - It is expected that run descriptions are authored semi-automatically, e.g. using the [arcCommander](https://github.com/nfdi4plants/arcCommander) tool.
 
-- It is strongly encouraged to include author and contributor metadata in run descriptions as [CWL metadata](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html).
+### Run Metadata
+
+- For metadata annotation, it is encouraged to reference namespaces and schemas, as shown in the [CWL metadata user guide](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html)
+
+- It is strongly encouraged to include author and contributor metadata in `run.yml` parameter files as CWL metadata.
+
+ - The referenced authors and contributors must be the ones executing the [processing unit](https://www.commonwl.org/user_guide/introduction/basic-concepts.html#processes-and-requirements), not the person that created the processing unit.
+
+ - It is encouraged, to add metadata relevant to the `run.yml` parameter file. This metadata must be limited to only metadata that directly describes the run parameters. Metadata describing the processing unit must be added to the corresponding `.cwl` file.
 
 ## Additional Payload
 

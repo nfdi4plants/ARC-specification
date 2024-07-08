@@ -145,6 +145,10 @@ Therefore, the main entities of the `Datamap File` should be `Data`.
 
 The `Datamap File` acts as an extension of the `data` nodes defined in the [`Study and Assay graphs section`](https://isa-specs.readthedocs.io/en/latest/isamodel.html#study-and-assay-graphs) from the ISA Abstract Model.
 
+## Datamap Sheet
+
+Any Assay/Study MAY contain a worksheet `isa_datamap` with the same structure as the `Datamap File` described in [`Datamap table sheet`](#datamap-table-sheets). Should both a `Datamap File` and a `Datamap Sheet` be present, the `Datamap Sheet` is prioritized and the `Datamap File` is ignored.
+
 # Top-level metadata sheets
 
 The purpose of top-level metadata sheets is aggregating and listing top-level metadata. Each sheet consists of sections consisting of a section header and key-value fields. Section headers MUST be completely written in upper case (e.g. STUDY), field headers MUST have the first letter of each word in upper case (e.g. Study Identifier); with the exception of the referencing label (REF).

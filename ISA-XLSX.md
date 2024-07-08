@@ -26,7 +26,7 @@ This document describes the ISA Abstract Model reference implementation specifie
   - [Parameters](#parameters)
   - [Comments](#comments)
   - [Examples](#examples-1)
-- [Datamap Table sheets](#datamap-table-sheets)
+- [Datamap Table](#datamap-table)
   - [Data](#data-column)
   - [Explication](#explication-column)
   - [Unit](#unit-column)
@@ -118,6 +118,8 @@ Additionally, the `Study File` SHOULD contain one or more [`Annotation Table she
 
 Therefore, the main entities of the `Study File` should be `Sources` and `Samples`.
 
+Any Study MAY contain datamap references as described in the [`Datamap Sheet`](#datamap-sheet) section.
+
 The `Study File` implements the [`Study`](https://isa-specs.readthedocs.io/en/latest/isamodel.html#study) graph from the ISA Abstract Model. graph from the ISA Abstract Model.
 
 # Assay File
@@ -133,13 +135,15 @@ Additionally, the `Assay File` SHOULD contain one or more [`Annotation Table she
 
 Therefore, the main entities of the `Assay File` should be `Samples` and `Data`.
 
+Any Assay MAY contain datamap references as described in the [`Datamap Sheet`](#datamap-sheet) section.
+
 The `Assay File` implements the [`Assay`](https://isa-specs.readthedocs.io/en/latest/isamodel.html#assay) graph from the ISA Abstract Model.
 
 # Datamap File
 
 The `Datamap` represents a set of explanations about the `data` entities defined in `assays` and `studies`.
 
-The `Datamap File` MUST contain one [`Datamap table sheet`](#datamap-table-sheets). This sheet MUST be named `isa_datamap`.
+The `Datamap File` MUST contain one [`Datamap table`](#datamap-table). This sheet MUST be named `isa_datamap`.
 
 Therefore, the main entities of the `Datamap File` should be `Data`.
 
@@ -147,7 +151,7 @@ The `Datamap File` acts as an extension of the `data` nodes defined in the [`Stu
 
 ## Datamap Sheet
 
-Any Assay/Study MAY contain a worksheet `isa_datamap` with the same structure as the `Datamap File` described in [`Datamap table sheet`](#datamap-table-sheets). Should both a `Datamap File` and a `Datamap Sheet` be present, the `Datamap Sheet` is prioritized and the `Datamap File` is ignored.
+Any Assay/Study MAY contain a worksheet `isa_datamap` with the same structure as the `Datamap File` described in [`Datamap table`](#datamap-table). Should both a `Datamap File` and a `Datamap Sheet` be present, the `Datamap Sheet` is prioritized and the `Datamap File` is ignored.
 
 # Top-level metadata sheets
 
@@ -789,19 +793,19 @@ If we pool two sources into a single sample, we might represent this as:
 | source1       | sample collection | sample1       |
 | source2       | sample collection | sample1       |
 
-# Datamap Table sheets
+# Datamap Table
 
-`Datamap Table sheets` are used to describe the contents of data files. 
+`Datamap Table` are used to describe the contents of data files. 
 
-In the `Datamap Table sheets`, column headers MUST have the first letter of each word in upper case, with the exception of the referencing label (REF).
+In the `Datamap Table`, column headers MUST have the first letter of each word in upper case, with the exception of the referencing label (REF).
 
 The content of the datamap table MUST be placed in an `xlsx table` whose name equals `datamapTable`. Each sheet MUST contain at most one such datamap table. Only cells inside this table are considered as part of the formatted metadata.
 
-`Datamap Table sheets` are structured with fields organized on a per-row basis. The first row MUST be used for column headers. Each body row is an implementation of a `data` node.
+`Datamap Table` are structured with fields organized on a per-row basis. The first row MUST be used for column headers. Each body row is an implementation of a `data` node.
 
 ## Data column
 
-Every `Datamap Table sheet` MUST contain a `Data` column. Every  object in this column MUST correspond to a relevant data resource location, following the [Data Path Annotation](/ARC%20specification.md#data-path-annotation) patterns. If the annotation of the `Data` node refers not to the complete resource, but a part of it, a `Selector` MAY be added. This Selector MUST be separated from the resource location using a `#`— with no whitespace between: `location#selector`. If appropriate, the Selector SHOULD be formatted according to IRI fragment selectors specified by [W3](https://www.w3.org/TR/annotation-model/#fragment-selector).
+Every `Datamap Table` MUST contain a `Data` column. Every  object in this column MUST correspond to a relevant data resource location, following the [Data Path Annotation](/ARC%20specification.md#data-path-annotation) patterns. If the annotation of the `Data` node refers not to the complete resource, but a part of it, a `Selector` MAY be added. This Selector MUST be separated from the resource location using a `#`— with no whitespace between: `location#selector`. If appropriate, the Selector SHOULD be formatted according to IRI fragment selectors specified by [W3](https://www.w3.org/TR/annotation-model/#fragment-selector).
 
 The format of the data resource MAY be further qualified using a `Data Format` column. The `Data Format` SHOULD be expressed using a [MIME format](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types), most commonly consisting of two parts: a type and a subtype, separated by a slash (/) — with no whitespace between: `type/subtype`. If appropriate, a format from the list composed by [IANA](https://www.iana.org/assignments/media-types/media-types.xhtml)
 SHOULD be picked. Unregistered or niche encoding and file formats MAY be indicated instead via the most appropriate URL.

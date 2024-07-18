@@ -96,9 +96,7 @@ Note:
 
 ```
 <top-level directory> 
-|   isa.investigation.xlsx 
-|   arc.cwl [optional]
-|   arc.yml [optional]            
+|   isa.investigation.xlsx         
 \--- studies
     \--- <study_name> 
             |    isa.study.xlsx  
@@ -118,8 +116,8 @@ Note:
 \--- runs   
     \--- <run_name> 
         |    [files;...] (different output files) 
-        |    run.cwl 
-        |    run.yml [optional]                 
+        |    run.cwl
+        |    run.yml     
 ```
 
 ## ARC Representation

@@ -188,6 +188,8 @@ Workflow execution and metadata MUST be described using the [Common Workflow Lan
 
 - A CWL [workflow description](https://www.commonwl.org/v1.2/Workflow.html). Such descriptions MAY utilize other ARC workflows as [nested workflows](https://www.commonwl.org/user_guide/topics/workflows.html#nested-workflows), but MUST use relative paths in this case. Files outside the ARC root directory MUST NOT be referenced.
 
+The file locations can be seen in the [Example ARC structure](#example-arc-structure).
+
 Notes:
 
 - There are no requirements on the structure or granularity of workflows. An ARC may contain no workflows at all if it contains no [run results](#run-description), or MAY utilize a single workflow to generate a single run result containing all computational output.

@@ -26,7 +26,7 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
   - [Additional Payload](#additional-payload)
   - [Top-level Metadata and Workflow Description](#top-level-metadata-and-workflow-description)
     - [Investigation and Study Metadata](#investigation-and-study-metadata)
-    - [Top-Level Run Description](#top-level-run-description)
+    - [Individual Run Description](#individual-run-description)
   - [Data Path Annotation](#data-path-annotation)
     - [Examples](#examples)
       - [General Pattern](#general-pattern)
@@ -84,7 +84,7 @@ Each ARC is a directory containing the following elements:
 
 - *Runs* capture data products (i.e., outputs of computational analyses) derived from assays, other runs, or study materials using workflows (located in the aforementioned *workflows* subdirectory). Each run is a collection of files, stored in the top-level `runs` subdirectory. It MUST be accompanied by a per-run CWL workflow description, stored in `<run_name>.cwl` as further described [below](#run-description).
 
-- *Top-level metadata and workflow description* tie together the elements of an ARC in the contexts of investigation and associated studies (in the ISA definition), captured in the file `isa.investigation.xlsx` in [ISA-XLSX format](#isa-xlsx-format), which MUST be present. Furthermore, top-level reproducibility information SHOULD be provided in the CWL `arc.cwl`.
+- *Top-level metadata and workflow description* tie together the elements of an ARC in the contexts of investigation and associated studies (in the ISA definition), captured in the file `isa.investigation.xlsx` in [ISA-XLSX format](#isa-xlsx-format), which MUST be present.
 
 All other files contained in an ARC (e.g., a `README.txt`, pre-print PDFs, additional annotation files) are referred to as *additional payload*, and MAY be located anywhere within the ARC structure. However, an ARC MUST be [reproducible](#reproducible-arcs) and [publishable](#shareable-and-publishable-arcs) even if these files are deleted. Further considerations on additional payload are described [below](#additional-payload).
 
@@ -96,9 +96,7 @@ Note:
 
 ```
 <top-level directory> 
-|   isa.investigation.xlsx 
-|   arc.cwl [optional]
-|   arc.yml [optional]            
+|   isa.investigation.xlsx         
 \--- studies
     \--- <study_name> 
             |    isa.study.xlsx  
@@ -118,8 +116,8 @@ Note:
 \--- runs   
     \--- <run_name> 
         |    [files;...] (different output files) 
-        |    run.cwl 
-        |    run.yml [optional]                 
+        |    run.cwl
+        |    run.yml     
 ```
 
 ## ARC Representation
@@ -186,9 +184,11 @@ Notes:
 
 Workflow execution and metadata MUST be described using the [Common Workflow Language](https://www.commonwl.org/) (CWL), [v1.2](https://www.commonwl.org/v1.2/) or higher, in a file `workflow.cwl`, which MUST be placed in the subdirectory containing all files specific to this workflow under the top-level `workflows` subdirectory. This file MUST contain either of:
 
-- A CWL [tool description](https://www.commonwl.org/v1.2/CommandLineTool.html). Tool descriptions must be self-contained and not refer to any files outside the workflow subdirectory. All paths used within the tool description MUST be relative to itself.
+- A CWL [tool description](https://www.commonwl.org/v1.2/CommandLineTool.html). Tool descriptions must be self-contained and not refer to any files outside the ARC root directory. All paths used within the tool description MUST be relative to itself.
 
-- A CWL [workflow description](https://www.commonwl.org/v1.2/Workflow.html). Such descriptions MAY utilize other ARC workflows as [nested workflows](https://www.commonwl.org/user_guide/22-nested-workflows/index.html), but MUST use relative paths in this case. Files outside the ARC root directory MUST NOT be referenced.
+- A CWL [workflow description](https://www.commonwl.org/v1.2/Workflow.html). Such descriptions MAY utilize other ARC workflows as [nested workflows](https://www.commonwl.org/user_guide/topics/workflows.html#nested-workflows), but MUST use relative paths in this case. Files outside the ARC root directory MUST NOT be referenced.
+
+The file locations can be seen in the [Example ARC structure](#example-arc-structure).
 
 Notes:
 
@@ -196,11 +196,19 @@ Notes:
 
 - While workflows typically are (and should be) *generic*, i.e. a single workflow can be applied to different data of the same type, this is not a requirement. It is allowed to hard-code assay file paths and other parameters if workflow reusability is not a priority.
 
-- It is highly recommended that tool descriptions contain a reproducible execution environment description in the form of a [Docker](https://www.commonwl.org/user_guide/07-containers/index.html) container description.
+- It is highly recommended that tool descriptions contain a reproducible execution environment description in the form of a [Docker](https://www.commonwl.org/user_guide/topics/using-containers.html) container description.
 
 - It is expected that workflow and tool descriptions are authored semi-automatically, e.g. using the [arcCommander](https://github.com/nfdi4plants/arcCommander) tool.
 
-- It is strongly encouraged to include author and contributor metadata in tool descriptions and workflow descriptions as [CWL metadata](https://www.commonwl.org/user_guide/17-metadata/index.html).
+### Workflow Metadata
+
+- For metadata annotation, it is encouraged to reference namespaces and schemas, as shown in the [CWL metadata user guide](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html)
+
+- It is strongly encouraged to include author and contributor metadata in tool descriptions and workflow descriptions as CWL metadata.
+
+    - The referenced authors and contributors must be the ones involved in the creation of the tool description or workflow description, not the person executing the [processing unit](https://www.commonwl.org/user_guide/introduction/basic-concepts.html#processes-and-requirements).
+
+- It is encouraged, to add metadata relevant to the tool description or workflow description. This metadata must be limited to only metadata that directly describes the processing unit. Metadata describing the run parameters must be added to the `run.yml` parameter file.
 
 ## Run Description
 
@@ -218,7 +226,15 @@ Notes:
 
 - It is expected that run descriptions are authored semi-automatically, e.g. using the [arcCommander](https://github.com/nfdi4plants/arcCommander) tool.
 
-- It is strongly encouraged to include author and contributor metadata in run descriptions as [CWL metadata](https://www.commonwl.org/user_guide/17-metadata/index.html).
+### Run Metadata
+
+- For metadata annotation, it is encouraged to reference namespaces and schemas, as shown in the [CWL metadata user guide](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html)
+
+- It is strongly encouraged to include author and contributor metadata in `run.yml` parameter files as CWL metadata.
+
+ - The referenced authors and contributors must be the ones executing the [processing unit](https://www.commonwl.org/user_guide/introduction/basic-concepts.html#processes-and-requirements), not the person that created the processing unit.
+
+ - It is encouraged, to add metadata relevant to the `run.yml` parameter file. This metadata must be limited to only metadata that directly describes the run parameters. Metadata describing the processing unit must be added to the corresponding `.cwl` file.
 
 ## Additional Payload
 
@@ -235,7 +251,7 @@ Note:
 
 The `investigation` file MUST follow the [ISA-XLSX investigation file specification](ISA-XLSX.md#investigation-file).
 
-Furthermore, top-level reproducibility information SHOULD be provided in the CWL `arc.cwl`.
+Furthermore, run-level reproducibility information SHOULD be provided in the CWL `run.cwl` ([Individual Run Description](#individual-run-description)).
 
 ### Investigation and Study Metadata
 
@@ -244,11 +260,11 @@ The ARC root directory is identifiable by the presence of the `isa.investigation
 Multiple studies MUST be stored using one worksheet per study in `isa.studies.xlsx` in the root directory of the ARC. 
 The study-level SHOULD define [ISA factors](https://isa-specs.readthedocs.io/en/latest/isamodel.html#study) of a study and MAY contain overlapping information also to be found in all assays grouped by the study. -->
 
-### Top-Level Run Description
+### Individual Run Description
 
-The file `arc.cwl` SHOULD exist at the root directory of each ARC. It describes which runs are executed (and specifically, their order) to (re)produce the computational outputs contained within the ARC.
+The file `run.cwl` MUST exist in the directory of each run. It describes the runs execution to (re)produce the computational outputs contained within the ARC.
 
-`arc.cwl` MUST be a CWL v1.2 workflow description and adhere to the same requirements as [run descriptions](#run-description). In particular, references to study or assay data files, nested workflows MUST use relative paths. An optional file `arc.yml` MAY be provided to specify input parameters.
+`run.cwl` MUST be a CWL v1.2 workflow description and adhere to the same requirements as [run descriptions](#run-description). In particular, references to study or assay data files, nested workflows MUST use relative paths.
 
 ## Data Path Annotation
 

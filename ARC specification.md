@@ -252,9 +252,15 @@ The file `arc.cwl` SHOULD exist at the root directory of each ARC. It describes 
 
 ## Data Path Annotation
 
-All metadata references to files or directories located inside the ARC MUST follow the following patterns:
+All metadata references to files or directories MUST follow one of the following patterns:
 
 - The `general pattern`, which is universally applicable and SHOULD be used to specify the path relative to the ARC root.
+
+- The `URL pattern`, which is universally applicable and MAY be used to specify path locations anywhere on the web, given the following constraints:
+  - The string MUST follow the [URI Syntax Specification (rfc3986)](https://datatracker.ietf.org/doc/html/rfc3986#section-1.1.3)
+  - The string MUST be a proper `URL`, i.e. it MUST contain all information necessary to locate the described resource
+  - The located resource MUST be publicly accessible and retreivable using a standardised communications protocol (see [FAIR A1.1](https://www.go-fair.org/fair-principles/a1-1-protocol-open-free-universally-implementable/))
+
 
 - The `folder specific pattern`, which MAY be used only in specific metadata contexts:
   - Data nodes in `isa.assay.xlsx` files: The path MAY be specified relative to the `dataset` sub-folder of the assay

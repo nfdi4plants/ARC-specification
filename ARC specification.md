@@ -302,7 +302,7 @@ Note, that to reference `Data` which is part of `Assays1` in `Assay2`, the `gene
 
 # Shareable and Publishable ARCs
 
-ARCs can be shared in any state. They are considered *publishable* (e.g. for the purpose of minting a DOI) when fulfilling the following conditions:
+ARCs can generally be shared in any state. In order for ARCs to be stored in a public archive for the purpose of minting a DOI, they MUST be *publishable*. They are considered *publishable*  when fulfilling the following conditions:
 
 - Investigation-level (administrative) metadata contains minimally the following terms:
 
@@ -312,11 +312,12 @@ ARCs can be shared in any state. They are considered *publishable* (e.g. for the
   - INVESTIGATION CONTACTS section and/or Comment[ORCID] of the PI(s)
     - Investigation Person Last Name
     - Investigation Person First Name
-    - Investigation Person Mid Initials
     - Investigation Person Email
     - Investigation Person Affiliation
 
 - A *publishable* ARC MUST NOT be *empty*: it MUST contain minimally a single assay or a single workflow.
+
+- All [Data Path Annotations](#data-path-annotation) made in the ARC MUST resolve to an existing, accessible data ressource.
 
 - A *publishable* ARC MUST be [reproducible](#reproducible-arcs)
 

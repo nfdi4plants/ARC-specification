@@ -210,6 +210,11 @@ Notes:
 
 - It is encouraged, to add metadata relevant to the tool description or workflow description. This metadata must be limited to only metadata that directly describes the processing unit. Metadata describing the run parameters must be added to the `run.yml` parameter file.
 
+- The properties of [Lab Protocol](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprotocol) and [Computational Workflow](https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE#nav-description)
+ should be used to describe workflow metadata.
+
+  - This is mainly done using [Property Values](https://schema.org/PropertyValue).
+
 ## Run Description
 
 **Runs** in an ARC represent all artefacts that result from some computation on the data within the ARC, i.e. [assays](#assay-data-and-metadata) and [external data](#external-data). These results (e.g. plots, tables, data files, etc. ) MUST reside inside one or more subdirectory of the top-level `runs` directory.
@@ -232,9 +237,14 @@ Notes:
 
 - It is strongly encouraged to include author and contributor metadata in `run.yml` parameter files as CWL metadata.
 
- - The referenced authors and contributors must be the ones executing the [processing unit](https://www.commonwl.org/user_guide/introduction/basic-concepts.html#processes-and-requirements), not the person that created the processing unit.
+  - The referenced authors and contributors must be the ones executing the [processing unit](https://www.commonwl.org/user_guide/introduction/basic-concepts.html#processes-and-requirements), not the person that created the processing unit.
 
- - It is encouraged, to add metadata relevant to the `run.yml` parameter file. This metadata must be limited to only metadata that directly describes the run parameters. Metadata describing the processing unit must be added to the corresponding `.cwl` file.
+- It is encouraged, to add metadata relevant to the `run.yml` parameter file. This metadata must be limited to only metadata that directly describes the run parameters. Metadata describing the processing unit must be added to the corresponding `.cwl` file.
+
+- The properties of [Lab Process](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprocess) and [Create Action](https://schema.org/CreateAction) should be used to 
+describe run metadata.
+
+  - This is mainly done using the processSequence (currently [about](https://schema.org/about)).
 
 ## Additional Payload
 

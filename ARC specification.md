@@ -192,26 +192,26 @@ The file locations can be seen in the [Example ARC structure](#example-arc-struc
 
 Notes:
 
-- There are no requirements on the structure or granularity of workflows. An ARC may contain no workflows at all if it contains no [run results](#run-description), or MAY utilize a single workflow to generate a single run result containing all computational output.
+- There are no requirements on the structure or granularity of workflows. An ARC MAY contain no workflows at all if it contains no [run results](#run-description), or MAY utilize a single workflow to generate a single run result containing all computational output.
 
-- While workflows typically are (and should be) *generic*, i.e. a single workflow can be applied to different data of the same type, this is not a requirement. It is allowed to hard-code assay file paths and other parameters if workflow reusability is not a priority.
+- While workflows typically are (and SHOULD be) *generic*, i.e. a single workflow can be applied to different data of the same type, this is not a requirement. It is allowed to hard-code assay file paths and other parameters if workflow reusability is not a priority.
 
-- It is highly recommended that tool descriptions contain a reproducible execution environment description in the form of a [Docker](https://www.commonwl.org/user_guide/topics/using-containers.html) container description.
+- Tool descriptions SHOULD contain a reproducible execution environment description in the form of a [Docker](https://www.commonwl.org/user_guide/topics/using-containers.html) container description.
 
 - It is expected that workflow and tool descriptions are authored semi-automatically, e.g. using the [arcCommander](https://github.com/nfdi4plants/arcCommander) tool.
 
 ### Workflow Metadata
 
-- For metadata annotation, it is encouraged to reference namespaces and schemas, as shown in the [CWL metadata user guide](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html)
+- For metadata annotation,namespaces and schemas SHOULD be referenced, as shown in the [CWL metadata user guide](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html)
 
-- It is strongly encouraged to include author and contributor metadata in tool descriptions and workflow descriptions as CWL metadata.
+- Author and contributor metadata SHOULD be included in tool descriptions and workflow descriptions as CWL metadata.
 
-    - The referenced authors and contributors must be the ones involved in the creation of the tool description or workflow description, not the person executing the [processing unit](https://www.commonwl.org/user_guide/introduction/basic-concepts.html#processes-and-requirements).
+    - The referenced authors and contributors MUST be the ones involved in the creation of the tool description or workflow description, not the person executing the [processing unit](https://www.commonwl.org/user_guide/introduction/basic-concepts.html#processes-and-requirements).
 
-- It is encouraged, to add metadata relevant to the tool description or workflow description. This metadata must be limited to only metadata that directly describes the processing unit. Metadata describing the run parameters must be added to the `run.yml` parameter file.
+- Metadata relevant to the tool description or workflow description SHOULD be added. This metadata MUST be limited to only metadata that directly describes the processing unit. Metadata describing the run parameters MUST be added to the `run.yml` parameter file.
 
 - The properties of [Lab Protocol](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprotocol) and [Computational Workflow](https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE#nav-description)
- should be used to describe workflow metadata.
+ SHOULD be used to describe workflow metadata.
 
   - This is mainly done using [Property Values](https://schema.org/PropertyValue).
 
@@ -219,7 +219,7 @@ Notes:
 
 **Runs** in an ARC represent all artefacts that result from some computation on the data within the ARC, i.e. [assays](#assay-data-and-metadata) and [external data](#external-data). These results (e.g. plots, tables, data files, etc. ) MUST reside inside one or more subdirectory of the top-level `runs` directory.
 
-Each such subdirectory must contain a workflow description `run.cwl`, given in [Common Workflow Language](https://www.commonwl.org/) (CWL), [v1.2](https://www.commonwl.org/v1.2/) or higher, that describes how the files contained with the run are derived from assay or external data, or other runs. `run.cwl` MUST be placed in the subdirectory under the top-level `runs` directory. A parameter file `run.yml` MAY be given to specify run-specific input parameters.
+Each such subdirectory MUST contain a workflow description `run.cwl`, given in [Common Workflow Language](https://www.commonwl.org/) (CWL), [v1.2](https://www.commonwl.org/v1.2/) or higher, that describes how the files contained with the run are derived from assay or external data, or other runs. `run.cwl` MUST be placed in the subdirectory under the top-level `runs` directory. A parameter file `run.yml` MAY be given to specify run-specific input parameters.
 
 `run.cwl` MAY (and sensibly, should) refer to assay data files, external data files, workflow descriptions, and files in other run results; such references MUST use relative paths. Furthermore, `run.cwl` MUST specify as outputs all result files. `run.cwl` MUST BE executable without referring to [additional payload files](#additional-auxiliary-payload) or files outside the ARC.
 
@@ -233,15 +233,15 @@ Notes:
 
 ### Run Metadata
 
-- For metadata annotation, it is encouraged to reference namespaces and schemas, as shown in the [CWL metadata user guide](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html)
+- For metadata annotation, namespaces and schemas SHOULD be referenced, as shown in the [CWL metadata user guide](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html)
 
-- It is strongly encouraged to include author and contributor metadata in `run.yml` parameter files as CWL metadata.
+- Author and contributor metadata SHOULD be included in `run.yml` parameter files as CWL metadata.
 
-  - The referenced authors and contributors must be the ones executing the [processing unit](https://www.commonwl.org/user_guide/introduction/basic-concepts.html#processes-and-requirements), not the person that created the processing unit.
+  - The referenced authors and contributors MUST be the ones executing the [processing unit](https://www.commonwl.org/user_guide/introduction/basic-concepts.html#processes-and-requirements), not the person that created the processing unit.
 
-- It is encouraged, to add metadata relevant to the `run.yml` parameter file. This metadata must be limited to only metadata that directly describes the run parameters. Metadata describing the processing unit must be added to the corresponding `.cwl` file.
+- Metadata relevant to the `run.yml` parameter file SHOULD be added. This metadata MUST be limited to only metadata that directly describes the run parameters. Metadata describing the processing unit MUST be added to the corresponding `.cwl` file.
 
-- The properties of [Lab Process](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprocess) and [Create Action](https://schema.org/CreateAction) should be used to 
+- The properties of [Lab Process](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprocess) and [Create Action](https://schema.org/CreateAction) SHOULD be used to 
 describe run metadata.
 
   - This is mainly done using the processSequence (currently [about](https://schema.org/about)).

@@ -692,29 +692,54 @@ In this example, there is a measurement of two `Samples`, namely `input1` and `i
 
 ## Ontology Annotations
 
-Where a value is an `Ontology Annotation` in a table file, `Term Accession Number` and `Term Source REF` fields MUST follow the column cell in which the value is entered. These two columns SHOULD contain further ontological information about the header. In this case, following the static header string, separated by a single space, there MUST be a short ontology term identifier formatted as CURIEs (prefixed identifiers) of the form `<IDSPACE>:<LOCALID>` (specified [here](http://obofoundry.org/id-policy)) inside `()` brackets.
-For example, a characteristic type `organism` with a value of `Homo sapiens` can be qualified with an `Ontology Annotation` of a term from NCBI Taxonomy as follows:
-
-| Characteristic [organism]   | Term Source REF (OBI:0100026)  | Term Accession Number (OBI:0100026) |
-|-----------------------------|-------------------|------------------------------------------------------|
-| Homo sapiens                | NCBITaxon         | [http://…/NCBITAXON_9606](http://.../NCBITAXON_9606) |
+Where a value is an `Ontology Annotation` in an annotation table, `Term Accession Number` and `Term Source REF` columns MUST follow the main column. 
 
 An `Ontology Annotation` MAY be applied to any appropriate `Characteristic`, `Parameter`, `Factor`, `Component` or `Protocol Type`.
 
 This implements `Ontology Annotation` from the ISA Abstract Model.
 
+#### Ontology Annotation Headers
+
+The header of the main column MUST contain the structural column type followed by the `name` of the ontology term in `[]` brackets.
+There SHOULD be a `space` between the column type and the `[` bracket.
+
+The headers of the two annotation columns SHOULD contain further ontological information about the ontology term of the main header. In this case, following the static header string, separated by a single space, there MUST be a short ontology term identifier formatted as CURIEs (prefixed identifiers) of the form `<IDSPACE>:<LOCALID>` (specified [here](http://obofoundry.org/id-policy)) inside `()` brackets.
+
+#### Ontology Annotation Values
+
+The value in the main column MUST contain the name of the ontology term.
+
+The value in the `Term Source REF` column MUST either contain a short identifier for the `IDSPACE`, which identifies the ontology the term can be found in, or be left empty. 
+
+The value in the `Term Accession Number` column MUST either contain a value formatted in one of the following formats, or be left empty:
+  - `LOCALID` of the ontology, which is only applicable if the matching `IDSPACE` is given in the `Term Source REF` column
+  - short ontology term identifier formatted as CURIEs (prefixed identifiers) of the form `<IDSPACE>:<LOCALID>` (specified [here](http://obofoundry.org/id-policy))
+  - `URL` pointing to the ontology term
+
+#### Ontology Annotation Example
+
+For example, a characteristic type `organism` with a value of `Homo sapiens` can be qualified with an `Ontology Annotation` of a term from NCBI Taxonomy as follows:
+
+| Characteristic [organism]   | Term Source REF (OBI:0100026)  | Term Accession Number (OBI:0100026) |
+|-----------------------------|-------------------|------------------------------------------------------|
+| Homo sapiens                | NCBITaxon         | [http://…/NCBITAXON_9606](http://purl.obolibrary.org/obo/NCBITAXON_9606) |
+
+> Note: In this example, the value in the `Term Accession Number` column is formatted as a `URL`, but shortened for the purpose of markdown-formatting.
+
 ## Unit
 
 Where a value is numeric, a `Unit` MAY be used to qualify the quantity. In this case, following the column in which a `Unit`
-is used, a `Unit` heading MUST be present, and MAY be further annotated as an [`Ontology Annotation`](#ontology-annotations).
+is used, a `Unit` heading MUST be present, and SHOULD be further annotated as an [`Ontology Annotation`](#ontology-annotations). 
+The header and values of the annotation columns then refer to the unit, and not to the numeric value of the main column.
 
 For example, to qualify the value `300` with a `Unit` `Kelvin` qualified as an [`Ontology Annotation`](#ontology-annotations) from the Units Ontology declared
 in the Ontology Sources with `UO`:
 
 |   Parameter [temperature] | Unit   | Term Source REF (PATO:0000146)  | Term Accession Number (PATO:0000146)  |
 |--------------------------------|--------|-------------------|------------------------------------------------------|
-|                            300 | Kelvin | UO                | [http://…/obo/UO_0000012](http://.../obo/UO_0000012) |
+|                            300 | Kelvin | UO                | [http://…/obo/UO_0000012](http://purl.obolibrary.org/obo/UO_0000012) |
 
+> Note: In this example, the value in the `Term Accession Number` column is formatted as a `URL`, but shortened for the purpose of markdown-formatting.
 
 
 ## Characteristics
@@ -728,6 +753,8 @@ For example, a characteristic type Organism with a value of Homo sapiens can be 
 |-------------------------------|-------------------|-------------------------|
 | Liver                         | MeSH              | D008099                 |
 
+> Note: In this example, the value in the `Term Accession Number` column is formatted as a `LOCALID`. The associated `IDSPACE` to identify the ontology term is given in the `Term Source REF` column.
+
 ## Factors
 
 A `Factor` is an independent variable manipulated by an experimentalist with the intention to affect biological systems in a way that can be measured by an assay. This field holds the actual data for the `Factor` named between the square brackets (as declared in the `Study Factors` section of a top-level metadata sheet) so MUST match, for example, `Factor [compound]`. The value MUST be free text, numeric, or an [`Ontology Annotation`](#ontology-annotations).
@@ -736,6 +763,7 @@ A `Factor` is an independent variable manipulated by an experimentalist with the
 |------------------------|-------------------|-------------------------|
 | Male                   | MeSH              | D008297                 |
 
+> Note: In this example, the value in the `Term Accession Number` column is formatted as a `LOCALID`. The associated `IDSPACE` to identify the ontology term is given in the `Term Source REF` column.
 
 ## Components
 
@@ -745,6 +773,9 @@ A `Component` is a consumable or reusable physical entity used in the experiment
 |------------------------|-------------------|-------------------------|
 | Illumina MiniSeq                   | OBI              | [http://…/obo/OBI_0003114](http://purl.obolibrary.org/obo/OBI_0003114)                 |
 
+> Note: In this example, the value in the `Term Accession Number` column is formatted as a `URL`, but shortened for the purpose of markdown-formatting.
+
+
 ## Parameters
 
 A `Parameter` can be used to specify any additional information about the experimental setup, that does not fall under the aforementioned 3 categories. It is formatted in the pattern `Parameter [<category term>]`. The value MUST be free text, numeric, or an [`Ontology Annotation`](#ontology-annotations).
@@ -752,6 +783,9 @@ A `Parameter` can be used to specify any additional information about the experi
 | Parameter [time] | Unit   | Term Source REF (PATO_0000165)  | Term Accession Number (PATO:0000165)  |
 |--------------------------------|--------|-------------------|------------------------------------------------------|
 |                            300 | Kelvin | UO                | [http://…/obo/UO_0000032](http://purl.obolibrary.org/obo/UO_0000032) |
+
+> Note: In this example, the value in the `Term Accession Number` column is formatted as a `URL`, but shortened for the purpose of markdown-formatting.
+
 
 ## Comments
 
@@ -824,6 +858,8 @@ Every `Datamap Table sheet` SHOULD contain an `Unit` column. The `Unit` adds a u
 |------------------------|-------------------|-------------------------|
 | milligram per milliliter | UO | [http://…/obo/UO_0000176](http://purl.obolibrary.org/obo/UO_0000176) |
 
+> Note: In this example, the value in the `Term Accession Number` column is formatted as a `URL`, but shortened for the purpose of markdown-formatting.
+
 ## Object Type column
 
 Every `Datamap Table sheet` SHOULD contain an `Object Type` column. The `Object Type` defines the shape or format in which the data node is represented. The value MUST be free text, or an [`Ontology Annotation`](#ontology-annotations).
@@ -831,6 +867,8 @@ Every `Datamap Table sheet` SHOULD contain an `Object Type` column. The `Object 
 | Object Type | Term Source REF | Term Accession Number |
 |------------------------|-------------------|-------------------------|
 | Float | NCIT | [http://…/obo/NCIT_C48150](http://purl.obolibrary.org/obo/NCIT_C48150) |
+
+> Note: In this example, the value in the `Term Accession Number` column is formatted as a `URL`, but shortened for the purpose of markdown-formatting.
 
 ## Description column
 

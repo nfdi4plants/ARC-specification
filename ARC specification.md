@@ -156,7 +156,7 @@ The `study` file MUST follow the [ISA-XLSX study file specification](ISA-XLSX.md
 
 Protocols that are necessary to describe the sample or material creating process can be placed under the protocols directory.
 
-Further explications about data entities defined in the assay MAY be stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file, which SHOULD exist for each assay. Further details on `isa.datamap.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
+Further explications about data entities defined in the study MAY be stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file, which SHOULD exist for each study. Further details on `isa.datamap.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
 
 ## Assay Data and Metadata
 

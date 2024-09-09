@@ -709,7 +709,7 @@ The headers of the two annotation columns SHOULD contain further ontological inf
 
 The value in the main column MUST contain the name of the ontology term.
 
-The value in the `Term Source REF` column MUST either contain a short identifier for the `IDSPACE`, which identifies the ontology the term can be found in, or be left empty. 
+The value in the `Term Source REF` column MUST either contain a short identifier for the `IDSPACE`, which identifies the ontology containing the term, or be left empty. 
 
 The value in the `Term Accession Number` column MUST either contain a value formatted in one of the following formats, or be left empty:
   - `LOCALID` of the ontology, which is only applicable if the matching `IDSPACE` is given in the `Term Source REF` column
@@ -728,12 +728,14 @@ For example, a characteristic type `organism` with a value of `Homo sapiens` can
 
 ## Unit
 
-Where a value is numeric, a `Unit` MAY be used to qualify the quantity. In this case, following the column in which a `Unit`
-is used, a `Unit` heading MUST be present, and SHOULD be further annotated as an [`Ontology Annotation`](#ontology-annotations). 
-The header and values of the annotation columns then refer to the unit, and not to the numeric value of the main column.
+Where a value is numeric, a `Unit` MAY be used to qualify the quantity. 
+In this case, the main column must be followed by a `Unit` column, which in turn SHOULD be further annotated as an [`Ontology Annotation`](#ontology-annotations), being followed by `Term Accession Number` and `Term Source REF` columns.
 
-For example, to qualify the value `300` with a `Unit` `Kelvin` qualified as an [`Ontology Annotation`](#ontology-annotations) from the Units Ontology declared
-in the Ontology Sources with `UO`:
+- The headers of the annotation columns then refer to the header of the main column.
+- The values of the annotation columns then refer to the unit, and not to the numeric value of the main column.
+
+For example, in the following, the header ontology `temperature` is further qualified with the CURIE `PATO:0000146`. 
+The value `300` is qualified with a `Unit` `Kelvin`, which is further qualified as an [`Ontology Annotation`](#ontology-annotations) from the Units Ontology declared in the Ontology Sources with `UO`:
 
 |   Parameter [temperature] | Unit   | Term Source REF (PATO:0000146)  | Term Accession Number (PATO:0000146)  |
 |--------------------------------|--------|-------------------|------------------------------------------------------|
@@ -769,7 +771,7 @@ A `Factor` is an independent variable manipulated by an experimentalist with the
 
 A `Component` is a consumable or reusable physical entity used in the experimental workflow. It is formatted in the pattern `Component [<category term>]`. The value MUST be free text, numeric, or an [`Ontology Annotation`](#ontology-annotations).
 
-| Component [Measurement Device]   | Term Source REF (NCIT_C81182)  | Term Accession Number (NCIT_C81182)  |
+| Component [Measurement Device]   | Term Source REF (NCIT:C81182)  | Term Accession Number (NCIT:C81182)  |
 |------------------------|-------------------|-------------------------|
 | Illumina MiniSeq                   | OBI              | [http://…/obo/OBI_0003114](http://purl.obolibrary.org/obo/OBI_0003114)                 |
 
@@ -780,7 +782,7 @@ A `Component` is a consumable or reusable physical entity used in the experiment
 
 A `Parameter` can be used to specify any additional information about the experimental setup, that does not fall under the aforementioned 3 categories. It is formatted in the pattern `Parameter [<category term>]`. The value MUST be free text, numeric, or an [`Ontology Annotation`](#ontology-annotations).
 
-| Parameter [time] | Unit   | Term Source REF (PATO_0000165)  | Term Accession Number (PATO:0000165)  |
+| Parameter [temperature] | Unit   | Term Source REF (NCRO:0000029)  | Term Accession Number (NCRO:0000029)  |
 |--------------------------------|--------|-------------------|------------------------------------------------------|
 |                            300 | Kelvin | UO                | [http://…/obo/UO_0000032](http://purl.obolibrary.org/obo/UO_0000032) |
 

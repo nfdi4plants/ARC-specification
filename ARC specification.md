@@ -23,10 +23,10 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
   - [Assay Data and Metadata](#assay-data-and-metadata)
   - [Workflow Description](#workflow-description)
   - [Run Description](#run-description)
+    - [Individual Run Description](#individual-run-description)
   - [Additional Payload](#additional-payload)
   - [Top-level Metadata and Workflow Description](#top-level-metadata-and-workflow-description)
     - [Investigation and Study Metadata](#investigation-and-study-metadata)
-    - [Individual Run Description](#individual-run-description)
   - [Data Path Annotation](#data-path-annotation)
     - [Examples](#examples)
       - [General Pattern](#general-pattern)
@@ -246,6 +246,12 @@ describe run metadata.
 
   - This is mainly done using the processSequence (currently [about](https://schema.org/about)).
 
+### Individual Run Description
+
+The file `run.cwl` MUST exist in the directory of each run. It describes the runs execution to (re)produce the computational outputs contained within the ARC.
+
+`run.cwl` MUST be a CWL v1.2 workflow description and adhere to the same requirements as [run descriptions](#run-description). In particular, references to study or assay data files, nested workflows MUST use relative paths.
+
 ## Additional Payload
 
 ARCs can include additional payload according to user requirements, e.g. presentations, reading material, or manuscripts. While these files can be placed anywhere in the ARC, it is strongly advised to organize these in additional subdirectories.
@@ -269,12 +275,6 @@ The ARC root directory is identifiable by the presence of the `isa.investigation
 <!-- The study file is optional and can be used to group assays into studies within one investigation. 
 Multiple studies MUST be stored using one worksheet per study in `isa.studies.xlsx` in the root directory of the ARC. 
 The study-level SHOULD define [ISA factors](https://isa-specs.readthedocs.io/en/latest/isamodel.html#study) of a study and MAY contain overlapping information also to be found in all assays grouped by the study. -->
-
-### Individual Run Description
-
-The file `run.cwl` MUST exist in the directory of each run. It describes the runs execution to (re)produce the computational outputs contained within the ARC.
-
-`run.cwl` MUST be a CWL v1.2 workflow description and adhere to the same requirements as [run descriptions](#run-description). In particular, references to study or assay data files, nested workflows MUST use relative paths.
 
 ## Data Path Annotation
 

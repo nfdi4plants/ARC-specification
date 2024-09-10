@@ -203,7 +203,7 @@ Notes:
 
 - Add metadata annotation as shown in the [CWL metadata user guide](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html).
 
-- Namespaces and schemas SHOULD be referenced (e.g. [Lab Protocol](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprotocol).
+- Namespaces and schemas SHOULD be referenced (e.g. [Lab Protocol](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprotocol)).
 
 - Author and contributor metadata SHOULD be included in tool descriptions and workflow descriptions as CWL metadata.
 
@@ -213,6 +213,8 @@ Notes:
 
 - The properties of [Lab Protocol](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprotocol) and [Computational Workflow](https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE#nav-description)
  SHOULD be used to describe workflow metadata.
+
+  - The types MUST be used in the [CWL syntax](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html) and SHOULD be referenced as described above.
 
   - This is mainly done using [Property Values](https://schema.org/PropertyValue).
 
@@ -236,7 +238,7 @@ Notes:
 
 - Add metadata annotation as shown in the [CWL metadata user guide](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html).
 
-- Namespaces and schemas SHOULD be referenced (e.g. [LabProcess](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate.md#labprocess).
+- Namespaces and schemas SHOULD be referenced (e.g. [LabProcess](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate.md#labprocess)).
 
 - Author and contributor metadata SHOULD be included in `run.yml` parameter files as CWL metadata.
 
@@ -246,6 +248,8 @@ Notes:
 
 - The properties of [Lab Process](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprocess) and [Create Action](https://schema.org/CreateAction) SHOULD be used to 
 describe run metadata.
+
+  - The types MUST be used in the [CWL syntax](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html) and SHOULD be referenced as described above.
 
   - This is mainly done using the processSequence (which currently maps to the [about](https://schema.org/about) type of LabProcess, see [here](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate_mapping.md)).
 

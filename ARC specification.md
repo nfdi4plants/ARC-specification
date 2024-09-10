@@ -23,7 +23,6 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
   - [Assay Data and Metadata](#assay-data-and-metadata)
   - [Workflow Description](#workflow-description)
   - [Run Description](#run-description)
-    - [Individual Run Description](#individual-run-description)
   - [Additional Payload](#additional-payload)
   - [Top-level Metadata and Workflow Description](#top-level-metadata-and-workflow-description)
     - [Investigation and Study Metadata](#investigation-and-study-metadata)
@@ -249,12 +248,6 @@ Notes:
 describe run metadata.
 
   - This is mainly done using the processSequence (which currently maps to the [about](https://schema.org/about) type of LabProcess, see [here](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate_mapping.md)).
-
-### Individual Run Description
-
-The file `run.cwl` MUST exist in the directory of each run. It describes the runs execution to (re)produce the computational outputs contained within the ARC.
-
-`run.cwl` MUST be a CWL v1.2 workflow description and adhere to the same requirements as [run descriptions](#run-description). In particular, references to study or assay data files, nested workflows MUST use relative paths.
 
 ## Additional Payload
 

@@ -279,13 +279,26 @@ The study-level SHOULD define [ISA factors](https://isa-specs.readthedocs.io/en/
 
 ## Data Path Annotation
 
-All metadata references to files or directories located inside the ARC MUST follow the following patterns:
+All metadata references to files or directories MUST follow one of the `patterns` defined in this section, which MUST only be used if the `constraint` is met.
 
-- The `general pattern`, which is universally applicable and SHOULD be used to specify the path relative to the ARC root.
+Files and directories referenced in ARC metadata files MUST follow one of the two following `constraints`:
 
-- The `folder specific pattern`, which MAY be used only in specific metadata contexts:
-  - Data nodes in `isa.assay.xlsx` files: The path MAY be specified relative to the `dataset` sub-folder of the assay
-  - Data nodes in `isa.study.xlsx` files: The path MAY be specified relative to the `resources` sub-folder of the study
+- `Local constraint`: The directory or file MUST be placed somewhere inside the ARC.
+
+  - The `general pattern`, which is universally applicable and SHOULD be used to specify the path relative to the ARC root.
+
+  - The `folder specific pattern`, which MAY be used only in specific metadata contexts:
+    - Data nodes in `isa.assay.xlsx` files: The path MAY be specified relative to the `dataset` sub-folder of the assay.
+    - Data nodes in `isa.study.xlsx` files: The path MAY be specified relative to the `resources` sub-folder of the study.
+
+- `Public constraint`: The located resource MUST be publicly accessible and retreivable using a standardised communications protocol (see [FAIR A1.1](https://www.go-fair.org/fair-principles/a1-1-protocol-open-free-universally-implementable/)).
+
+  - The `URL pattern`, which is universally applicable and MUST be used to specify path locations anywhere on the web, given the following formatting constraints:
+    - The string MUST follow the [URI Syntax Specification (rfc3986)](https://datatracker.ietf.org/doc/html/rfc3986#section-1.1.3).
+    - The string MUST be a proper `URL`, i.e. it MUST contain all information necessary to locate the described resource.
+
+
+
 
 ### Examples
 

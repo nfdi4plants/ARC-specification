@@ -104,13 +104,13 @@ Note:
             |    isa.study.xlsx  
             |    isa.datamap.xlsx [optional]
             \--- resources 
-            \--- protocol [optional / add. payload]
+            \--- protocols [optional / add. payload]
 \--- assays
     \--- <assay_name> 
             |    isa.assay.xlsx  
             |    isa.datamap.xlsx [optional]
             \--- dataset 
-            \--- protocol [optional / add. payload]
+            \--- protocols [optional / add. payload]
 \--- workflows  
     \--- <workflow_name> 
             | workflow.cwl 

@@ -26,7 +26,6 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
   - [Additional Payload](#additional-payload)
   - [Top-level Metadata and Workflow Description](#top-level-metadata-and-workflow-description)
     - [Investigation and Study Metadata](#investigation-and-study-metadata)
-    - [Top-Level Run Description](#top-level-run-description)
   - [Data Path Annotation](#data-path-annotation)
     - [Examples](#examples)
       - [General Pattern](#general-pattern)
@@ -76,15 +75,15 @@ ARCs are based on a strict separation of data and metadata content into study ma
 
 Each ARC is a directory containing the following elements:
 
-- *Studies* are collections of material and resources used within the investigation. Study-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.study.xlsx` file, which MUST exist to specify the input material or data resources. Resources MAY include biological materials (e.g. plant samples, analytical standards) created during the current investigation. Resources MAY further include external data (e.g., knowledge files, results files) that need to be included and cannot be referenced due to external limitations. Resources described in a study file can be the input for one or multiple assays. Further details on `isa.study.xlsx` are specified [below](#study-and-resources). Resource (descriptor) files MUST be placed in a `resources` subdirectory. Further explications about data entities defined in the study are stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file, which SHOULD exist for studies containing data. Further details on `isa.datamap.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
+- *Studies* are collections of material and resources used within the investigation. Study-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.study.xlsx` file, which MUST exist to specify the input material or data resources. Resources MAY include biological materials (e.g. plant samples, analytical standards) created during the current investigation. Resources MAY further include external data (e.g., knowledge files, results files) that need to be included and cannot be referenced due to external limitations. Resources described in a study file can be the input for one or multiple assays. Further details on `isa.study.xlsx` are specified [below](#study-and-resources). Resource (descriptor) files MUST be placed in a `resources` subdirectory. Further explications about data entities defined in the study are stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file in the **study folder** or `isa_datamap` worksheet in the **isa.study.xlsx** file. Further details on this are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
 
-- *Assays* correspond to outcomes of experimental assays or analytical measurements (in the interpretation of the ISA model) and are treated as immutable data. Each assay is a collection of files, together with a corresponding metadata file, stored in a subdirectory of the top-level subdirectory `assays`. Assay-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.assay.xlsx` file, which MUST exist for each assay. Further details on `isa.assay.xlsx` are specified [below](#assay-data-and-metadata). Assay data files MUST be placed in a `dataset` subdirectory. Further explications about data entities defined in the assay are stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file, which SHOULD exist for each assay. Further details on `isa.datamap.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
+- *Assays* correspond to outcomes of experimental assays or analytical measurements (in the interpretation of the ISA model) and are treated as immutable data. Each assay is a collection of files, together with a corresponding metadata file, stored in a subdirectory of the top-level subdirectory `assays`. Assay-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.assay.xlsx` file, which MUST exist for each assay. Further details on `isa.assay.xlsx` are specified [below](#assay-data-and-metadata). Assay data files MUST be placed in a `dataset` subdirectory. Further explications about data entities defined in the assay are stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file in the **assay folder** or `isa_datamap` worksheet in the **isa.assay.xlsx** file. Further details on this are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
 
 - *Workflows* represent data analysis routines (in the sense of CWL tools and workflows) and are a collection of files, together with a corresponding CWL description, stored in a single directory under the top-level `workflows` subdirectory. A per-workflow executable CWL description is stored in `workflow.cwl`, which MUST exist for all ARC workflows. Further details on workflow descriptions are given [below](#workflow-description).
 
-- *Runs* capture data products (i.e., outputs of computational analyses) derived from assays, other runs, or study materials using workflows (located in the aforementioned *workflows* subdirectory). Each run is a collection of files, stored in the top-level `runs` subdirectory. It MUST be accompanied by a per-run CWL workflow description, stored in `<run_name>.cwl` as further described [below](#run-description).
+- *Runs* capture data products (i.e., outputs of computational analyses) derived from assays, other runs, or study materials using workflows (located in the aforementioned *workflows* subdirectory). Each run is a collection of files, stored in the top-level `runs` subdirectory. It MUST be accompanied by a per-run CWL workflow description, stored in `run.cwl` as further described [below](#run-description).
 
-- *Top-level metadata and workflow description* tie together the elements of an ARC in the contexts of investigation and associated studies (in the ISA definition), captured in the file `isa.investigation.xlsx` in [ISA-XLSX format](#isa-xlsx-format), which MUST be present. Furthermore, top-level reproducibility information SHOULD be provided in the CWL `arc.cwl`.
+- *Top-level metadata and workflow description* tie together the elements of an ARC in the contexts of investigation and associated studies (in the ISA definition), captured in the file `isa.investigation.xlsx` in [ISA-XLSX format](#isa-xlsx-format), which MUST be present.
 
 All other files contained in an ARC (e.g., a `README.txt`, pre-print PDFs, additional annotation files) are referred to as *additional payload*, and MAY be located anywhere within the ARC structure. However, an ARC MUST be [reproducible](#reproducible-arcs) and [publishable](#shareable-and-publishable-arcs) even if these files are deleted. Further considerations on additional payload are described [below](#additional-payload).
 
@@ -96,9 +95,7 @@ Note:
 
 ```
 <top-level directory> 
-|   isa.investigation.xlsx 
-|   arc.cwl [optional]
-|   arc.yml [optional]            
+|   isa.investigation.xlsx         
 \--- studies
     \--- <study_name> 
             |    isa.study.xlsx  
@@ -118,8 +115,8 @@ Note:
 \--- runs   
     \--- <run_name> 
         |    [files;...] (different output files) 
-        |    run.cwl 
-        |    run.yml [optional]                 
+        |    run.cwl
+        |    run.yml     
 ```
 
 ## ARC Representation
@@ -156,7 +153,7 @@ The `study` file MUST follow the [ISA-XLSX study file specification](ISA-XLSX.md
 
 Protocols that are necessary to describe the sample or material creating process can be placed under the protocols directory.
 
-Further explications about data entities defined in the assay MAY be stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file, which SHOULD exist for each assay. Further details on `isa.datamap.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
+Further explications about data entities defined in the study MAY be stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file, which SHOULD exist for each study. Further details on `isa.datamap.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
 
 ## Assay Data and Metadata
 
@@ -186,29 +183,48 @@ Notes:
 
 Workflow execution and metadata MUST be described using the [Common Workflow Language](https://www.commonwl.org/) (CWL), [v1.2](https://www.commonwl.org/v1.2/) or higher, in a file `workflow.cwl`, which MUST be placed in the subdirectory containing all files specific to this workflow under the top-level `workflows` subdirectory. This file MUST contain either of:
 
-- A CWL [tool description](https://www.commonwl.org/v1.2/CommandLineTool.html). Tool descriptions must be self-contained and not refer to any files outside the workflow subdirectory. All paths used within the tool description MUST be relative to itself.
+- A CWL [tool description](https://www.commonwl.org/v1.2/CommandLineTool.html). Tool descriptions MUST be self-contained and not refer to any files outside the ARC root directory. All paths used within the tool description MUST be relative to itself.
 
-- A CWL [workflow description](https://www.commonwl.org/v1.2/Workflow.html). Such descriptions MAY utilize other ARC workflows as [nested workflows](https://www.commonwl.org/user_guide/22-nested-workflows/index.html), but MUST use relative paths in this case. Files outside the ARC root directory MUST NOT be referenced.
+- A CWL [workflow description](https://www.commonwl.org/v1.2/Workflow.html). Such descriptions MAY utilize other ARC workflows as [nested workflows](https://www.commonwl.org/user_guide/topics/workflows.html#nested-workflows), but MUST use relative paths in this case. Files outside the ARC root directory MUST NOT be referenced.
+
+The file locations can be seen in the [Example ARC structure](#example-arc-structure).
 
 Notes:
 
-- There are no requirements on the structure or granularity of workflows. An ARC may contain no workflows at all if it contains no [run results](#run-description), or MAY utilize a single workflow to generate a single run result containing all computational output.
+- There are no requirements on the structure or granularity of workflows. An ARC MAY contain no workflows at all if it contains no [run results](#run-description), or MAY utilize a single workflow to generate a single run result containing all computational output.
 
-- While workflows typically are (and should be) *generic*, i.e. a single workflow can be applied to different data of the same type, this is not a requirement. It is allowed to hard-code assay file paths and other parameters if workflow reusability is not a priority.
+- While workflows typically are (and SHOULD be) *generic*, i.e. a single workflow can be applied to different data of the same type, this is not a requirement. It is allowed to hard-code assay file paths and other parameters if workflow reusability is not a priority.
 
-- It is highly recommended that tool descriptions contain a reproducible execution environment description in the form of a [Docker](https://www.commonwl.org/user_guide/07-containers/index.html) container description.
+- Tool descriptions SHOULD contain a reproducible execution environment description in the form of a [Docker](https://www.commonwl.org/user_guide/topics/using-containers.html) container description.
 
 - It is expected that workflow and tool descriptions are authored semi-automatically, e.g. using the [arcCommander](https://github.com/nfdi4plants/arcCommander) tool.
 
-- It is strongly encouraged to include author and contributor metadata in tool descriptions and workflow descriptions as [CWL metadata](https://www.commonwl.org/user_guide/17-metadata/index.html).
+### Workflow Metadata
+
+- Add metadata annotation as shown in the [CWL metadata user guide](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html).
+
+- Namespaces and schemas SHOULD be referenced (e.g. [Lab Protocol](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprotocol)).
+
+- Author and contributor metadata SHOULD be included in tool descriptions and workflow descriptions as CWL metadata.
+
+    - The referenced authors and contributors MUST be the ones involved in the creation of the tool description or workflow description, not the person executing the [processing unit](https://www.commonwl.org/user_guide/introduction/basic-concepts.html#processes-and-requirements).
+
+- Metadata relevant to the tool description or workflow description SHOULD be added. This metadata MUST be limited to only metadata that directly describes the processing unit. Metadata describing the run parameters MUST be added to the `run.yml` parameter file.
+
+- The properties of [Lab Protocol](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprotocol), [Lab Process](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate.md#labprocess) and [Computational Workflow](https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE#nav-description)
+ SHOULD be used to describe workflow metadata.
+
+  - The types MUST be used in the [CWL syntax](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html) and SHOULD be referenced as described above.
+
+  - This is mainly done using [Property Values](https://schema.org/PropertyValue).
 
 ## Run Description
 
 **Runs** in an ARC represent all artefacts that result from some computation on the data within the ARC, i.e. [assays](#assay-data-and-metadata) and [external data](#external-data). These results (e.g. plots, tables, data files, etc. ) MUST reside inside one or more subdirectory of the top-level `runs` directory.
 
-Each such subdirectory must contain a workflow description `run.cwl`, given in [Common Workflow Language](https://www.commonwl.org/) (CWL), [v1.2](https://www.commonwl.org/v1.2/) or higher, that describes how the files contained with the run are derived from assay or external data, or other runs. `run.cwl` MUST be placed in the subdirectory under the top-level `runs` directory. A parameter file `run.yml` MAY be given to specify run-specific input parameters.
+Each such subdirectory MUST contain a workflow description `run.cwl`, given in [Common Workflow Language](https://www.commonwl.org/) (CWL), [v1.2](https://www.commonwl.org/v1.2/) or higher, that describes how the files contained with the run are derived from assay or external data, or other runs. `run.cwl` MUST be placed in the subdirectory under the top-level `runs` directory. A parameter file `run.yml` MAY be given to specify run-specific input parameters.
 
-`run.cwl` MAY (and sensibly, should) refer to assay data files, external data files, workflow descriptions, and files in other run results; such references MUST use relative paths. Furthermore, `run.cwl` MUST specify as outputs all result files. `run.cwl` MUST BE executable without referring to [additional payload files](#additional-auxiliary-payload) or files outside the ARC.
+`run.cwl` MAY (and sensibly, should) refer to assay data files, external data files, workflow descriptions, and files in other run results; such references MUST use relative paths, which can be given in the corresponding `run.yml`. The paths MUST be relative to the location of the `run.yml` file. Furthermore, `run.cwl` MUST specify as outputs all result files. `run.cwl` MUST BE executable without referring to [additional payload files](#additional-auxiliary-payload) or files outside the ARC.
 
 Notes:
 
@@ -218,7 +234,24 @@ Notes:
 
 - It is expected that run descriptions are authored semi-automatically, e.g. using the [arcCommander](https://github.com/nfdi4plants/arcCommander) tool.
 
-- It is strongly encouraged to include author and contributor metadata in run descriptions as [CWL metadata](https://www.commonwl.org/user_guide/17-metadata/index.html).
+### Run Metadata
+
+- Add metadata annotation as shown in the [CWL metadata user guide](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html).
+
+- Namespaces and schemas SHOULD be referenced (e.g. [LabProcess](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate.md#labprocess)).
+
+- Author and contributor metadata SHOULD be included in `run.yml` parameter files as CWL metadata.
+
+  - The referenced authors and contributors MUST be the ones executing the [processing unit](https://www.commonwl.org/user_guide/introduction/basic-concepts.html#processes-and-requirements), not the person that created the processing unit.
+
+- Metadata relevant to the `run.yml` parameter file SHOULD be added. This metadata MUST be limited to only metadata that directly describes the run parameters. Metadata describing the processing unit MUST be added to the corresponding `.cwl` file.
+
+- The properties of [Lab Process](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprocess) and [Create Action](https://schema.org/CreateAction) SHOULD be used to 
+describe run metadata.
+
+  - The types MUST be used in the [CWL syntax](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html) and SHOULD be referenced as described above.
+
+  - This is mainly done using the processSequence (which currently maps to the [about](https://schema.org/about) type of LabProcess, see [here](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate_mapping.md)).
 
 ## Additional Payload
 
@@ -235,7 +268,7 @@ Note:
 
 The `investigation` file MUST follow the [ISA-XLSX investigation file specification](ISA-XLSX.md#investigation-file).
 
-Furthermore, top-level reproducibility information SHOULD be provided in the CWL `arc.cwl`.
+Furthermore, run-level reproducibility information SHOULD be provided in the CWL `run.cwl` ([Individual Run Description](#individual-run-description)).
 
 ### Investigation and Study Metadata
 
@@ -244,21 +277,28 @@ The ARC root directory is identifiable by the presence of the `isa.investigation
 Multiple studies MUST be stored using one worksheet per study in `isa.studies.xlsx` in the root directory of the ARC. 
 The study-level SHOULD define [ISA factors](https://isa-specs.readthedocs.io/en/latest/isamodel.html#study) of a study and MAY contain overlapping information also to be found in all assays grouped by the study. -->
 
-### Top-Level Run Description
-
-The file `arc.cwl` SHOULD exist at the root directory of each ARC. It describes which runs are executed (and specifically, their order) to (re)produce the computational outputs contained within the ARC.
-
-`arc.cwl` MUST be a CWL v1.2 workflow description and adhere to the same requirements as [run descriptions](#run-description). In particular, references to study or assay data files, nested workflows MUST use relative paths. An optional file `arc.yml` MAY be provided to specify input parameters.
-
 ## Data Path Annotation
 
-All metadata references to files or directories located inside the ARC MUST follow the following patterns:
+All metadata references to files or directories MUST follow one of the `patterns` defined in this section, which MUST only be used if the `constraint` is met.
 
-- The `general pattern`, which is universally applicable and SHOULD be used to specify the path relative to the ARC root.
+Files and directories referenced in ARC metadata files MUST follow one of the two following `constraints`:
 
-- The `folder specific pattern`, which MAY be used only in specific metadata contexts:
-  - Data nodes in `isa.assay.xlsx` files: The path MAY be specified relative to the `dataset` sub-folder of the assay
-  - Data nodes in `isa.study.xlsx` files: The path MAY be specified relative to the `resources` sub-folder of the study
+- `Local constraint`: The directory or file MUST be placed somewhere inside the ARC.
+
+  - The `general pattern`, which is universally applicable and SHOULD be used to specify the path relative to the ARC root.
+
+  - The `folder specific pattern`, which MAY be used only in specific metadata contexts:
+    - Data nodes in `isa.assay.xlsx` files: The path MAY be specified relative to the `dataset` sub-folder of the assay.
+    - Data nodes in `isa.study.xlsx` files: The path MAY be specified relative to the `resources` sub-folder of the study.
+
+- `Public constraint`: The located resource MUST be publicly accessible and retreivable using a standardised communications protocol (see [FAIR A1.1](https://www.go-fair.org/fair-principles/a1-1-protocol-open-free-universally-implementable/)).
+
+  - The `URL pattern`, which is universally applicable and MUST be used to specify path locations anywhere on the web, given the following formatting constraints:
+    - The string MUST follow the [URI Syntax Specification (rfc3986)](https://datatracker.ietf.org/doc/html/rfc3986#section-1.1.3).
+    - The string MUST be a proper `URL`, i.e. it MUST contain all information necessary to locate the described resource.
+
+
+
 
 ### Examples
 
@@ -302,7 +342,7 @@ Note, that to reference `Data` which is part of `Assays1` in `Assay2`, the `gene
 
 # Shareable and Publishable ARCs
 
-ARCs can be shared in any state. They are considered *publishable* (e.g. for the purpose of minting a DOI) when fulfilling the following conditions:
+ARCs can generally be shared in any state. In order for ARCs to be stored in a public archive for the purpose of minting a DOI, they MUST be *publishable*. They are considered *publishable*  when fulfilling the following conditions:
 
 - Investigation-level (administrative) metadata contains minimally the following terms:
 
@@ -312,11 +352,12 @@ ARCs can be shared in any state. They are considered *publishable* (e.g. for the
   - INVESTIGATION CONTACTS section and/or Comment[ORCID] of the PI(s)
     - Investigation Person Last Name
     - Investigation Person First Name
-    - Investigation Person Mid Initials
     - Investigation Person Email
     - Investigation Person Affiliation
 
 - A *publishable* ARC MUST NOT be *empty*: it MUST contain minimally a single assay or a single workflow.
+
+- All [Data Path Annotations](#data-path-annotation) made in the ARC MUST resolve to an existing, accessible data ressource.
 
 - A *publishable* ARC MUST be [reproducible](#reproducible-arcs)
 

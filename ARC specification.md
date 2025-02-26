@@ -211,7 +211,7 @@ Notes:
 
 - Metadata relevant to the tool description or workflow description SHOULD be added. This metadata MUST be limited to only metadata that directly describes the processing unit. Metadata describing the run parameters MUST be added to the `run.yml` parameter file.
 
-- The properties of [Lab Protocol](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprotocol) and [Computational Workflow](https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE#nav-description)
+- The properties of [Lab Protocol](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprotocol), [Lab Process](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate.md#labprocess) and [Computational Workflow](https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE#nav-description)
  SHOULD be used to describe workflow metadata.
 
   - The types MUST be used in the [CWL syntax](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html) and SHOULD be referenced as described above.

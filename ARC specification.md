@@ -346,18 +346,20 @@ Note, that to reference `Data` which is part of `Assays1` in `Assay2`, the `gene
 
 _Disclaimer: This is not legal advice, when in doubt consult a legal professional in your jurisdiction_
 
+**ARCs SHOULD be shared under a license of the authors’/owners’/creators’ choice that clearly states the data usage terms.**
+
 Per default, digital artifacts such as the ARC fall under exclusive copyright of the creator(s).
 In other words, the creator has the exclusive right to decide how the ARC is used, distributed, or modified.
-To allow others to use, distribute, or modify the ARC, the creator(s) can choose a more permissive license. Examples of permissive licenses include the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/) and the [MIT License](https://opensource.org/licenses/MIT).
+To allow others to use, distribute, or modify the ARC, the creator(s) can choose a more permissive license. Examples of very permissive licenses include the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/) and the [MIT License](https://opensource.org/licenses/MIT).
 
-Obviously, more permissive licenses are more in line with the F**A**I**R** principles, as they allow others to **A**ccess and **R**euse ARCs.
+_Adding any license information to an ARC already makes it more FAI**R**_, as it clarifies the conditions under which it may be (re)used by others.
 However, **the choice of license is up to the creator(s) of the ARC**.
-It may not be possible to openly share ARCs due to legal or ethical constraints, for example when sensitive clinical data is involved.
-Furthermore, the license of an ARC can change during its lifetime: it may be shared under a more restrictive license during the research phase and under a more permissive license after publication.
+It may not be possible to share ARCs without restrictions due to legal (e.g. patenting or IPR) or ethical constraints, for example when sensitive clinical data is involved.
+Furthermore, the license of an ARC can change during its lifetime: it may be shared under a more restrictive license during the research and/or review phase and under a more permissive license after publication.
 
 **Choosing a license for ARCs is optional.**
 **When no license information is provided, all rights are reserved to the creators/owners.**
-However, we strongly encourage the usage of permissive licenses to increase the FAIRness of your ARC where possible.
+However, it is strongly encouraged to use licenses to increase the FAIRness of your ARC where possible.
 
 If a license of choice shall apply to an ARC, the license information MUST be included in the root of the ARC in a plaintext file named `LICENSE`.
 Text file extensions `.txt` or `.md` are allowed.

@@ -220,7 +220,7 @@ Notes:
 
 ## Run Description
 
-**Runs** in an ARC represent all artefacts that result from some computation on the data within the ARC, i.e. [assays](#assay-data-and-metadata) and [external data](#external-data). These results (e.g. plots, tables, data files, etc. ) MUST reside inside one or more subdirectory of the top-level `runs` directory.
+**Runs** in an ARC represent all artifacts that result from some computation on the data within the ARC, i.e. [assays](#assay-data-and-metadata) and [external data](#external-data). These results (e.g. plots, tables, data files, etc. ) MUST reside inside one or more subdirectory of the top-level `runs` directory.
 
 Each such subdirectory MUST contain a workflow description `run.cwl`, given in [Common Workflow Language](https://www.commonwl.org/) (CWL), [v1.2](https://www.commonwl.org/v1.2/) or higher, that describes how the files contained with the run are derived from assay or external data, or other runs. `run.cwl` MUST be placed in the subdirectory under the top-level `runs` directory. A parameter file `run.yml` MAY be given to specify run-specific input parameters.
 
@@ -291,7 +291,7 @@ Files and directories referenced in ARC metadata files MUST follow one of the tw
     - Data nodes in `isa.assay.xlsx` files: The path MAY be specified relative to the `dataset` sub-folder of the assay.
     - Data nodes in `isa.study.xlsx` files: The path MAY be specified relative to the `resources` sub-folder of the study.
 
-- `Public constraint`: The located resource MUST be publicly accessible and retreivable using a standardised communications protocol (see [FAIR A1.1](https://www.go-fair.org/fair-principles/a1-1-protocol-open-free-universally-implementable/)).
+- `Public constraint`: The located resource MUST be publicly accessible and retrievable using a standardized communications protocol (see [FAIR A1.1](https://www.go-fair.org/fair-principles/a1-1-protocol-open-free-universally-implementable/)).
 
   - The `URL pattern`, which is universally applicable and MUST be used to specify path locations anywhere on the web, given the following formatting constraints:
     - The string MUST follow the [URI Syntax Specification (rfc3986)](https://datatracker.ietf.org/doc/html/rfc3986#section-1.1.3).
@@ -357,7 +357,7 @@ ARCs can generally be shared in any state. In order for ARCs to be stored in a p
 
 - A *publishable* ARC MUST NOT be *empty*: it MUST contain minimally a single assay or a single workflow.
 
-- All [Data Path Annotations](#data-path-annotation) made in the ARC MUST resolve to an existing, accessible data ressource.
+- All [Data Path Annotations](#data-path-annotation) made in the ARC MUST resolve to an existing, accessible data resource.
 
 - A *publishable* ARC MUST be [reproducible](#reproducible-arcs)
 

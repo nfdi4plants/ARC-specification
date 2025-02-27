@@ -63,9 +63,11 @@ The key words MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RE
 
 ## Extensions
 
-The ARC specification can be extended in a backwards compatible way and will evolve over time. This is accomplished through a community-driven ARC discussion forum and pull request mechanisms.
+The ARC specification can be extended and will evolve over time. This is accomplished through a community-driven ARC discussion forum and pull request mechanisms.
 
-All changes that are not backwards compatible with the current ARC specification will be implemented in ARC specification v2.0.
+Backwards compatible changes, e.g. the addition of new optional metadata fields, will be implemented in _minor version increases_.
+All changes that are not backwards compatible with the current ARC specification will be implemented in _major version increases_.
+By this, we try to adopt [semantic versioning](https://semver.org/).
 
 # ARC Structure and Content
 
@@ -339,6 +341,26 @@ Use of `folder specific pattern` relative paths from `Assay1` and `Assay2` `Data
 | assays/Assay1/dataset/measurement.txt | script.sh | result.txt |
 
 Note, that to reference `Data` which is part of `Assays1` in `Assay2`, the `general pattern` is necessary either way. Therefore it is considered the more broadly applicable and recommended pattern.
+
+## Licensing
+
+_Disclaimer: This is not legal advice, when in doubt consult a legal professional in your jurisdiction_
+
+Per default, digital artifacts such as the ARC fall under exclusive copyright of the creator(s).
+In other words, the creator has the exclusive right to decide how the ARC is used, distributed, or modified.
+To allow others to use, distribute, or modify the ARC, the creator(s) can choose a more permissive license. Examples of permissive licenses include the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/) and the [MIT License](https://opensource.org/licenses/MIT).
+
+Obviously, more permissive licenses are more in line with the F**A**I**R** principles, as they allow others to **A**ccess and **R**euse ARCs.
+However, **the choice of license is up to the creator(s) of the ARC**.
+It may not be possible to openly share ARCs due to legal or ethical constraints, for example when sensitive clinical data is involved.
+Furthermore, the license of an ARC can change during its lifetime: it may be shared under a more restrictive license during the research phase and under a more permissive license after publication.
+
+**Choosing a license for ARCs is optional.**
+**When no license information is provided, all rights are reserved to the creators/owners.**
+However, we strongly encourage the usage of permissive licenses to increase the FAIRness of your ARC where possible.
+
+If a license of choice shall apply to an ARC, the license information MUST be included in the root of the ARC in a plaintext file named `LICENSE`.
+Text file extensions `.txt` or `.md` are allowed.
 
 # Shareable and Publishable ARCs
 

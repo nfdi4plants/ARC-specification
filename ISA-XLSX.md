@@ -639,11 +639,19 @@ In the `Annotation Table sheets`, column headers MUST have the first letter of e
 
 The content of the annotation table MUST be placed in an `xlsx table` whose name starts with `annotationTable`. Each sheet MUST contain at most one such annotation table. Only cells inside this table are considered as part of the formatted metadata.
 
-`Annotation Table sheets` are structured with fields organized on a per-row basis. The first row MUST be used for column headers. Each body row is an implementation of a `Process` node.
+`Annotation Table sheets` are structured with fields organized on a per-row basis. The first row MUST be used for column headers. Each body row is an implementation of a `Process`.
 
 ## Inputs and Outputs
 
-Each annotation table sheet MUST contain at most one `Input` and at most one `Output` column, which denote the Input and Output node of the `Process` node respectively. They MUST be formatted in the pattern `Input [<NodeType>]` and `Output [<NodeType>]`.
+Each annotation table sheet MAY contain at most one `Input` column.
+Their header MUST follow the pattern `Input [<NodeType>]` (See below for possible values of `<NodeType>`).
+If the `Input` column is present, it MUST NOT contain empty cell values.
+
+Each annotation table sheet MAY contain at most one `Output` column.
+Their header MUST follow the pattern `Output [<NodeType>]` (See below for possible values of `<NodeType>`).
+If the `Output` column is present, it MUST NOT contain empty cell values.
+
+Cell values of the `Input` and `Output` column represent nodes of the `Process` respectively.
 
 `NodeTypes` MUST be one of the following:
 

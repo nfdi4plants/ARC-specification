@@ -118,8 +118,6 @@ Additionally, the `Study File` SHOULD contain one or more [`Annotation Table she
 
 Therefore, the main entities of the `Study File` should be `Sources` and `Samples`.
 
-Any Study MAY contain datamap references as described in the [`Datamap Sheet`](#datamap-table-sheets) section.
-
 The `Study File` implements the [`Study`](https://isa-specs.readthedocs.io/en/latest/isamodel.html#study) graph from the ISA Abstract Model. graph from the ISA Abstract Model.
 
 # Assay File
@@ -134,8 +132,6 @@ The `Assay File` MUST contain one [`Top-Level Metadata sheet`](#top-level-metada
 Additionally, the `Assay File` SHOULD contain one or more [`Annotation Table sheet(s)`](#annotation-table-sheets), which MAY record preparation of biological samples, measurement of these samples and basic computations performed on the resulting data.
 
 Therefore, the main entities of the `Assay File` should be `Samples` and `Data`.
-
-Any Assay MAY contain datamap references as described in the [`Datamap Sheet`](#datamap-table-sheets) section.
 
 The `Assay File` implements the [`Assay`](https://isa-specs.readthedocs.io/en/latest/isamodel.html#assay) graph from the ISA Abstract Model.
 

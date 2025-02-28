@@ -29,6 +29,8 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
   - [Data Path Annotation](#data-path-annotation)
     - [Examples](#examples)
       - [General Pattern](#general-pattern)
+      - [Folder Specific pattern](#folder-specific-pattern)
+  - [Licensing](#licensing)
 - [Shareable and Publishable ARCs](#shareable-and-publishable-arcs)
 - [Reproducible ARCs](#reproducible-arcs)
 - [Mechanisms for ARC Quality Control](#mechanisms-for-arc-quality-control)

@@ -1,4 +1,4 @@
-# ISA-XLSX format
+# ISA-XLSX format, version 3.0.0-draft.1
 
 For detail on ISA framework terminology, please read the [ISA Abstract Model specification](https://isa-specs.readthedocs.io/en/latest/isamodel.html).
 

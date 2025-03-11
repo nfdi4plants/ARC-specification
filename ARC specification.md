@@ -1,10 +1,10 @@
-# Annotated Research Context Specification, v2.0
+# Annotated Research Context Specification, version 3.0.0-draft.1
 
 Please provide feedback via GitHub issues or a pull request.
 
 **GitHub repository:**  <https://github.com/nfdi4plants/ARC-specification>
 
-This specification is Copyright 2022 by [DataPLANT](https://nfdi4plants.de).
+Copyright 2022–2025 [DataPLANT](https://nfdi4plants.de).
 
 Licensed under the Creative Commons License CC BY, Version 4.0; you may not use this file except in compliance with the License. You may obtain a copy of the License at https://creativecommons.org/about/cclicenses/. This license allows re-users to distribute, remix, adapt, and build upon the material in any medium or format, so long as attribution is given to the creator. The license allows for commercial use. Credit must be given to the creator.
 

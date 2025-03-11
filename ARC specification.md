@@ -29,6 +29,8 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
   - [Data Path Annotation](#data-path-annotation)
     - [Examples](#examples)
       - [General Pattern](#general-pattern)
+      - [Folder Specific pattern](#folder-specific-pattern)
+  - [Licensing](#licensing)
 - [Shareable and Publishable ARCs](#shareable-and-publishable-arcs)
 - [Reproducible ARCs](#reproducible-arcs)
 - [Mechanisms for ARC Quality Control](#mechanisms-for-arc-quality-control)
@@ -63,9 +65,11 @@ The key words MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RE
 
 ## Extensions
 
-The ARC specification can be extended in a backwards compatible way and will evolve over time. This is accomplished through a community-driven ARC discussion forum and pull request mechanisms.
+The ARC specification can be extended and will evolve over time. This is accomplished through a community-driven ARC discussion forum and pull request mechanisms.
 
-All changes that are not backwards compatible with the current ARC specification will be implemented in ARC specification v2.0.
+Backwards compatible changes, e.g. the addition of new optional metadata fields, will be implemented in _minor version increases_.
+All changes that are not backwards compatible with the current ARC specification will be implemented in _major version increases_.
+By this, we try to adopt [semantic versioning](https://semver.org/).
 
 # ARC Structure and Content
 
@@ -220,7 +224,7 @@ Notes:
 
 ## Run Description
 
-**Runs** in an ARC represent all artefacts that result from some computation on the data within the ARC, i.e. [assays](#assay-data-and-metadata) and [external data](#external-data). These results (e.g. plots, tables, data files, etc. ) MUST reside inside one or more subdirectory of the top-level `runs` directory.
+**Runs** in an ARC represent all artifacts that result from some computation on the data within the ARC, i.e. [assays](#assay-data-and-metadata) and [external data](#external-data). These results (e.g. plots, tables, data files, etc. ) MUST reside inside one or more subdirectory of the top-level `runs` directory.
 
 Each such subdirectory MUST contain a workflow description `run.cwl`, given in [Common Workflow Language](https://www.commonwl.org/) (CWL), [v1.2](https://www.commonwl.org/v1.2/) or higher, that describes how the files contained with the run are derived from assay or external data, or other runs. `run.cwl` MUST be placed in the subdirectory under the top-level `runs` directory. A parameter file `run.yml` MAY be given to specify run-specific input parameters.
 
@@ -291,7 +295,7 @@ Files and directories referenced in ARC metadata files MUST follow one of the tw
     - Data nodes in `isa.assay.xlsx` files: The path MAY be specified relative to the `dataset` sub-folder of the assay.
     - Data nodes in `isa.study.xlsx` files: The path MAY be specified relative to the `resources` sub-folder of the study.
 
-- `Public constraint`: The located resource MUST be publicly accessible and retreivable using a standardised communications protocol (see [FAIR A1.1](https://www.go-fair.org/fair-principles/a1-1-protocol-open-free-universally-implementable/)).
+- `Public constraint`: The located resource MUST be publicly accessible and retrievable using a standardized communications protocol (see [FAIR A1.1](https://www.go-fair.org/fair-principles/a1-1-protocol-open-free-universally-implementable/)).
 
   - The `URL pattern`, which is universally applicable and MUST be used to specify path locations anywhere on the web, given the following formatting constraints:
     - The string MUST follow the [URI Syntax Specification (rfc3986)](https://datatracker.ietf.org/doc/html/rfc3986#section-1.1.3).
@@ -340,6 +344,28 @@ Use of `folder specific pattern` relative paths from `Assay1` and `Assay2` `Data
 
 Note, that to reference `Data` which is part of `Assays1` in `Assay2`, the `general pattern` is necessary either way. Therefore it is considered the more broadly applicable and recommended pattern.
 
+## Licensing
+
+_Disclaimer: This is not legal advice, when in doubt consult a legal professional in your jurisdiction_
+
+**ARCs SHOULD be shared under a license of the authors’/owners’/creators’ choice that clearly states the data usage terms.**
+
+Per default, digital artifacts such as the ARC fall under exclusive copyright of the creator(s).
+In other words, the creator has the exclusive right to decide how the ARC is used, distributed, or modified.
+To allow others to use, distribute, or modify the ARC, the creator(s) can choose a more permissive license. Examples of very permissive licenses include the [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/) and the [MIT License](https://opensource.org/licenses/MIT).
+
+_Adding any license information to an ARC already makes it more FAI**R**_, as it clarifies the conditions under which it may be (re)used by others.
+However, **the choice of license is up to the creator(s) of the ARC**.
+It may not be possible to share ARCs without restrictions due to legal (e.g. patenting or IPR) or ethical constraints, for example when sensitive clinical data is involved.
+Furthermore, the license of an ARC can change during its lifetime: it may be shared under a more restrictive license during the research and/or review phase and under a more permissive license after publication.
+
+**Choosing a license for ARCs is optional.**
+**When no license information is provided, all rights are reserved to the creators/owners.**
+However, it is strongly encouraged to use licenses to increase the FAIRness of your ARC where possible.
+
+If a license of choice shall apply to an ARC, the license information MUST be included in the root of the ARC in a plaintext file named `LICENSE`.
+Text file extensions `.txt` or `.md` are allowed.
+
 # Shareable and Publishable ARCs
 
 ARCs can generally be shared in any state. In order for ARCs to be stored in a public archive for the purpose of minting a DOI, they MUST be *publishable*. They are considered *publishable*  when fulfilling the following conditions:
@@ -357,7 +383,7 @@ ARCs can generally be shared in any state. In order for ARCs to be stored in a p
 
 - A *publishable* ARC MUST NOT be *empty*: it MUST contain minimally a single assay or a single workflow.
 
-- All [Data Path Annotations](#data-path-annotation) made in the ARC MUST resolve to an existing, accessible data ressource.
+- All [Data Path Annotations](#data-path-annotation) made in the ARC MUST resolve to an existing, accessible data resource.
 
 - A *publishable* ARC MUST be [reproducible](#reproducible-arcs)
 

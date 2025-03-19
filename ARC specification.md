@@ -116,11 +116,13 @@ Note:
     \--- <workflow_name> 
             | workflow.cwl 
             | docker-compose.yml [optional / add. payload]
+            | isa.datamap.xlsx [optional]
 \--- runs   
     \--- <run_name> 
-        |    [files;...] (different output files) 
-        |    run.cwl
-        |    run.yml     
+            |    [files;...] (different output files) 
+            |    run.cwl
+            |    run.yml  
+            |    isa.datamap.xlsx [optional]   
 ```
 
 ## ARC Representation
@@ -193,6 +195,8 @@ Workflow execution and metadata MUST be described using the [Common Workflow Lan
 
 The file locations can be seen in the [Example ARC structure](#example-arc-structure).
 
+Further explications about data and metadata entities defined in the workflow MAY be stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file, which MAY exist for each workflow. Further details on `isa.datamap.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
+
 Notes:
 
 - There are no requirements on the structure or granularity of workflows. An ARC MAY contain no workflows at all if it contains no [run results](#run-description), or MAY utilize a single workflow to generate a single run result containing all computational output.
@@ -229,6 +233,8 @@ Notes:
 Each such subdirectory MUST contain a workflow description `run.cwl`, given in [Common Workflow Language](https://www.commonwl.org/) (CWL), [v1.2](https://www.commonwl.org/v1.2/) or higher, that describes how the files contained with the run are derived from assay or external data, or other runs. `run.cwl` MUST be placed in the subdirectory under the top-level `runs` directory. A parameter file `run.yml` MAY be given to specify run-specific input parameters.
 
 `run.cwl` MAY (and sensibly, should) refer to assay data files, external data files, workflow descriptions, and files in other run results; such references MUST use relative paths, which can be given in the corresponding `run.yml`. The paths MUST be relative to the location of the `run.yml` file. Furthermore, `run.cwl` MUST specify as outputs all result files. `run.cwl` MUST BE executable without referring to [additional payload files](#additional-auxiliary-payload) or files outside the ARC.
+
+Further explications about data entities created by execution of the run MAY be stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file, which MAY exist for each run. Further details on `isa.datamap.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
 
 Notes:
 

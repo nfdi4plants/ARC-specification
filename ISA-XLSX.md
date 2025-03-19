@@ -118,8 +118,6 @@ Additionally, the `Study File` SHOULD contain one or more [`Annotation Table she
 
 Therefore, the main entities of the `Study File` should be `Sources` and `Samples`.
 
-Any Study MAY contain datamap references as described in the [`Datamap Sheet`](#datamap-table-sheets) section.
-
 The `Study File` implements the [`Study`](https://isa-specs.readthedocs.io/en/latest/isamodel.html#study) graph from the ISA Abstract Model. graph from the ISA Abstract Model.
 
 # Assay File
@@ -135,15 +133,13 @@ Additionally, the `Assay File` SHOULD contain one or more [`Annotation Table she
 
 Therefore, the main entities of the `Assay File` should be `Samples` and `Data`.
 
-Any Assay MAY contain datamap references as described in the [`Datamap Sheet`](#datamap-table-sheets) section.
-
 The `Assay File` implements the [`Assay`](https://isa-specs.readthedocs.io/en/latest/isamodel.html#assay) graph from the ISA Abstract Model.
 
 # Datamap File
 
 The `Datamap` represents a set of explanations about the `data` entities defined in `assays` and `studies`.
 
-The `Datamap File` MUST contain one [`Datamap table sheet`](#datamap-table-sheets). This sheet MUST be named `isa_datamap`.
+The `Datamap File` MUST contain at least one [`Datamap table sheet`](#datamap-table-sheets). The names of these worksheets SHOULD reflect the data entities they describe.
 
 Therefore, the main entities of the `Datamap File` should be `Data`.
 
@@ -860,7 +856,7 @@ If we pool two sources into a single sample, we might represent this as:
 
 In the `Datamap Table sheets`, column headers MUST have the first letter of each word in upper case, with the exception of the referencing label (REF).
 
-The content of the datamap table MUST be placed in an `xlsx table` whose name equals `datamapTable`. Each sheet MUST contain at most one such datamap table. Only cells inside this table are considered as part of the formatted metadata.
+The content of the datamap table MUST be placed in an `xlsx table` whose name starts with `datamapTable`. Each sheet MUST contain at most one such datamap table. Only cells inside this table are considered as part of the formatted metadata.
 
 `Datamap Table sheets` are structured with fields organized on a per-row basis. The first row MUST be used for column headers. Each body row is an implementation of a `data` node.
 

@@ -114,14 +114,15 @@ Note:
             \--- protocols [optional / add. payload]
 \--- workflows  
     \--- <workflow_name> 
-            | workflow.cwl 
-            | docker-compose.yml [optional / add. payload]
-            | isa.datamap.xlsx [optional]
+            |    workflow.cwl 
+            |    docker-compose.yml [optional / add. payload]
+            |    isa.datamap.xlsx [optional]
 \--- runs   
     \--- <run_name> 
             |    [files;...] (different output files) 
             |    run.cwl
             |    run.yml  
+            |    isa.run.xlsx [optional]   
             |    isa.datamap.xlsx [optional]   
 ```
 
@@ -207,25 +208,6 @@ Notes:
 
 - It is expected that workflow and tool descriptions are authored semi-automatically, e.g. using the [arcCommander](https://github.com/nfdi4plants/arcCommander) tool.
 
-### Workflow Metadata
-
-- Add metadata annotation as shown in the [CWL metadata user guide](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html).
-
-- Namespaces and schemas SHOULD be referenced (e.g. [Lab Protocol](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprotocol)).
-
-- Author and contributor metadata SHOULD be included in tool descriptions and workflow descriptions as CWL metadata.
-
-    - The referenced authors and contributors MUST be the ones involved in the creation of the tool description or workflow description, not the person executing the [processing unit](https://www.commonwl.org/user_guide/introduction/basic-concepts.html#processes-and-requirements).
-
-- Metadata relevant to the tool description or workflow description SHOULD be added. This metadata MUST be limited to only metadata that directly describes the processing unit. Metadata describing the run parameters MUST be added to the `run.yml` parameter file.
-
-- The properties of [Lab Protocol](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprotocol), [Lab Process](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate.md#labprocess) and [Computational Workflow](https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE#nav-description)
- SHOULD be used to describe workflow metadata.
-
-  - The types MUST be used in the [CWL syntax](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html) and SHOULD be referenced as described above.
-
-  - This is mainly done using [Property Values](https://schema.org/PropertyValue).
-
 ## Run Description
 
 **Runs** in an ARC represent all artifacts that result from some computation on the data within the ARC, i.e. [assays](#assay-data-and-metadata) and [external data](#external-data). These results (e.g. plots, tables, data files, etc. ) MUST reside inside one or more subdirectory of the top-level `runs` directory.
@@ -233,6 +215,8 @@ Notes:
 Each such subdirectory MUST contain a workflow description `run.cwl`, given in [Common Workflow Language](https://www.commonwl.org/) (CWL), [v1.2](https://www.commonwl.org/v1.2/) or higher, that describes how the files contained with the run are derived from assay or external data, or other runs. `run.cwl` MUST be placed in the subdirectory under the top-level `runs` directory. A parameter file `run.yml` MAY be given to specify run-specific input parameters.
 
 `run.cwl` MAY (and sensibly, should) refer to assay data files, external data files, workflow descriptions, and files in other run results; such references MUST use relative paths, which can be given in the corresponding `run.yml`. The paths MUST be relative to the location of the `run.yml` file. Furthermore, `run.cwl` MUST specify as outputs all result files. `run.cwl` MUST BE executable without referring to [additional payload files](#additional-auxiliary-payload) or files outside the ARC.
+
+Retrospective top level metadata about the run and metadata about the provenance of the generated data of this run SHOULD be stored in [ISA-XLSX](#isa-xlsx-format) in a `isa.run.xlsx` file, which SHOULD exist for each run. Further details on `isa.run.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#run-file).
 
 Further explications about data entities created by execution of the run MAY be stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file, which MAY exist for each run. Further details on `isa.datamap.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
 
@@ -243,25 +227,6 @@ Notes:
 - Any files produced by executing the run description which are not specified as CWL outputs in `run.cwl` are considered additional ARC payload. Furthermore, all files of all subdirectories under `run` that are not referenced from the [top-level workflow](#top-level-workflow) are considered additional payload.
 
 - It is expected that run descriptions are authored semi-automatically, e.g. using the [arcCommander](https://github.com/nfdi4plants/arcCommander) tool.
-
-### Run Metadata
-
-- Add metadata annotation as shown in the [CWL metadata user guide](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html).
-
-- Namespaces and schemas SHOULD be referenced (e.g. [LabProcess](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate.md#labprocess)).
-
-- Author and contributor metadata SHOULD be included in `run.yml` parameter files as CWL metadata.
-
-  - The referenced authors and contributors MUST be the ones executing the [processing unit](https://www.commonwl.org/user_guide/introduction/basic-concepts.html#processes-and-requirements), not the person that created the processing unit.
-
-- Metadata relevant to the `run.yml` parameter file SHOULD be added. This metadata MUST be limited to only metadata that directly describes the run parameters. Metadata describing the processing unit MUST be added to the corresponding `.cwl` file.
-
-- The properties of [Lab Process](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprocess) and [Create Action](https://schema.org/CreateAction) SHOULD be used to 
-describe run metadata.
-
-  - The types MUST be used in the [CWL syntax](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html) and SHOULD be referenced as described above.
-
-  - This is mainly done using the processSequence (which currently maps to the [about](https://schema.org/about) type of LabProcess, see [here](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate_mapping.md)).
 
 ## Additional Payload
 

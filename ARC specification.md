@@ -206,7 +206,7 @@ Notes:
 
 - Tool descriptions SHOULD contain a reproducible execution environment description in the form of a [Docker](https://www.commonwl.org/user_guide/topics/using-containers.html) container description.
 
-- It is expected that workflow and tool descriptions are authored semi-automatically, e.g. using the [arcCommander](https://github.com/nfdi4plants/arcCommander) tool.
+- It is expected that workflow and tool descriptions are authored semi-automatically, e.g. using the [Swate](https://nfdi4plants.github.io/nfdi4plants.knowledgebase/swate/) tool for annotation of the `isa.datamap.xlsx` file.
 
 ## Run Description
 
@@ -226,7 +226,7 @@ Notes:
 
 - Any files produced by executing the run description which are not specified as CWL outputs in `run.cwl` are considered additional ARC payload. Furthermore, all files of all subdirectories under `run` that are not referenced from the [top-level workflow](#top-level-workflow) are considered additional payload.
 
-- It is expected that run descriptions are authored semi-automatically, e.g. using the [arcCommander](https://github.com/nfdi4plants/arcCommander) tool.
+- It is expected that run descriptions are authored semi-automatically, e.g. using the [Swate](https://nfdi4plants.github.io/nfdi4plants.knowledgebase/swate/) tool for annotation of the `isa.datamap.xlsx` and the `isa.run.xlsx` file.
 
 ## Additional Payload
 

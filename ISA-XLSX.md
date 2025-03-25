@@ -140,7 +140,7 @@ The `Assay File` implements the [`Assay`](https://isa-specs.readthedocs.io/en/la
 
 # Run File
 
-The `Run` represents the application of a computational workflow. A `Run File` contains metadata about the executed workflows, information about the people creating, picking and parametrizing these workflow exections, and most importantly, details about the input data, parametrization and the result data.
+The `Run` represents the application of a `workflow`, i.e. the execution of a computational tool that has orchestrated the execution of other tools. A `Run File` contains metadata about the executed workflows, information about the people creating, picking and parametrizing these workflow exections, and most importantly, details about the input data, parametrization and the result data.
 
 The `Run File` MUST contain one [`Top-Level Metadata sheet`](#top-level-metadata-sheets). This sheet MUST be named `isa_run` and MUST contain the following sections:
 
@@ -682,7 +682,7 @@ This section MUST contain the following labels, with the specified datatypes for
 | Run Technology Type Term Accession Number  | String     | The accession number from the Term Source associated with the selected term.  |
 | Run Technology Type Term Source REF        | String     | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match one of the Term Source Names declared in the Ontology Source Reference. |
 | Run Technology Platform | String     | Software Publisher/Creator and/or Software name used for the computation. |
-| Run File Name           | String     | A field to specify the name of the Run Table file corresponding the definition of that assay. There can be only one file per cell. |
+| Run File Name           | String     | A field to specify the name of the Run Table file corresponding the definition of that run. There can be only one file per cell. |
 
 **Example**
 
@@ -712,15 +712,15 @@ This section MUST contain the following labels, with the specified datatypes for
 
 | Label | Datatype | Description |
 |-------|----------|-------------|
-| Run Person Last Name | String  | The last name of a person associated with the Assay.  |
+| Run Person Last Name | String  | The last name of a person associated with the run.  |
 | Run Person First Name  | String | Run Person Name |
-| Run Person Mid Initials  | String  | The middle initials of a person associated with the Assay.|
-| Run Person Email | String formatted as email | The email address of a person associated with the Assay. |
-| Run Person Phone  | String | The telephone number of a person associated with the Assay. |
-| Run Person Fax  | String | The fax number of a person associated with the assay.  |
-| Run Person Address  | String | The address of a person associated with the assay. |
-| Run Person Affiliation | String | The organization affiliation for a person associated with the assay. |
-| Run Person Roles | String or Ontology Annotation if accompanied by Term Accession Numbers and Term Source REFs | Term to classify the role(s) performed by this person in the context of the assay, which means that the roles reported here need not correspond to roles held withing their affiliated organization. Multiple annotations or values attached to one person can be provided by using a semicolon (“;”) Unicode (U0003+B) as a separator (e.g.: submitter;funder;sponsor) .The term can be free text or from, for example, a controlled vocabulary or an ontology. If the latter source is used the Term Accession Number and Term Source REF fields below are required. |
+| Run Person Mid Initials  | String  | The middle initials of a person associated with the run.|
+| Run Person Email | String formatted as email | The email address of a person associated with the run. |
+| Run Person Phone  | String | The telephone number of a person associated with the run. |
+| Run Person Fax  | String | The fax number of a person associated with the run.  |
+| Run Person Address  | String | The address of a person associated with the run. |
+| Run Person Affiliation | String | The organization affiliation for a person associated with the run. |
+| Run Person Roles | String or Ontology Annotation if accompanied by Term Accession Numbers and Term Source REFs | Term to classify the role(s) performed by this person in the context of the run, which means that the roles reported here need not correspond to roles held withing their affiliated organization. Multiple annotations or values attached to one person can be provided by using a semicolon (“;”) Unicode (U0003+B) as a separator (e.g.: submitter;funder;sponsor) .The term can be free text or from, for example, a controlled vocabulary or an ontology. If the latter source is used the Term Accession Number and Term Source REF fields below are required. |
 | Run Person Roles Term Accession Number | String | The accession number from the Term Source associated with the selected term. |
 | Run Person Roles Term Source REF | String | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match one of the Term Source Names declared in the Ontology Source Reference section. |
 

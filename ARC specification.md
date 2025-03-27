@@ -116,6 +116,7 @@ Note:
     \--- <workflow_name> 
             |    workflow.cwl 
             |    docker-compose.yml [optional / add. payload]
+            |    isa.workflow.xlsx [optional]   
             |    isa.datamap.xlsx [optional]
 \--- runs   
     \--- <run_name> 
@@ -195,6 +196,8 @@ Workflow execution and metadata MUST be described using the [Common Workflow Lan
 - A CWL [workflow description](https://www.commonwl.org/v1.2/Workflow.html). Such descriptions MAY utilize other ARC workflows as [nested workflows](https://www.commonwl.org/user_guide/topics/workflows.html#nested-workflows), but MUST use relative paths in this case. Files outside the ARC root directory MUST NOT be referenced.
 
 The file locations can be seen in the [Example ARC structure](#example-arc-structure).
+
+Prospective top level metadata about the workflow SHOULD be stored in [ISA-XLSX](#isa-xlsx-format) in a `isa.workflow.xlsx` file, which SHOULD exist for each workflow. Further details on `isa.workflow.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#workflow-file).
 
 Further explications about data and metadata entities defined in the workflow MAY be stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file, which MAY exist for each workflow. Further details on `isa.datamap.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
 

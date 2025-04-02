@@ -630,17 +630,16 @@ However, **if** an ARC is valid for a given _target_ is only half of the equatio
 
 In this example, a validation package SHOULD only determine if the content _COULD_ be published to the ER, and a subsequent service SHOULD then take the respective action based on the reported result of that package (e.g. fixing errors based on the report, or publish the content to the ER).
 
-**ARC apps** are services that provide URLs called _(CQC) Hook Endpoints_ that be triggered manually or by the result of a validation package. They are intended to automate the process of taking action based on the result of a validation package.
+**ARC apps** are services that provide _(CQC) Hook Endpoints_ that can be triggered manually or by the result of a validation package. They are intended to automate the process of taking action based on the result of a validation package.
 
-### Reference implementation
+To make sure that the data sent to an ARC App is well defined, as well as keeping data secure, a **Handshake service** is used as a middleman between the ARC and the ARC App. It is responsible for creating the payload that is sent to the ARC App, as well as for authenticating the user.
 
-PLANTDataHUB performs Continuous Quality Control of ARCs using the [arc-validate software suite](https://github.com/nfdi4plants/arc-validate) as described in our 2023 paper [PLANTdataHUB: a collaborative platform for continuous FAIR data sharing in plant research](https://doi.org/10.1111/tpj.16474).
-
-The following sequence diagram shows the conceptual implementation of CQC pipelines in conjunction with ARC Apps connected via CQC Hooks on the reference DataHUB instance with the following participants:
+The following sequence diagram shows the conceptual implementation of CQC pipelines in conjunction with ARC Apps connected via CQC Hooks:
 
 - **User**: The user who works on an ARC published on the DataHUB
 - **ARC**: The ARC repository on the DataHUB
 - **DataHUB**: The DataHUB instance
+- **Handshake Service**: Responsible for user authentication and payload generation
 - **ARC App**: A service that provides a CQC Hook Endpoint to perform actions based on validation results and/or user input
 
 ```mermaid
@@ -649,20 +648,32 @@ sequenceDiagram
     participant User
     participant ARC
     participant DataHUB
+    participant Handshake Service
     participant ARC App
 
     Note over User, DataHUB: Validation (CQC pipeline)
+
     User ->> ARC : commit
     DataHUB ->> DataHUB : trigger validation for commit
     DataHUB ->> ARC : commit validation results <br> to cqc branch
     DataHUB ->> ARC : create badge
-    Note over User, ARC App: CQC Hooks
-    User ->> ARC App : click on badge link
-    DataHUB ->> ARC App : trigger some action based on validation results
-    ARC App ->> DataHUB : Request relevant information
-    DataHUB ->> ARC App : send relevant information (when granted access)
+    User ->> Handshake Service : click on badge link
+
+    Note over DataHUB, ARC App: CQC Hooks
+
+    Handshake Service ->> DataHUB : authenticate user
+    DataHUB ->> Handshake Service : accept or deny
+    Handshake Service ->> DataHUB : request validation results
+    DataHUB ->> Handshake Service : send validation results if authenticated
+    Handshake Service ->> User : Show website, request user input (e.g authentication, list app permissions)
+    User ->> Handshake Service : provide requested input
+    Handshake Service ->> ARC App : create and send payload (e.g. validation results, user input)
     ARC App ->> ARC App : Perform action with retrieved data
 ```
+
+### Reference implementation
+
+PLANTDataHUB performs Continuous Quality Control of ARCs using the [arc-validate software suite](https://github.com/nfdi4plants/arc-validate) as described in our 2023 paper [PLANTdataHUB: a collaborative platform for continuous FAIR data sharing in plant research](https://doi.org/10.1111/tpj.16474).
 
 # Best Practices
 

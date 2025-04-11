@@ -1,4 +1,4 @@
-# Annotated Research Context Specification, version 3.0.0-draft.1
+# Annotated Research Context Specification, version 3.0.0-draft.2
 
 Please provide feedback via GitHub issues or a pull request.
 
@@ -10,8 +10,6 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
 
 # Table of Contents
 
-- [Annotated Research Context Specification, v2.0](#annotated-research-context-specification-v12)
-- [Table of Contents](#table-of-contents)
 - [Introduction](#introduction)
   - [Extensions](#extensions)
 - [ARC Structure and Content](#arc-structure-and-content)
@@ -149,7 +147,7 @@ Notes:
 
 The ISA-XLSX specification is currently part of the ARC specification. Its version therefore follows the version of the ARC specification.
 
-https://github.com/nfdi4plants/ARC-specfication/blob/main/ISA-XLSX.md
+[ISA-XLSX format specification](ISA-XLSX.md)
 
 ## Study and Resources
 

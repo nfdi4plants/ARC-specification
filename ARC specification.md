@@ -79,9 +79,9 @@ ARCs are based on a strict separation of data and metadata content into study ma
 
 Each ARC is a directory containing the following elements:
 
-- *Studies* are collections of material and resources used within the investigation. Study-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.study.xlsx` file, which MUST exist to specify the input material or data resources. Resources MAY include biological materials (e.g. plant samples, analytical standards) created during the current investigation. Resources MAY further include external data (e.g., knowledge files, results files) that need to be included and cannot be referenced due to external limitations. Resources described in a study file can be the input for one or multiple assays. Further details on `isa.study.xlsx` are specified [below](#study-and-resources). Resource (descriptor) files MUST be placed in a `resources` subdirectory. Further explications about data entities defined in the study are stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file in the **study folder** or `isa_datamap` worksheet in the **isa.study.xlsx** file. Further details on this are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
+- *Studies* are collections of material and resources used within the investigation. Study-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.study.xlsx` file, which MUST exist to specify the input material or data resources. Resources MAY include biological materials (e.g. plant samples, analytical standards) created during the current investigation. Resources MAY further include external data (e.g., knowledge files, results files) that need to be included and cannot be referenced due to external limitations. Resources described in a study file can be the input for one or multiple assays. Further details on `isa.study.xlsx` are specified [below](#study-and-resources). Resource (descriptor) files MUST be placed in a `resources` subdirectory. Further explications about data entities defined in the study are stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file in the **study folder**. Further details on this are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
 
-- *Assays* correspond to outcomes of experimental assays or analytical measurements (in the interpretation of the ISA model) and are treated as immutable data. Each assay is a collection of files, together with a corresponding metadata file, stored in a subdirectory of the top-level subdirectory `assays`. Assay-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.assay.xlsx` file, which MUST exist for each assay. Further details on `isa.assay.xlsx` are specified [below](#assay-data-and-metadata). Assay data files MUST be placed in a `dataset` subdirectory. Further explications about data entities defined in the assay are stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file in the **assay folder** or `isa_datamap` worksheet in the **isa.assay.xlsx** file. Further details on this are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
+- *Assays* correspond to outcomes of experimental assays or analytical measurements (in the interpretation of the ISA model) and are treated as immutable data. Each assay is a collection of files, together with a corresponding metadata file, stored in a subdirectory of the top-level subdirectory `assays`. Assay-level metadata is stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.assay.xlsx` file, which MUST exist for each assay. Further details on `isa.assay.xlsx` are specified [below](#assay-data-and-metadata). Assay data files MUST be placed in a `dataset` subdirectory. Further explications about data entities defined in the assay are stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file in the **assay folder**. Further details on this are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
 
 - *Workflows* represent data analysis routines (in the sense of CWL tools and workflows) and are a collection of files, together with a corresponding CWL description, stored in a single directory under the top-level `workflows` subdirectory. A per-workflow executable CWL description is stored in `workflow.cwl`, which MUST exist for all ARC workflows. Further details on workflow descriptions are given [below](#workflow-description).
 
@@ -114,13 +114,17 @@ Note:
             \--- protocols [optional / add. payload]
 \--- workflows  
     \--- <workflow_name> 
-            | workflow.cwl 
-            | docker-compose.yml [optional / add. payload]
+            |    workflow.cwl 
+            |    docker-compose.yml [optional / add. payload]
+            |    isa.workflow.xlsx [optional]   
+            |    isa.datamap.xlsx [optional]
 \--- runs   
     \--- <run_name> 
-        |    [files;...] (different output files) 
-        |    run.cwl
-        |    run.yml     
+            |    [files;...] (different output files) 
+            |    run.cwl
+            |    run.yml  
+            |    isa.run.xlsx [optional]   
+            |    isa.datamap.xlsx [optional]   
 ```
 
 ## ARC Representation
@@ -193,6 +197,10 @@ Workflow execution and metadata MUST be described using the [Common Workflow Lan
 
 The file locations can be seen in the [Example ARC structure](#example-arc-structure).
 
+Prospective top level metadata about the workflow SHOULD be stored in [ISA-XLSX](#isa-xlsx-format) in a `isa.workflow.xlsx` file, which SHOULD exist for each workflow. Further details on `isa.workflow.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#workflow-file).
+
+Further explications about data and metadata entities defined in the workflow MAY be stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file, which MAY exist for each workflow. Further details on `isa.datamap.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
+
 Notes:
 
 - There are no requirements on the structure or granularity of workflows. An ARC MAY contain no workflows at all if it contains no [run results](#run-description), or MAY utilize a single workflow to generate a single run result containing all computational output.
@@ -201,26 +209,7 @@ Notes:
 
 - Tool descriptions SHOULD contain a reproducible execution environment description in the form of a [Docker](https://www.commonwl.org/user_guide/topics/using-containers.html) container description.
 
-- It is expected that workflow and tool descriptions are authored semi-automatically, e.g. using the [arcCommander](https://github.com/nfdi4plants/arcCommander) tool.
-
-### Workflow Metadata
-
-- Add metadata annotation as shown in the [CWL metadata user guide](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html).
-
-- Namespaces and schemas SHOULD be referenced (e.g. [Lab Protocol](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprotocol)).
-
-- Author and contributor metadata SHOULD be included in tool descriptions and workflow descriptions as CWL metadata.
-
-    - The referenced authors and contributors MUST be the ones involved in the creation of the tool description or workflow description, not the person executing the [processing unit](https://www.commonwl.org/user_guide/introduction/basic-concepts.html#processes-and-requirements).
-
-- Metadata relevant to the tool description or workflow description SHOULD be added. This metadata MUST be limited to only metadata that directly describes the processing unit. Metadata describing the run parameters MUST be added to the `run.yml` parameter file.
-
-- The properties of [Lab Protocol](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprotocol), [Lab Process](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate.md#labprocess) and [Computational Workflow](https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE#nav-description)
- SHOULD be used to describe workflow metadata.
-
-  - The types MUST be used in the [CWL syntax](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html) and SHOULD be referenced as described above.
-
-  - This is mainly done using [Property Values](https://schema.org/PropertyValue).
+- It is expected that workflow and tool descriptions are authored semi-automatically, e.g. using the [Swate](https://nfdi4plants.github.io/nfdi4plants.knowledgebase/swate/) tool for annotation of the `isa.datamap.xlsx` file.
 
 ## Run Description
 
@@ -230,32 +219,17 @@ Each such subdirectory MUST contain a workflow description `run.cwl`, given in [
 
 `run.cwl` MAY (and sensibly, should) refer to assay data files, external data files, workflow descriptions, and files in other run results; such references MUST use relative paths, which can be given in the corresponding `run.yml`. The paths MUST be relative to the location of the `run.yml` file. Furthermore, `run.cwl` MUST specify as outputs all result files. `run.cwl` MUST BE executable without referring to [additional payload files](#additional-auxiliary-payload) or files outside the ARC.
 
+Retrospective top level metadata about the run and metadata about the provenance of the generated data of this run SHOULD be stored in [ISA-XLSX](#isa-xlsx-format) in a `isa.run.xlsx` file, which SHOULD exist for each run. Further details on `isa.run.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#run-file).
+
+Further explications about data entities created by execution of the run MAY be stored in [ISA-XLSX](#isa-xlsx-format) format in a `isa.datamap.xlsx` file, which MAY exist for each run. Further details on `isa.datamap.xlsx` are specified [in the isa-xlsx specification](ISA-XLSX.md#datamap-file).
+
 Notes:
 
 - Run descriptions are intended to ensure that the computational analysis encapsulated within an ARC can be fully reproduced.
 
 - Any files produced by executing the run description which are not specified as CWL outputs in `run.cwl` are considered additional ARC payload. Furthermore, all files of all subdirectories under `run` that are not referenced from the [top-level workflow](#top-level-workflow) are considered additional payload.
 
-- It is expected that run descriptions are authored semi-automatically, e.g. using the [arcCommander](https://github.com/nfdi4plants/arcCommander) tool.
-
-### Run Metadata
-
-- Add metadata annotation as shown in the [CWL metadata user guide](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html).
-
-- Namespaces and schemas SHOULD be referenced (e.g. [LabProcess](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate.md#labprocess)).
-
-- Author and contributor metadata SHOULD be included in `run.yml` parameter files as CWL metadata.
-
-  - The referenced authors and contributors MUST be the ones executing the [processing unit](https://www.commonwl.org/user_guide/introduction/basic-concepts.html#processes-and-requirements), not the person that created the processing unit.
-
-- Metadata relevant to the `run.yml` parameter file SHOULD be added. This metadata MUST be limited to only metadata that directly describes the run parameters. Metadata describing the processing unit MUST be added to the corresponding `.cwl` file.
-
-- The properties of [Lab Process](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprocess) and [Create Action](https://schema.org/CreateAction) SHOULD be used to 
-describe run metadata.
-
-  - The types MUST be used in the [CWL syntax](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html) and SHOULD be referenced as described above.
-
-  - This is mainly done using the processSequence (which currently maps to the [about](https://schema.org/about) type of LabProcess, see [here](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate_mapping.md)).
+- It is expected that run descriptions are authored semi-automatically, e.g. using the [Swate](https://nfdi4plants.github.io/nfdi4plants.knowledgebase/swate/) tool for annotation of the `isa.datamap.xlsx` and the `isa.run.xlsx` file.
 
 ## Additional Payload
 

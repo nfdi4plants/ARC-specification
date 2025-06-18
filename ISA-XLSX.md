@@ -86,10 +86,10 @@ The `Investigation file` fulfils four needs:
 
 The `Investigation File` MUST contain one [`Top-Level Metadata sheet`](#top-level-metadata-sheets). This sheet MUST be named `isa_investigation` and MUST contain the following sections:
  
-- [`ONTOLOGY SOURCE REFERENCE`](#ontology-source-reference)
 - [`INVESTIGATION`](#investigation)
 - [`INVESTIGATION PUBLICATIONS`](#investigation-publications)
 - [`INVESTIGATION CONTACTS`](#investigation-contacts)
+- [`ONTOLOGY SOURCE REFERENCE`](#ontology-source-reference)
 
 Additionally, it MAY contain the following sections:
 
@@ -204,16 +204,20 @@ This section MUST contain zero or more values.
 
 This section MUST contain the following labels, with the specified datatypes for values supported:
 
-| Label                   | Datatype                  | Description                                                                                                                                                                     |
-|-------------------------|---------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Term Source Name        | String                    | The name of the source of a term; i.e. the source controlled vocabulary or ontology. These names will be used in all corresponding Term Source REF fields that occur elsewhere. |
-| Term Source File        | String (file name or URI) | A file name or a URI of an official resource.                                                                                                                                   |
-| Term Source Version     | String                    | The version number of the Term Source to support terms tracking.                                                                                                                |
-| Term Source Description | String                    | Use for disambiguating resources when homologous prefixes have been used.                                                                                                       |
+| Label                   | Datatype                  | Mandatory | Description                                                                                                                                                                     |
+|-------------------------|---------------------------|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Term Source Name        | String                    |           | The name of the source of a term; i.e. the source controlled vocabulary or ontology. These names will be used in all corresponding Term Source REF fields that occur elsewhere. |
+| Term Source File        | String (file name or URI) |           | A file name or a URI of an official resource.                                                                                                                                   |
+| Term Source Version     | String                    |           | The version number of the Term Source to support terms tracking.                                                                                                                |
+| Term Source Description | String                    |           | Use for disambiguating resources when homologous prefixes have been used.                                                                                                       |
 
-**Example**
+**Examples**
 
 For example, the `ONTOLOGY SOURCE REFERENCE` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
+
+
+<details>
+<summary>Example Filled</summary>
 
 |                    |       |       |       |             |      |
 |--------------------|-------|-------|-------|-------------|------|
@@ -223,6 +227,20 @@ For example, the `ONTOLOGY SOURCE REFERENCE` section of an ISA-XLSX `isa.investi
 | Term Source Version | 78  | 111 | 21  | 2         | 160 |
 | Term Source Description | Chemical Entities of Biological Interest Ontology | Experimental Factor Ontology | Ontology for Biomedical Investigations | National Center for Biotechnology Information (NCBI) Organismal Classification | Phenotypic Quality Ontology |
 
+</details>
+
+<details>
+<summary>Example Minimal</summary>
+
+|                           |   |
+|---------------------------|---|
+| ONTOLOGY SOURCE REFERENCE |   |
+| Term Source Name          |   |
+| Term Source File          |   |
+| Term Source Version       |   |
+| Term Source Description   |   |
+
+</details>
 
 ## INVESTIGATION section
 
@@ -236,19 +254,21 @@ This section MUST contain zero or one values.
 
 This section MUST contain the following labels, with the specified datatypes for values supported:
 
-| Label                             | Datatype                                    | Description                                                                                  |
-|-----------------------------------|---------------------------------------------|----------------------------------------------------------------------------------------------|
-| Investigation Identifier          | String                                      | A mandatory identifier or an accession number provided by a repository. This SHOULD be locally unique. A value MUST be given for this label. |
-| Investigation Title               | String                                      | A mandatory concise name given to the investigation. A value MUST be given for this label.   |
-| Investigation Description         | String                                      | A mandatory textual description of the investigation. A value MUST be given for this label.  |
-| Investigation Submission Date     | String formatted as ISO8601 date YYYY-MM-DD | The date on which the investigation was reported to the repository.                          |
-| Investigation Public Release Date | String formatted as ISO8601 date YYYY-MM-DD | The date on which the investigation was released publicly.                                   |
+| Label                             | Datatype                                    | Mandatory | Description                                                                                  |
+|-----------------------------------|---------------------------------------------|:-----------:|----------------------------------------------------------------------------------------------|
+| Investigation Identifier          | String                                      | ×         | A identifier or an accession number provided by a repository. This SHOULD be locally unique. |
+| Investigation Title               | String                                      | ×         | A concise name given to the investigation.                                                   |
+| Investigation Description         | String                                      | ×         | A textual description of the investigation.                                                  |
+| Investigation Submission Date     | String formatted as ISO8601 date YYYY-MM-DD |           | The date on which the investigation was reported to the repository.                          |
+| Investigation Public Release Date | String formatted as ISO8601 date YYYY-MM-DD |           | The date on which the investigation was released publicly.                                   |
 
-**Example**
-
-For example, the `INVESTIGATION` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
+**Examples**
 
 
+Examples for the `INVESTIGATION` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
+
+<details>
+<summary>Example Filled</summary>
 
 |                              |                         |
 |------------------------------|-------------------------|
@@ -257,7 +277,24 @@ For example, the `INVESTIGATION` section of an ISA-XLSX `isa.investigation.xlsx`
 | Investigation Title         | Systems-wide investigation of responses to moderate and acute high temperatures in the green alga Chlamydomonas reinhardtii. |
 | Investigation Description   | Algae cultures were grown mixotrophically (TAP). After 24h of 35°C/40°C the cells were shifted back to room temperature for 48h. 'omics samples were taken. |
 | Investigation Submission Date | 2022-05-13              |
+| Investigation Public Release Date | 2022-06-14           |
+
+</details>
+
+<details>
+<summary>Minimal</summary>
+
+|                              |                         |
+|------------------------------|-------------------------|
+| INVESTIGATION |
+| Investigation Identifier     | ChlamyHeatstress                 |
+| Investigation Title         | Systems-wide investigation of responses to moderate and acute high temperatures in the green alga Chlamydomonas reinhardtii. |
+| Investigation Description   | Algae cultures were grown mixotrophically (TAP). After 24h of 35°C/40°C the cells were shifted back to room temperature for 48h. 'omics samples were taken. |
+| Investigation Submission Date |               |
 | Investigation Public Release Date |            |
+
+</details>
+
 
 
 ### INVESTIGATION PUBLICATIONS
@@ -266,22 +303,25 @@ This section MUST contain zero or more values.
 
 This section MUST contain the following labels, with the specified datatypes for values supported:
 
-| Label                                                  | Datatype                                                                                           | Description                                                                                                                                                                                |
-|--------------------------------------------------------|----------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Investigation Publication PubMed ID                                | String formatted as valid PubMed ID                                                                | The PubMed IDs of the described publication(s) associated with this investigation.                                                                              |
-| Investigation Publication DOI                          | String formatted as valid DOI                                                                      | A Digital Object Identifier (DOI) for that publication (where available).                                                                                 |
-| Investigation Publication Author List                  | String                                                                                      | The list of authors associated with that publication.                                                                                |
-| Investigation Publication Title                        | String                                                                                             | The title of publication associated with the investigation.                                                                              |
-| Investigation Publication Status                       | String, or Ontology Annotation by providing accompanying Term Accession Number and Term Source REF | A term describing the status of that publication (i.e. submitted, in preparation, published). |
-| Investigation Publication Status Term Accession Number | String or URI                                                                                      | The accession number from the Term Source associated with the selected term.                                                                                       |
-| Investigation Publication Status Term Source REF       | String                                                                                             | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match one the Term Source Name declared in the in the Ontology Source Reference section. |
-
-**Example**
-
-For example, the `INVESTIGATION PUBLICATIONS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
+| Label                                                  | Datatype                                                                                           | Mandatory | Description                                                                                                                                                                                |
+|--------------------------------------------------------|----------------------------------------------------------------------------------------------------|:-----------:|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Investigation Publication PubMed ID                    | String formatted as valid PubMed ID                                                                |           | The PubMed IDs of the described publication(s) associated with this investigation.                                                                                                         |
+| Investigation Publication DOI                          | String formatted as valid DOI                                                                      |           | A Digital Object Identifier (DOI) for that publication (where available).                                                                                                                  |
+| Investigation Publication Author List                  | String                                                                                             |           | The list of authors associated with that publication.                                                                                                                                      |
+| Investigation Publication Title                        | String                                                                                             |           | The title of publication associated with the investigation.                                                                                                                                |
+| Investigation Publication Status                       | String, or Ontology Annotation by providing accompanying Term Accession Number and Term Source REF |           | A term describing the status of that publication (i.e. submitted, in preparation, published).                                                                                              |
+| Investigation Publication Status Term Accession Number | String or URI                                                                                      |           | The accession number from the Term Source associated with the selected term.                                                                                                               |
+| Investigation Publication Status Term Source REF       | String                                                                                             |           | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match one the Term Source Name declared in the in the Ontology Source Reference section. |
 
 
-|                                        |                  |
+**Examples**
+
+Examples for an `INVESTIGATION PUBLICATIONS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
+
+<details>
+<summary>Example Filled</summary>
+
+|                                        |                 |
 |----------------------------------------|------------------|
 | INVESTIGATION PUBLICATIONS |
 | Investigation Publication PubMed ID    | PMC9106746         |
@@ -292,29 +332,66 @@ For example, the `INVESTIGATION PUBLICATIONS` section of an ISA-XLSX `isa.invest
 | Investigation Publication Status Term Accession Number | http://purl.org/spar/pso/published |
 | Investigation Publication Status Term Source REF | PSO |
 
+
+</details>
+
+<details>
+<summary>Example Minimal</summary>
+
+|                                        |                  |
+|----------------------------------------|------------------|
+| INVESTIGATION PUBLICATIONS |
+| Investigation Publication PubMed ID    |  |
+| Investigation Publication DOI          |  |
+| Investigation Publication Author List  |  |
+| Investigation Publication Title        |  |
+| Investigation Publication Status       |  |
+| Investigation Publication Status Term Accession Number |  |
+| Investigation Publication Status Term Source REF |  |
+
+</details>
+
+<details>
+<summary>Example Multiple</summary>
+
+|                                                        |                                                                                                                                                                                                                                                                                                                            |   |
+|:------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|---|
+| INVESTIGATION PUBLICATIONS                             |                                                                                                                                                                                                                                                                                                                            |   |
+| Investigation Publication PubMed ID                    | PMC9106746                                                                                                                                                                                                                                                                                                                 |   |
+| Investigation Publication DOI                          | 10.1038/s42003-022-03359-z                                                                                                                                                                                                                                                                                                 | https://doi.org/10.1111/tpj.16474  |
+| Investigation Publication Author List                  | Ningning Zhang, Erin M. Mattoon, Will McHargue, Benedikt Venn, David Zimmer, Kresti Pecani, Jooyeon Jeong, Cheyenne M. Anderson, Chen Chen, Jeffrey C. Berry, Ming Xia, Shin-Cheng Tzeng, Eric Becker, Leila Pazouki, Bradley Evans, Fred Cross, Jianlin Cheng, Kirk J. Czymmek, Michael Schroda, Timo Mühlhaus & Ru Zhang | Heinrich Lukas Weil, Kevin Schneider, Marcel Tschöpe, Jonathan Bauer, Oliver Maus, Kevin Frey, Dominik Brilhaus, Cristina Martins Rodrigues, Gajendra Doniparthi, Florian Wetzels, Jonas Lukasczyk, Angela Kranz, Björn Grüning, David Zimmer, Stefan Deßloch, Dirk von Suchodoletz, Björn Usadel, Christoph Garth, Timo Mühlhaus  |
+| Investigation Publication Title                        | Systems-wide analysis revealed shared and unique responses to moderate and acute high temperatures in the green alga Chlamydomonas reinhardtii                                                                                                                                                                             | PLANTdataHUB: a collaborative platform for continuous FAIR data sharing in plant research  |
+| Investigation Publication Status                       | published                                                                                                                                                                                                                                                                                                                  | published  |
+| Investigation Publication Status Term Accession Number | http://purl.org/spar/pso/published                                                                                                                                                                                                                                                                                         | http://purl.org/spar/pso/published  |
+| Investigation Publication Status Term Source REF       | PSO                                                                                                                                                                                                                                                                                                                        | PSO |
+
+</details>
+
 ### INVESTIGATION CONTACTS
 
 This section MUST contain zero or more values.
 
 This section MUST contain the following labels, with the specified datatypes for values supported:
+| Label                                            | Datatype                                                                                    | Mandatory | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+|--------------------------------------------------|---------------------------------------------------------------------------------------------|-----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Investigation Person Last Name                   | String                                                                                      |           | The last name of a person associated with the investigation.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| Investigation Person First Name                  | String                                                                                      |           | Investigation Person Name                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| Investigation Person Mid Initials                | String                                                                                      |           | The middle initials of a person associated with the investigation.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Investigation Person Email                       | String formatted as email                                                                   |           | The email address of a person associated with the investigation.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| Investigation Person Phone                       | String                                                                                      |           | The telephone number of a person associated with the investigation.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| Investigation Person Fax                         | String                                                                                      |           | The fax number of a person associated with the investigation.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| Investigation Person Address                     | String                                                                                      |           | The address of a person associated with the investigation.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Investigation Person Affiliation                 | String                                                                                      |           | The organization affiliation for a person associated with the investigation.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| Investigation Person Roles                       | String or Ontology Annotation if accompanied by Term Accession Numbers and Term Source REFs |           | Term to classify the role(s) performed by this person in the context of the investigation, which means that the roles reported here need not correspond to roles held withing their affiliated organization. Multiple annotations or values attached to one person can be provided by using a semicolon (“;”) Unicode (U0003+B) as a separator (e.g.: submitter;funder;sponsor) .The term can be free text or from, for example, a controlled vocabulary or an ontology. If the latter source is used the Term Accession Number and Term Source REF fields below are required. |
+| Investigation Person Roles Term Accession Number | String                                                                                      |           | The accession number from the Term Source associated with the selected term.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| Investigation Person Roles Term Source REF       | String                                                                                      |           | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match one of the Term Source Names declared in the Ontology Source Reference section.                                                                                                                                                                                                                                                                                                                                                                                        |
 
-| Label                                            | Datatype                                                                                    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-|--------------------------------------------------|---------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Investigation Person Last Name                   | String                                                                                      | The last name of a person associated with the investigation.                                                                              |
-| Investigation Person First Name                  | String                                                                                      | Investigation Person Name                                                                                        |
-| Investigation Person Mid Initials                | String                                                                                      | The middle initials of a person associated with the investigation.                                                                              |
-| Investigation Person Email                       | String formatted as email                                                                   | The email address of a person associated with the investigation.                                                                              |
-| Investigation Person Phone                       | String                                                                                      | The telephone number of a person associated with the investigation.                                                                              |
-| Investigation Person Fax                         | String                                                                                      | The fax number of a person associated with the investigation.                                                                              |
-| Investigation Person Address                     | String                                                                                      | The address of a person associated with the investigation.                                                                              |
-| Investigation Person Affiliation                 | String                                                                                      | The organization affiliation for a person associated with the investigation.                                                                              |
-| Investigation Person Roles                       | String or Ontology Annotation if accompanied by Term Accession Numbers and Term Source REFs | Term to classify the role(s) performed by this person in the context of the investigation, which means that the roles reported here need not correspond to roles held withing their affiliated organization. Multiple annotations or values attached to one person can be provided by using a semicolon (“;”) Unicode (U0003+B) as a separator (e.g.: submitter;funder;sponsor) .The term can be free text or from, for example, a controlled vocabulary or an ontology. If the latter source is used the Term Accession Number and Term Source REF fields below are required. Refer to section [Multiple values](#multiple-values) on how to encode multiple values in one field and match term sources. |
-| Investigation Person Roles Term Accession Number | String                                                                                      | The accession number from the Term Source associated with the selected term.                                                                                       |
-| Investigation Person Roles Term Source REF       | String                                                                                      | Identifies the controlled vocabulary or ontology that this term comes from. The Source REF has to match one of the Term Source Names declared in the Ontology Source Reference section.                                                                                    |
-
-**Example**
+**Examples**
 
 For example, the `INVESTIGATION CONTACTS` section of an ISA-XLSX `isa.investigation.xlsx` file may look as follows:
+
+<details>
+<summary>Example Multiple</summary>
 
 |                                |          |          |       |
 |--------------------------------|----------|----------|-------|
@@ -330,6 +407,28 @@ For example, the `INVESTIGATION CONTACTS` section of an ISA-XLSX `isa.investigat
 | Investigation Person Roles     | author | author | corresponding author |
 | Investigation Person Roles Term Accession Number |          |          |       |
 | Investigation Person Roles Term Source REF |          |          |       |
+
+</details>
+
+<details>
+<summary>Example minimal</summary>
+
+|                                                  |   |
+|--------------------------------------------------|---|
+| INVESTIGATION CONTACTS                           |   |
+| Investigation Person Last Name                   |   |
+| Investigation Person First Name                  |   |
+| Investigation Person Mid Initials                |   |
+| Investigation Person Email                       |   |
+| Investigation Person Phone                       |   |
+| Investigation Person Fax                         |   |
+| Investigation Person Address                     |   |
+| Investigation Person Affiliation                 |   |
+| Investigation Person Roles                       |   |
+| Investigation Person Roles Term Accession Number |   |
+| Investigation Person Roles Term Source REF       |   |
+
+</details>
 
 ## STUDY section
 

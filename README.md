@@ -1,6 +1,6 @@
 # Annotated Research Contexts specification
 
-[![DOI](https://zenodo.org/badge/380251011.svg)](https://zenodo.org/badge/latestdoi/380251011)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8302661.svg)](https://doi.org/10.5281/zenodo.8302661)
 
 Annotated Research Contexts (ARCs) are designed to represent FAIR Digital Objects (FDOs) for plant sciences to facilitate encompassing Research Data Management (RDM) tasks.
 

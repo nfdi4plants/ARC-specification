@@ -11,6 +11,14 @@ If you have novel conceptual ideas, please discuss them with the community under
 
 ## Contributing to this repository
 
-The default branch `release` of this repo is kept in sync with the latest release tag and the zenodo record. 
+The default branch `release` of this repo is kept in sync with the latest release tag and the zenodo record.
 
 Therefore, all contributions to this repo must target the `dev` branch, which is representing the work in progress for the next versioned release.
+
+Changes to the normative `.arc/validation_packages.yml` example can be checked
+against the released AVPR Codecs package and its bundled JSON Schema with
+[`uv`](https://docs.astral.sh/uv/):
+
+```shell
+uv run --script tests/validate_validation_packages_example.py
+```

@@ -595,32 +595,146 @@ Commits to the `cqc` branch MUST contain the commit hash of the commit that was 
 
 ### The validation_packages.yml file
 
-The `validation_packages.yml` specifies the validation packages that the branch containing the file will be validated against.
-Each branch of an ARC MAY contain 0 or 1 `validation_packages.yml` files.
-If the file is present, it:
+The `.arc/validation_packages.yml` file specifies the validation packages that
+an ARC branch will be validated against and the input values supplied to those
+packages. Each branch of an ARC MAY contain zero or one such file. When the
+file is present, newly written documents MUST use the canonical,
+schema-versioned format defined here.
 
-- MAY contain a `specification` key which, when present, MUST contain the version of the ARC specification that the ARC should be validated against. Schema specification should be tied to specification releases, and be directly integrated into tools that can perform  validation against validation packages.
-- MUST be located in the `.arc` folder in the root of the ARC
-- MUST contain the `validation_packages` key which is a list of validation packages that the current branch will be validated against.
+The machine-readable companion is the immutable Draft 2020-12 schema with
+identifier
+`https://avpr.nfdi4plants.org/schemas/v1/validation-packages.schema.json`.
+It is supplied by `ValidationPackage.Codecs` `0.1.0-preview.4` (Python package
+version `0.1.0a4`). The linked
+[schema document](https://github.com/nfdi4plants/arc-validate-package-registry/blob/2da28f06539cbc2a0aea2a20efccdf42cd436057/schemas/validation-packages.schema.json)
+is pinned to the released AVPR revision.
 
-  values of the `validation_packages` list are objects with the following fields:
+#### Canonical document
 
-  - `name`: the name of the validation package. This field is mandatory and MUST be included for each validation package object. This name MUST be unique across all validation packages object, which means that only one version of a package can be contained in the file.
-  - `version`: the version of the validation package. This field is optional and MAY be included for each validation package object. If included, it MUST be a valid [semantic version](https://semver.org/), restricted to MAJOR.MINOR.PATCH format. If not included, this indicates that the latest available version of the validation package will be used.
+A canonical document is a mapping with these fields and no others:
 
-example:
+| Field | Required | Meaning |
+| --- | --- | --- |
+| `$schema` | yes | MUST equal `https://avpr.nfdi4plants.org/schemas/v1/validation-packages.schema.json`. |
+| `arc_specification` | no | A complete [Semantic Version 2.0](https://semver.org/) identifying the ARC specification against which the ARC should be validated. |
+| `validation_packages` | yes | A sequence of package selections. The sequence MAY be empty. |
 
-> This example shows a `validation_packages.yml` file that specifies that the current branch will be validated against: version `2.0.0-draft` of the ARC specification, version `1.0.0` of `package1`, version `2.0.0` of `package2`, and the latest available version of `package3`.
+`$schema` has two purposes: it associates the document with its editor schema
+and selects the exact offline wire decoder. Runtime tools MUST dispatch it
+through a local allowlist, MUST NOT fetch an arbitrary schema URI while
+parsing, and MUST reject an unsupported URI instead of falling back to another
+document shape. An incompatible future format receives a new immutable schema
+URI; there is no separate numeric schema-version field.
+
+Each entry in `validation_packages` is a mapping with these fields and no
+others:
+
+| Field | Required | Meaning |
+| --- | --- | --- |
+| `name` | yes | A non-empty package name. Names are exact, case-sensitive, and MUST be unique within the document. |
+| `version` | yes | The complete Semantic Version used as the exact identity or rolling-version floor. |
+| `roll_forward` | no | One of `disable`, `latest_patch`, or `latest_minor`. Omission means `disable`. |
+| `inputs` | no | A mapping from exact package input declaration ID to one supported scalar value. |
+
+The selected package version's metadata is authoritative for input IDs,
+types, nullability, and requiredness. An input key is the package declaration's
+`id`, not its command-line `inputBinding.prefix`. The optional declaration
+`label` is human-readable package metadata and is not a configuration field.
+The executable declaration contract is documented with the
+[AVPR CWL command-input subset](https://github.com/nfdi4plants/arc-validate-package-registry/blob/2da28f06539cbc2a0aea2a20efccdf42cd436057/docs/packages/cwl-inputs.md).
+
+#### Version selection
+
+`roll_forward` has the following exact semantics:
+
+| Value | Resolution behavior |
+| --- | --- |
+| `disable` | Select exactly `version`, including any prerelease or build metadata. The exact identity MUST be published. |
+| `latest_patch` | Select the highest published stable version with the same major and minor numbers and precedence greater than or equal to `version`. |
+| `latest_minor` | Select the highest published stable version with the same major number and precedence greater than or equal to `version`. |
+
+For either rolling policy, the requested `version` is a lower bound; that
+exact floor does not itself need to be published. Rolling selection never
+crosses a major-version boundary. Both the requested and selected versions
+MUST be stable, so a requested version containing prerelease or build metadata
+is valid only when `roll_forward` is `disable`. Resolution fails when no
+eligible version exists.
+
+#### Package input values
+
+`inputs` follows the CWL job-object separation between input declarations and
+input values while supporting only the scalar types required by validation
+packages. Values MUST use this compatibility table:
+
+| Declared package type | Accepted configuration value |
+| --- | --- |
+| `boolean` | A lowercase YAML boolean, `true` or `false`. |
+| `int` | A JSON-form integer in the signed 32-bit range. |
+| `long` | A JSON-form integer in the signed 64-bit range. |
+| `float` | A JSON-form integer or floating-point number representable as a finite IEEE-754 single-precision value. |
+| `double` | A JSON-form integer or floating-point number representable as a finite IEEE-754 double-precision value. |
+| `string` | A quoted YAML string. |
+
+Appending `?` to a declared type makes that input nullable. Every
+non-nullable input MUST be explicitly present, including a required boolean
+whose value is `false`. A nullable input MAY be omitted or explicitly set to
+lowercase `null`. Unknown input IDs, missing required inputs, null for a
+non-nullable input, type or range mismatches, and implicit coercions MUST fail.
+Integer-to-floating widening is permitted; floating-to-integer and
+string/boolean coercion are not.
+
+Input values use a strict, JSON-compatible YAML scalar profile:
+
+- strings MUST use single- or double-quoted scalar syntax;
+- null and booleans MUST be the lowercase plain scalars `null`, `true`, and
+  `false`;
+- integers and floating-point values MUST use JSON number syntax and MUST be
+  finite; and
+- numeric lexemes MUST be preserved until declaration-driven validation and
+  argument materialization, so valid signed 64-bit integers are not rounded by
+  JavaScript consumers.
+
+YAML convenience or composite values such as `yes`, `no`, `on`, `off`, `~`,
+implicit empty null, hexadecimal or octal integers, numeric separators,
+leading-zero integers, `.nan`, `.inf`, sequences, and mappings MUST be
+rejected. Anchors, aliases, explicit tags, merge keys, duplicate mapping keys,
+multiple documents, and unknown fields MUST also be rejected.
+
+JSON Schema validates the JSON-compatible structure, required fields, known
+properties, scalar categories, version syntax, and policy enumeration. It
+cannot by itself enforce YAML lexical form, duplicate keys, aliases or tags,
+package-name uniqueness, declaration lookup, input type/range/requiredness, or
+version resolution. The released AVPR Model and Codecs are the executable
+reference for those rules. Consumers SHOULD use that implementation and MUST
+NOT treat shell-oriented YAML extraction as an equivalent parser.
+
+#### Canonical example
+
+> This example selects the newest stable `1.2.x` release of
+> `configurable-validation` at or above `1.2.3` and supplies three declared
+> input values.
 
 ```yaml
-arc_specification: 2.0.0-draft
+$schema: "https://avpr.nfdi4plants.org/schemas/v1/validation-packages.schema.json"
+arc_specification: 3.0.0-draft.2
 validation_packages:
-  - name: package1
-    version: 1.0.0
-  - name: package2
-    version: 2.0.0
-  - name: package3
+  - name: configurable-validation
+    version: 1.2.3
+    roll_forward: latest_patch
+    inputs:
+      strict: true
+      minimum-files: 2
+      report-title: "release candidate"
 ```
+
+#### Migration from schema-less files
+
+Schema-less files are a read-only legacy format during a temporary migration
+window. A legacy selection with a `version` resolves that exact identity. A
+legacy name-only selection resolves the highest published stable version and
+MUST produce a warning. Legacy documents cannot declare `roll_forward` or
+`inputs`. Canonical writers MUST always emit the supported `$schema` URI and a
+complete package `version`; they MUST NOT emit the legacy form.
 
 ### ARC Apps
 

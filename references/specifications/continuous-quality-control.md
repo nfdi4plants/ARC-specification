@@ -102,11 +102,11 @@ arc-validate config resolve \
   > validation_plan.json
 ```
 
-Standard output MUST contain only the complete JSON plan. Diagnostics and a
-legacy-format warning use standard error. The reference CLI classifies
-malformed configuration or unsatisfied selections as exit code `4` and
-registry transport or response failures as exit code `5`; structural command
-misuse remains `2`, and unexpected defects remain `3`.
+Standard output MUST contain only the complete JSON plan. Diagnostics use
+standard error. The reference CLI classifies malformed configuration or
+unsatisfied selections as exit code `4` and registry transport or response
+failures as exit code `5`; structural command misuse remains `2`, and
+unexpected defects remain `3`.
 
 For each plan entry, a child installs and runs the resolved identity:
 
@@ -212,11 +212,6 @@ lexical, uniqueness, declaration, range, or resolution rules. The released
 AVPR Model and Codecs are the executable reference for those rules. A consumer
 MUST NOT replace that contract with shell-oriented YAML extraction.
 
-Schema-less files are a read-only migration format. A legacy selection with a
-version resolves exactly that version; a name-only selection resolves the
-highest stable version and produces one warning. Legacy files cannot use
-`roll_forward` or `inputs`, and canonical writers MUST NOT emit them.
-
 ## Validation Plan
 
 The parent resolver emits the canonical persisted file
@@ -224,7 +219,7 @@ The parent resolver emits the canonical persisted file
 [validation-plan schema](../schemas/validation-plan.schema.json), identified by
 `https://nfdi4plants.github.io/arc-validate/schemas/v1/validation_plan.schema.json`.
 
-The plan contains:
+The plan is a closed object containing:
 
 | Field | Required | Meaning |
 | --- | --- | --- |
@@ -233,12 +228,17 @@ The plan contains:
 | `arc_specification` | no | Canonical ARC specification version copied from the configuration. |
 | `validation_packages` | yes | Ordered, fully resolved package identities. |
 
-Each package entry contains `name`, `requested_version`, `roll_forward`, and
-`resolved_version`. `requested_version` is a complete Semantic Version for a
-canonical selection and is null only for the legacy name-only form.
-`roll_forward` records `disable`, `latest_patch`, `latest_minor`, or the
-plan-only compatibility value `legacy_latest_stable`. `resolved_version` is
-always the exact package version the child MUST install and execute.
+Each package entry is a closed object with these fields:
+
+| Field | Required | Meaning |
+| --- | --- | --- |
+| `name` | yes | Exact package name copied from the configuration selection. |
+| `requested_version` | yes | Complete Semantic Version copied from the selection's `version`. |
+| `roll_forward` | yes | Effective policy: `disable`, `latest_patch`, or `latest_minor`. |
+| `resolved_version` | yes | Exact package version the child MUST install and execute. |
+
+The resolver preserves configuration selection order in the plan. This does
+not impose execution order on child jobs, which MAY run concurrently.
 
 The digest is calculated over the file's exact bytes, including a UTF-8 byte
 order mark when present. The resolver MUST finish registry discovery,
@@ -279,12 +279,15 @@ cqc branch root/
         └── validation_summary.json
 ```
 
-A result is identified by the source repository, source commit hash, source
-branch at execution time, package name, exact package version, and validation
-configuration digest. The CQC commit message MUST contain the validated source
-commit hash. `validation_summary.json` MUST contain matching `SourceBranch` and
-`SourceCommitHash` values, and the JUnit report and badge SHOULD embed the same
-source provenance using their format-specific metadata facilities.
+An execution is identified by the source repository, source commit hash,
+source branch at execution time, package name, exact package version, and
+validation configuration digest. The retained package result files identify
+the source and package identity; the retained validation plan supplies the
+configuration digest and resolution decision. The CQC commit message MUST
+contain the validated source commit hash. `validation_summary.json` MUST
+contain matching `SourceBranch` and `SourceCommitHash` values, and the JUnit
+report and badge SHOULD embed the same source provenance using their
+format-specific metadata facilities.
 
 `validation_plan.json` SHOULD be retained as a CI artifact alongside the run
 that produced the results. Its `config_sha256` binds parent resolution to the

@@ -34,10 +34,10 @@ and **MAY** in this document are to be interpreted as described in
 appear in all capitals.
 
 A conforming package consists of one supported executable script, embedded
-metadata, one or more validation cases, and the ability to create the standard
-result files. A conforming runner supplies the standard process arguments,
-preserves argument boundaries, and provides an execution environment for the
-script language.
+metadata, validation cases, and the ability to create the standard result
+files. A conforming runner supplies the standard process arguments, preserves
+argument boundaries, and provides an execution environment for the script
+language. The critical and non-critical case groups MAY each be empty.
 
 ## Validation Package Structure
 
@@ -54,10 +54,6 @@ The script MUST:
 * distinguish failed requirements from errors that prevented evaluation; and
 * write the standard output files below `.arc-validate-results/{name}@{version}/` in the supplied output directory.
 
-Validation case definitions MUST be contained in the package script and MUST
-NOT be loaded from external sources such as shared software libraries or
-network services at execution time.
-
 Package software dependencies MUST be declared inside the script using the mechanism specified for its programming language.
 A package MUST NOT rely on unrecorded software installed on a particular runner.
 
@@ -66,15 +62,14 @@ A package MUST NOT rely on unrecorded software installed on a particular runner.
 Package metadata is an embedded YAML mapping. Its machine-readable companion
 is the [validation-package frontmatter schema](../schemas/validation-package-frontmatter.schema.json),
 identified by
-`<insert w3c PID here later>`.
+`https://avpr.nfdi4plants.org/schemas/v1/validation-package-frontmatter.schema.json`.
 `$schema` selects an offline decoder as well as associating an editor schema;
 runners MUST NOT fetch and execute or trust an arbitrary schema URI while
 parsing a package.
 
 Readers MUST reject unknown fields, duplicate keys, aliases, anchors, explicit
-tags, merge keys, and multiple YAML documents. Schema-less metadata MAY be
-read for compatibility with immutable packages published before this contract;
-new packages and canonical writers MUST include `$schema`.
+tags, merge keys, and multiple YAML documents. Package metadata MUST include
+`$schema` with the exact identifier above.
 
 #### Root metadata contract
 
@@ -91,13 +86,16 @@ The following fields form the metadata contract:
 | `Description` | yes | Longer human-readable description of the package's scope. |
 | `PreReleaseVersionSuffix` | no | Semantic Version prerelease suffix without the leading hyphen. |
 | `BuildMetadataVersionSuffix` | no | Semantic Version build suffix without the leading plus sign. |
-| `ProgrammingLanguage` | no | Script language, normally supplied by frontmatter extraction. |
 | `Publish` | no | Registry-staging instruction; omission means `false`. It has no effect at runtime. |
 | `Authors` | no | Ordered package author and maintainer records. |
 | `Tags` | no | Search terms with optional ontology source and accession. |
 | `ReleaseNotes` | no | Human-readable changes in this package version. |
 | `CQCHookEndpoint` | no | Endpoint associated with the package for an ARC application. |
 | `Inputs` | no | Ordered package-specific command-input declarations. |
+
+Omitted optional string fields decode as empty strings, and omitted `Authors`,
+`Tags`, and `Inputs` fields decode as empty arrays. `Publish` defaults to
+`false`.
 
 #### Authors
 
@@ -150,12 +148,12 @@ others:
 | `prefix` | yes | Non-empty, exact command-line token emitted for the input. It MUST be unique within the package. |
 | `position` | no | Integer used to order package-specific arguments; omission means `0`. |
 
-`prefix` MUST NOT be `--`, `-i`, `-o`, `--source-branch`, or
-`--source-commit-hash`, which are reserved by the standard execution contract.
-A runner orders configured inputs by ascending `position` and then by input ID
-using ordinal comparison. A boolean `true` emits the prefix only; `false` and
-null emit nothing. Every other value emits the prefix and value as separate
-process arguments.
+`prefix` MUST NOT be `--`, `-i`, `--arc-directory`, `-o`,
+`--out-directory`, `--source-branch`, or `--source-commit-hash`, which are
+reserved by the standard argument parser. A runner orders configured inputs by
+ascending `position` and then by input ID using ordinal comparison. A boolean
+`true` emits the prefix only; `false` and null emit nothing. Every other value
+emits the prefix and value as separate process arguments.
 
 #### Frontmatter embedding
 
@@ -171,7 +169,7 @@ executing the package code.
 
 ### Validation Cases
 
-A package organizes its validation cases into **critical** and
+A package MUST organizes its validation cases into **critical** and
 **non-critical** groups. A failed or errored critical case means the ARC does
 not qualify under that package version. Non-critical cases communicate
 recommendations or quality indicators without changing that critical
@@ -187,7 +185,7 @@ one of these outcomes:
 | errored | The case could not be evaluated, for example because of malformed input or an execution failure. |
 | skipped | The case was intentionally not evaluated and records that fact. |
 
-Cases MUST be deterministic for the same immutable ARC state, package version,
+Cases SHOULD be deterministic for the same immutable ARC state, package version,
 declared inputs, and execution environment. A package SHOULD avoid network or
 time-dependent checks unless those dependencies and their effect on
 reproducibility are explicitly documented.
@@ -200,9 +198,11 @@ directory:
 
 | File | Purpose |
 | --- | --- |
-| `validation_summary.json` | Machine-readable aggregate result, package identity, optional payload, and source provenance. |
-| `validation_report.xml` | JUnit-compatible case-level result report. |
-| `badge.svg` | Human-readable visual summary suitable for an ARC or repository page. |
+| [`validation_summary.json`](#validation-summaryjson) | Machine-readable aggregate result, package identity, optional payload, and source provenance. |
+| [`validation_report.xml`](#validation-reportxml) | JUnit-compatible case-level result report. |
+| [`badge.svg`](#badgesvg) | Human-readable visual summary suitable for an ARC or repository page. |
+
+### validation-summary.json
 
 `validation_summary.json` MUST conform to the
 [validation-summary schema](../schemas/validation-summary.schema.json). It
@@ -219,10 +219,14 @@ The top level MAY contain arbitrary JSON-compatible package output in
 by the runner. A payload MUST NOT replace the standard result counts or package
 identity.
 
+### validation-report.xml
+
 `validation_report.xml` MUST represent all executed and skipped cases and
 SHOULD follow the conventional JUnit `testsuites`, `testsuite`, and `testcase`
 structure. Failures and errors MUST remain distinguishable. When source
 provenance is supplied, the report SHOULD retain it as suite properties.
+
+### badge.svg
 
 `badge.svg` MUST display the package name and a value derived from the same
 summary. It MUST indicate critical failures distinctly from a successful or
@@ -237,7 +241,7 @@ arguments:
 
 | Argument | Required | Meaning |
 | --- | --- | --- |
-| `-i <path>` | yes | Absolute path to the ARC directory to validate. |
+| `-i <path>` | yes | Normalized absolute path to the ARC directory, using `/` separators and ending in `/`. |
 | `-o <path>` | yes | Base directory under which the result directory is created. |
 | `--source-branch <branch>` | no | Source branch associated with this validation. |
 | `--source-commit-hash <hash>` | no | Immutable source revision associated with this validation. |
@@ -246,6 +250,11 @@ The runner MUST preserve every path and value as one process argument. It MUST
 provide read access to the ARC and write access to the output directory. A
 package SHOULD treat the ARC as read-only and MUST NOT write outside the
 supplied output directory as part of normal validation.
+
+The reference runner emits the short `-i` and `-o` forms. The reference
+package argument parser also accepts `--arc-directory` and `--out-directory`
+for direct invocation; those aliases are therefore reserved from
+package-specific input declarations.
 
 The reference runner is the
 [`arc-validate` CLI](https://github.com/nfdi4plants/arc-validate). The
@@ -296,7 +305,7 @@ The following F# frontmatter declares an immutable package identity and one
 nullable flag:
 
 ```fsharp
-let [<Literal>] PACKAGE_METADATA = """(*
+let [<Literal>]PACKAGE_METADATA = """(*
 ---
 $schema: "https://avpr.nfdi4plants.org/schemas/v1/validation-package-frontmatter.schema.json"
 Name: example-validation

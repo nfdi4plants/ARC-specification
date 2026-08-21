@@ -46,22 +46,14 @@
           "pattern": "\\S"
         },
         "requested_version": {
-          "oneOf": [
-            {
-              "$ref": "#/$defs/semVer"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "$ref": "#/$defs/semVer"
         },
         "roll_forward": {
           "type": "string",
           "enum": [
             "disable",
             "latest_patch",
-            "latest_minor",
-            "legacy_latest_stable"
+            "latest_minor"
           ]
         },
         "resolved_version": {
@@ -74,35 +66,7 @@
         "roll_forward",
         "resolved_version"
       ],
-      "additionalProperties": false,
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "roll_forward": {
-                "const": "legacy_latest_stable"
-              }
-            },
-            "required": [
-              "roll_forward"
-            ]
-          },
-          "then": {
-            "properties": {
-              "requested_version": {
-                "type": "null"
-              }
-            }
-          },
-          "else": {
-            "properties": {
-              "requested_version": {
-                "$ref": "#/$defs/semVer"
-              }
-            }
-          }
-        }
-      ]
+      "additionalProperties": false
     }
   }
 }

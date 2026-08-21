@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://w3id.org/arc/schemas/validation-summary/1.0.0",
+  "title": "ARC validation summary v1",
+  "description": "The aggregate result, package identity, optional payload, and source provenance emitted by an ARC validation package.",
+  "type": "object",
+  "$comment": "For each result group, HasFailures is true exactly when Failed or Errored is non-zero, and Total is at least Passed + Failed + Errored. Any remainder represents skipped cases. These arithmetic relationships are executable invariants that JSON Schema cannot express directly.",
+  "properties": {
+    "Critical": {
+      "$ref": "#/$defs/result"
+    },
+    "NonCritical": {
+      "$ref": "#/$defs/result"
+    },
+    "ValidationPackage": {
+      "$ref": "#/$defs/validationPackage"
+    },
+    "Payload": {
+      "description": "Optional package-defined JSON-compatible output."
+    },
+    "SourceBranch": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Source branch associated with this validation execution."
+    },
+    "SourceCommitHash": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Immutable source revision associated with this validation execution."
+    }
+  },
+  "required": [
+    "Critical",
+    "NonCritical",
+    "ValidationPackage"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "semVer": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-(?:0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)(?:\\.(?:0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*))*)?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$",
+      "description": "A complete Semantic Version 2.0 version."
+    },
+    "result": {
+      "type": "object",
+      "properties": {
+        "HasFailures": {
+          "type": "boolean"
+        },
+        "Total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "Passed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "Failed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "Errored": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "HasFailures",
+        "Total",
+        "Passed",
+        "Failed",
+        "Errored"
+      ],
+      "additionalProperties": false
+    },
+    "validationPackage": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Version": {
+          "$ref": "#/$defs/semVer"
+        },
+        "Summary": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "CQCHookEndpoint": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "Name",
+        "Version",
+        "Summary",
+        "Description"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "examples": [
+    {
+      "Critical": {
+        "HasFailures": false,
+        "Total": 2,
+        "Passed": 2,
+        "Failed": 0,
+        "Errored": 0
+      },
+      "NonCritical": {
+        "HasFailures": true,
+        "Total": 1,
+        "Passed": 0,
+        "Failed": 1,
+        "Errored": 0
+      },
+      "ValidationPackage": {
+        "Name": "example-validation",
+        "Version": "1.0.0",
+        "Summary": "Checks example ARC requirements.",
+        "Description": "An example validation package."
+      },
+      "Payload": {
+        "files_checked": 12
+      },
+      "SourceBranch": "main",
+      "SourceCommitHash": "0123456789abcdef"
+    }
+  ]
+}

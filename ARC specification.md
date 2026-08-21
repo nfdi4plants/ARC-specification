@@ -35,12 +35,9 @@ Licensed under the Creative Commons License CC BY, Version 4.0; you may not use 
   - [Validation](#validation)
     - [Validation cases](#validation-cases)
     - [Validation packages](#validation-packages)
-    - [Reference implementation](#reference-implementation)
+    - [Validation results](#validation-results)
   - [Continuous quality control](#continuous-quality-control)
-    - [The cqc branch](#the-cqc-branch)
-    - [The validation\_packages.yml file](#the-validation_packagesyml-file)
     - [ARC Apps](#arc-apps)
-    - [Reference implementation](#reference-implementation-1)
 - [Best Practices](#best-practices)
   - [Community Specific Data Formats](#community-specific-data-formats)
   - [Compression and Encryption](#compression-and-encryption)
@@ -373,296 +370,81 @@ Reproducibility of ARCs refers mainly to its *runs*. Within an ARC, it MUST be p
 
 # Mechanisms for ARC Quality Control
 
-ARCs are supposed to be living research objects and are as such never complete.
-Nevertheless, a mechanism to continuously report the current state and quality of an ARC is indispensable. 
+ARCs are living research objects and are therefore not expected to be complete
+at every point in their lifecycle. Quality control provides explicit,
+repeatable statements about the requirements an ARC satisfies at a particular
+state.
 
 ## Validation
 
-The process of assessing quality parameters of an ARC is further referred to as _validation_ of the ARC against a [_validation package_](#validation-packages), where the _validation package_ is an arbitrary set of [validation cases](#validation-cases) that the ARC MUST pass to qualify as _valid_ in regard to the _validation package_.
+**Validation** is the assessment of a particular state of an ARC against a
+validation package. An ARC is never unconditionally “valid”: every validation
+claim is relative to the ARC state, the validation package and its version, and
+any inputs used for that execution.
+
+Since ARCs are containers for data and metadata from arbitrary sources and domains, validation SHOULD be implemented as a pull model, where the ARC itself does not contain validation logic and the validation system can pull only the parts from the ARC that are necessary to evaluate the requirements. This allows validation to be performed by different systems and for different purposes, and allows validation packages to evolve independently of the ARC.
 
 ### Validation cases
 
-A **validation case** is the atomic unit of a [validation package](#validation-packages) describing a single, deterministic and reproducible requirement that the ARC MUST satisfy in order to qualify as _valid_ in regard to it.
+A **validation case** is an atomic, and reproducible requirement that SHOULD be able to be deterministically evaluated for an ARC.
+Evaluation produces a pass or fail outcome, or reports that the case could not be evaluated.
+Packages MAY also distinguish critical requirements that determine qualification from non-critical quality indicators.
 
-Format and scope of these cases naturally vary depending on the type of ARC, aim of the containing validation package and tools used for creating and performing the validation. 
-Therefore, no further requirements are made on the format of validation cases.
+The format and scope of a case depend on the community requirement being expressed. For example:
 
-  example:
-
-  > The following example shows a validation case simply defined using natural language.
-
-  ```
-  All Sample names in this ARC must be prefixed with the string "Sample_"
-  ```
-
-  Any ARC where all sample names are prefixed with the string "Sample_" would be considered valid in regard to this validation case.
+> All sample names in this ARC are prefixed with the string `Sample_`.
 
 ### Validation packages
 
-A **validation package** bundles a collection of [validation cases](#validation-cases) that the ARC MUST pass to qualify as _valid_ in regard to the _validation package_ with instructions on how to perform the validation and summarize the results.
+A **validation package** is a named and versioned collection of validation
+cases together with the information needed to evaluate them and interpret
+their combined result. A package defines its scope; passing one package does
+not imply that an ARC meets requirements outside that scope or those of a
+different package version.
 
-Validation packages
+A package SHOULD make its cases and aggregation rules understandable to both
+people and software. Its identity and version MUST be retained with every
+result so that a validation claim can be interpreted and reproduced.
 
-- MUST be executable. 
-  This can for example be achieved by implementing them in a programming language, a shell script, or a workflow language.
+### Validation results
 
-- MUST validate an ARC against all contained validation cases upon execution.
+A **validation result** records the outcome of applying one validation package
+version to one ARC state. It MUST distinguish an unsatisfied requirement from
+an error that prevented evaluation and MUST identify, directly or through
+associated provenance, the ARC state and package version. Results MAY include
+case-level detail, human-readable summaries, and application-specific payloads.
 
-- MUST have a globally unique name.
-  This will eventually be enforced by a central validation package registry
+### DataPLANT reference specification
 
-- SHOULD be versioned using [semantic versioning](https://semver.org/)
-
-- MUST be enriched with the following mandatory metadata in an appropriate way (e.g. via yaml frontmatter, tables in a database, etc.):
-  | Field | Type | Description |
-  | --- | --- | --- |
-  | Name | string | the name of the package |
-  | Version | string | the version of the package |
-  | Summary | string | a single sentence description (<=50 words) of the package |
-  | Description | string | an unconstrained free text description of the package |
-
-- MAY be enriched with the following optional metadata in an appropriate way (e.g. via yaml frontmatter, tables in a database, etc.):
-  | Field | Type | Description |
-  | --- | --- | --- |
-  | HookEndpoint | string | An URL to trigger subsequent events based on the result of executing the validation package in a CQC context, see [Continuous quality control](#continuous-quality-control) and [ARC Apps](#arc-apps) |
-
-- MAY be enriched with any additional metadata in an appropriate way (e.g. via yaml frontmatter, tables in a database, etc.).
-
-- MUST create a `validation_report.*` file upon execution that summarizes the results of validating the ARC against the cases defined in the validation package.
-  The format of this file SHOULD be of an established test result format such as [JUnit XML](https://github.com/windyroad/JUnit-Schema) or [TAP](https://testanything.org/).
-
-- MUST create a `badge.svg` file upon execution that visually summarizes the results of validating the ARC against the validation cases defined in the validation package.
-  The information displayed SHOULD be derivable from the `validation_report.*` file and MUST include the _Name_ of the validation package.
-
-- MUST create a `validation_summary.json` file upon execution, which contains the mandatory and optional metadata specified above, and a high-level summary of the execution of the validation package following this schema:
-  <details>
-  <summary>validation_summary.json schema</summary>
-
-  ```json
-  {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "type": "object",
-    "properties": {
-      "Critical": {
-        "type": "object",
-        "properties": {
-          "HasFailures": {
-            "type": "boolean"
-          },
-          "Total": {
-            "type": "integer"
-          },
-          "Passed": {
-            "type": "integer"
-          },
-          "Failed": {
-            "type": "integer"
-          },
-          "Errored": {
-            "type": "integer"
-          }
-        },
-        "required": [
-          "HasFailures",
-          "Total",
-          "Passed",
-          "Failed",
-          "Errored"
-        ]
-      },
-      "NonCritical": {
-        "type": "object",
-        "properties": {
-          "HasFailures": {
-            "type": "boolean"
-          },
-          "Total": {
-            "type": "integer"
-          },
-          "Passed": {
-            "type": "integer"
-          },
-          "Failed": {
-            "type": "integer"
-          },
-          "Errored": {
-            "type": "integer"
-          }
-        },
-        "required": [
-          "HasFailures",
-          "Total",
-          "Passed",
-          "Failed",
-          "Errored"
-        ]
-      },
-      "ValidationPackage": {
-        "type": "object",
-        "properties": {
-          "Name": {
-            "type": "string"
-          },
-          "Version": {
-            "type": "string"
-          },
-          "Summary": {
-            "type": "string"
-          },
-          "Description": {
-            "type": "string"
-          },
-          "HookEndpoint": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "Name",
-          "Version",
-          "Summary",
-          "Description"
-        ]
-      }
-    },
-    "required": [
-      "Critical",
-      "NonCritical",
-      "ValidationPackage"
-    ]
-  }
-  ```
-
-  </details>
-
-- SHOULD aggregate the result files in an appropriately named subdirectory.
-
-### Reference implementation
-
-A reference implementation for creating validation cases, validation packages, and validating ARCs against them is provided in the [arc-validate software suite](https://github.com/nfdi4plants/arc-validate)
+The executable package representation, metadata fields, supported languages,
+process arguments, result files, and registry behavior are defined by the
+[DataPLANT ARC Validation Package Specification](references/specifications/validation-packages.md).
 
 ## Continuous quality control
 
-In addition to manually validate ARCs against validation packages, ARCs MAY be continuously validated against validation packages using a continuous integration (CI) system. 
-This process is further referred to as _Continuous Quality Control_ (CQC) of the ARC. CQC can be triggered by any event that is supported by the CI system, e.g. a push to a branch of the ARC repository or a pull request.
+**Continuous Quality Control (CQC)** is the automated, repeated validation of
+an ARC as it changes. A CQC run is triggered by an event such as a repository
+push, merge request, tag, schedule, or manual request and evaluates a specific,
+immutable ARC state against one or more selected validation packages.
 
-### The cqc branch
-
-To make sure that validation results are bundled with ARCs but do not pollute their commit history, validation results MUST be stored in a separate branch of the ARC repository.
-This branch:
-
-- MUST be named `cqc`
-- MUST be an [orphan branch](https://git-scm.com/docs/git-checkout#Documentation/git-checkout.txt---orphanltnew-branchgt)
-- MUST NOT be merged into any other branch. 
-- MUST contain the following folder structure:
-
-  `{$branch}/{$package}`:
-
-  ```
-  cqc branch root
-  └── {$branch}
-      └── {$package}
-  ```
-  
-  where:
-  - `{$branch}` is the name of the branch the validation was run on
-  - `{$package}` is the name of the validation package the validation was run against. 
-    this folder then MUST contain the files `validation_report.*` and `badge.svg` as described in the [validation package specification](#validation-packages).
-    This folder MAY also be suffixed by the version of the validation package via a `@` character followed by the version number of the validation package: `{$package}@{$version}`, e.g. `package1@1.0.0`.
-
-  example:
-
-  > This example shows the validation results of the `main` and `branch-1` branches of the ARC repository against the `package1` and `package2` validation packages. for `package2`, an optional version hint of the package is included in the folder name:
-
-  ```
-  cqc-branch-root
-  ├── branch-1
-  │   ├── package1
-  │   │   ├── badge.svg
-  │   │   └── validation_report.xml
-  │   └── package2@2.0.0
-  │       ├── badge.svg
-  │       └── validation_report.xml
-  └── main
-      ├── package1
-      │   ├── badge.svg
-      │   └── validation_report.xml
-      └── package2@2.0.0
-          ├── badge.svg
-          └── validation_report.xml
-  ```
-
-Commits to the `cqc` branch MUST contain the commit hash of the commit that was validated in the commit message.
-
-### The validation_packages.yml file
-
-The `validation_packages.yml` specifies the validation packages that the branch containing the file will be validated against.
-Each branch of an ARC MAY contain 0 or 1 `validation_packages.yml` files.
-If the file is present, it:
-
-- MAY contain a `specification` key which, when present, MUST contain the version of the ARC specification that the ARC should be validated against. Schema specification should be tied to specification releases, and be directly integrated into tools that can perform  validation against validation packages.
-- MUST be located in the `.arc` folder in the root of the ARC
-- MUST contain the `validation_packages` key which is a list of validation packages that the current branch will be validated against.
-
-  values of the `validation_packages` list are objects with the following fields:
-
-  - `name`: the name of the validation package. This field is mandatory and MUST be included for each validation package object. This name MUST be unique across all validation packages object, which means that only one version of a package can be contained in the file.
-  - `version`: the version of the validation package. This field is optional and MAY be included for each validation package object. If included, it MUST be a valid [semantic version](https://semver.org/), restricted to MAJOR.MINOR.PATCH format. If not included, this indicates that the latest available version of the validation package will be used.
-
-example:
-
-> This example shows a `validation_packages.yml` file that specifies that the current branch will be validated against: version `2.0.0-draft` of the ARC specification, version `1.0.0` of `package1`, version `2.0.0` of `package2`, and the latest available version of `package3`.
-
-```yaml
-arc_specification: 2.0.0-draft
-validation_packages:
-  - name: package1
-    version: 1.0.0
-  - name: package2
-    version: 2.0.0
-  - name: package3
-```
+An ARC MAY declare the packages and package inputs intended for CQC. A CQC
+system MUST associate retained results with the source state and exact package
+versions that produced them. Resolution, execution, and infrastructure
+failures MUST remain distinguishable from validation-case failures.
 
 ### ARC Apps
 
-Continuous Quality Control enables to check at any time in the ARC life cycle whether it passes certain criteria or not.
+An **ARC app** is a service that performs an action based on an ARC and a
+validation result. For example, a package may assess whether an ARC meets a
+repository's submission requirements, while a separate ARC app performs the
+authorized submission. Separating assessment from action keeps validation
+reproducible and allows authentication, authorization, and user confirmation to
+be handled by the application.
 
-However, **if** an ARC is valid for a given _target_ is only half of the equation - the other being taking some kind of action based on this information. One large field of actions here is the publication of the ARC or (some) of it's contents to an **endpoint repository (ER)** (e.g. [PRIDE](https://www.ebi.ac.uk/pride/), [ENA](https://www.ebi.ac.uk/ena/browser/home)).
-
-In this example, a validation package SHOULD only determine if the content _COULD_ be published to the ER, and a subsequent service SHOULD then take the respective action based on the reported result of that package (e.g. fixing errors based on the report, or publish the content to the ER).
-
-**ARC apps** are services that provide URLs called _(CQC) Hook Endpoints_ that be triggered manually or by the result of a validation package. They are intended to automate the process of taking action based on the result of a validation package.
-
-### Reference implementation
-
-PLANTDataHUB performs Continuous Quality Control of ARCs using the [arc-validate software suite](https://github.com/nfdi4plants/arc-validate) as described in our 2023 paper [PLANTdataHUB: a collaborative platform for continuous FAIR data sharing in plant research](https://doi.org/10.1111/tpj.16474).
-
-The following sequence diagram shows the conceptual implementation of CQC pipelines in conjunction with ARC Apps connected via CQC Hooks on the reference DataHUB instance with the following participants:
-
-- **User**: The user who works on an ARC published on the DataHUB
-- **ARC**: The ARC repository on the DataHUB
-- **DataHUB**: The DataHUB instance
-- **ARC App**: A service that provides a CQC Hook Endpoint to perform actions based on validation results and/or user input
-
-```mermaid
-sequenceDiagram
-
-    participant User
-    participant ARC
-    participant DataHUB
-    participant ARC App
-
-    Note over User, DataHUB: Validation (CQC pipeline)
-    User ->> ARC : commit
-    DataHUB ->> DataHUB : trigger validation for commit
-    DataHUB ->> ARC : commit validation results <br> to cqc branch
-    DataHUB ->> ARC : create badge
-    Note over User, ARC App: CQC Hooks
-    User ->> ARC App : click on badge link
-    DataHUB ->> ARC App : trigger some action based on validation results
-    ARC App ->> DataHUB : Request relevant information
-    DataHUB ->> ARC App : send relevant information (when granted access)
-    ARC App ->> ARC App : Perform action with retrieved data
-```
+The reference configuration format, version-resolution behavior, execution
+plan, CI/CD flow, provenance profile, result history, and ARC app integration
+are defined by the
+[DataPLANT ARC Continuous Quality Control Specification](references/specifications/continuous-quality-control.md).
 
 # Best Practices
 

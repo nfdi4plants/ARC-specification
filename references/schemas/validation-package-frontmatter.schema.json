@@ -1,0 +1,244 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://avpr.nfdi4plants.org/schemas/v1/validation-package-frontmatter.schema.json",
+  "title": "AVPR validation-package frontmatter v1",
+  "description": "The extracted YAML metadata mapping for an ARC validation package. Language-specific F#/Python frontmatter delimiters are outside this schema.",
+  "type": "object",
+  "$comment": "Executable codec validation additionally rejects duplicate YAML keys, aliases, anchors, explicit tags, merge keys and multiple documents. Input id/prefix uniqueness and reserved-prefix collisions are also executable invariants.",
+  "properties": {
+    "$schema": {
+      "const": "https://avpr.nfdi4plants.org/schemas/v1/validation-package-frontmatter.schema.json",
+      "description": "Immutable offline decoder identifier and editor association. Runtime readers do not fetch it."
+    },
+    "Name": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S",
+      "description": "Validation-package name."
+    },
+    "Summary": {
+      "type": "string",
+      "description": "Short package summary."
+    },
+    "Description": {
+      "type": "string",
+      "description": "Longer package description."
+    },
+    "MajorVersion": {
+      "$ref": "#/$defs/versionComponent"
+    },
+    "MinorVersion": {
+      "$ref": "#/$defs/versionComponent"
+    },
+    "PatchVersion": {
+      "$ref": "#/$defs/versionComponent"
+    },
+    "PreReleaseVersionSuffix": {
+      "type": "string",
+      "pattern": "^(?:|(?:0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)(?:\\.(?:0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*))*)$",
+      "default": "",
+      "description": "SemVer prerelease suffix without the leading hyphen."
+    },
+    "BuildMetadataVersionSuffix": {
+      "type": "string",
+      "pattern": "^(?:|[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)$",
+      "default": "",
+      "description": "SemVer build suffix without the leading plus sign."
+    },
+    "ProgrammingLanguage": {
+      "type": "string",
+      "default": "",
+      "description": "Package language, normally supplied by frontmatter extraction."
+    },
+    "Publish": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this staged package is eligible for publication."
+    },
+    "Authors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/author"
+      },
+      "default": []
+    },
+    "Tags": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ontologyAnnotation"
+      },
+      "default": []
+    },
+    "ReleaseNotes": {
+      "type": "string",
+      "default": ""
+    },
+    "CQCHookEndpoint": {
+      "type": "string",
+      "default": ""
+    },
+    "Inputs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/commandInputParameter"
+      },
+      "default": [],
+      "$comment": "Input ids and inputBinding prefixes must be unique. Prefixes must not equal --, -i, -o, --source-branch or --source-commit-hash."
+    }
+  },
+  "required": [
+    "$schema",
+    "Name",
+    "Summary",
+    "Description",
+    "MajorVersion",
+    "MinorVersion",
+    "PatchVersion"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "versionComponent": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "A non-negative SemVer core component."
+    },
+    "semVer": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-(?:0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)(?:\\.(?:0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*))*)?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$",
+      "description": "A complete SemVer 2.0 version."
+    },
+    "author": {
+      "type": "object",
+      "properties": {
+        "FullName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "Email": {
+          "type": "string",
+          "default": ""
+        },
+        "Affiliation": {
+          "type": "string",
+          "default": ""
+        },
+        "AffiliationLink": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "required": [
+        "FullName"
+      ],
+      "additionalProperties": false
+    },
+    "ontologyAnnotation": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "TermSourceREF": {
+          "type": "string",
+          "default": ""
+        },
+        "TermAccessionNumber": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "required": [
+        "Name"
+      ],
+      "additionalProperties": false
+    },
+    "commandInputType": {
+      "type": "string",
+      "enum": [
+        "boolean",
+        "boolean?",
+        "int",
+        "int?",
+        "long",
+        "long?",
+        "float",
+        "float?",
+        "double",
+        "double?",
+        "string",
+        "string?"
+      ]
+    },
+    "commandInputBinding": {
+      "type": "object",
+      "properties": {
+        "prefix": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S",
+          "description": "Exact argv prefix token."
+        },
+        "position": {
+          "type": "integer",
+          "default": 0
+        }
+      },
+      "required": [
+        "prefix"
+      ],
+      "additionalProperties": false
+    },
+    "commandInputParameter": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "type": {
+          "$ref": "#/$defs/commandInputType"
+        },
+        "label": {
+          "type": "string",
+          "default": ""
+        },
+        "doc": {
+          "type": "string",
+          "default": ""
+        },
+        "inputBinding": {
+          "$ref": "#/$defs/commandInputBinding"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "inputBinding"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "examples": [
+    {
+      "$schema": "https://avpr.nfdi4plants.org/schemas/v1/validation-package-frontmatter.schema.json",
+      "Name": "configurable-validation",
+      "Summary": "Validates an ARC.",
+      "Description": "A configurable validation package.",
+      "MajorVersion": 1,
+      "MinorVersion": 2,
+      "PatchVersion": 3,
+      "Inputs": [
+        {
+          "id": "strict",
+          "type": "boolean",
+          "inputBinding": {
+            "prefix": "--strict",
+            "position": 10
+          }
+        }
+      ]
+    }
+  ]
+}

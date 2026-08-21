@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nfdi4plants.github.io/arc-validate/schemas/v1/validation_plan.schema.json",
+  "title": "arc-validate execution plan v1",
+  "description": "A preflighted validation-package execution plan emitted by arc-validate config resolve.",
+  "type": "object",
+  "$comment": "Package names are unique. The resolver additionally enforces exact and rolling relationships between requested_version and resolved_version; those semantic invariants are not expressible by this schema alone.",
+  "properties": {
+    "$schema": {
+      "const": "https://nfdi4plants.github.io/arc-validate/schemas/v1/validation_plan.schema.json",
+      "description": "Immutable local decoder identifier and editor association. Runtime readers do not fetch it."
+    },
+    "config_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Lowercase SHA-256 of the exact validation configuration bytes."
+    },
+    "arc_specification": {
+      "$ref": "#/$defs/semVer"
+    },
+    "validation_packages": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/selection"
+      }
+    }
+  },
+  "required": [
+    "$schema",
+    "config_sha256",
+    "validation_packages"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "semVer": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-(?:0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)(?:\\.(?:0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*))*)?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$",
+      "description": "A complete SemVer 2.0 version."
+    },
+    "selection": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "requested_version": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/semVer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "roll_forward": {
+          "type": "string",
+          "enum": [
+            "disable",
+            "latest_patch",
+            "latest_minor",
+            "legacy_latest_stable"
+          ]
+        },
+        "resolved_version": {
+          "$ref": "#/$defs/semVer"
+        }
+      },
+      "required": [
+        "name",
+        "requested_version",
+        "roll_forward",
+        "resolved_version"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "roll_forward": {
+                "const": "legacy_latest_stable"
+              }
+            },
+            "required": [
+              "roll_forward"
+            ]
+          },
+          "then": {
+            "properties": {
+              "requested_version": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "requested_version": {
+                "$ref": "#/$defs/semVer"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

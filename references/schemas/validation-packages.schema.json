@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://avpr.nfdi4plants.org/schemas/v1/validation-packages.schema.json",
+  "title": "ARC validation-packages configuration v1",
+  "description": "The canonical .arc/validation_packages.yml format.",
+  "type": "object",
+  "$comment": "The executable codec additionally rejects duplicate YAML keys, aliases, anchors, explicit tags, merge keys, multiple documents, non-JSON scalar spellings and non-finite numbers. Package-name uniqueness and declaration-driven input id/type/range/requiredness checks are executable invariants.",
+  "properties": {
+    "$schema": {
+      "const": "https://avpr.nfdi4plants.org/schemas/v1/validation-packages.schema.json",
+      "description": "Immutable offline decoder identifier and editor association. Runtime readers do not fetch it."
+    },
+    "arc_specification": {
+      "$ref": "#/$defs/semVer"
+    },
+    "validation_packages": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/selection"
+      },
+      "$comment": "Selection names must be unique."
+    }
+  },
+  "required": [
+    "$schema",
+    "validation_packages"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "semVer": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-(?:0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)(?:\\.(?:0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*))*)?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$",
+      "description": "A complete SemVer 2.0 version."
+    },
+    "inputValue": {
+      "description": "A JSON-compatible scalar or explicit null. String values must be quoted in YAML; that lexical distinction is enforced by the codec.",
+      "type": [
+        "null",
+        "boolean",
+        "integer",
+        "number",
+        "string"
+      ]
+    },
+    "selection": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S"
+        },
+        "version": {
+          "$ref": "#/$defs/semVer"
+        },
+        "roll_forward": {
+          "type": "string",
+          "enum": [
+            "disable",
+            "latest_patch",
+            "latest_minor"
+          ],
+          "default": "disable"
+        },
+        "inputs": {
+          "type": "object",
+          "propertyNames": {
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/inputValue"
+          },
+          "default": {},
+          "$comment": "Keys are exact package declaration ids. Their existence, declared scalar type, nullability, range and requiredness are validated against the selected package metadata."
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "examples": [
+    {
+      "$schema": "https://avpr.nfdi4plants.org/schemas/v1/validation-packages.schema.json",
+      "arc_specification": "3.0.0-draft.2",
+      "validation_packages": [
+        {
+          "name": "configurable-validation",
+          "version": "1.2.3",
+          "roll_forward": "latest_patch",
+          "inputs": {
+            "strict": true,
+            "minimum-files": 2,
+            "report-title": "release candidate"
+          }
+        }
+      ]
+    }
+  ]
+}

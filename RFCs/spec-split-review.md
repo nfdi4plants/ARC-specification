@@ -38,6 +38,19 @@ Suggested title:
 
 > Modularizing the ARC specification: core concepts, interoperability profiles, and reference implementations
 
+### Discussion outcome, 2026-10-12
+
+The discussion clarified the intended direction of the RFC. The following records that agreement for the draft; it does not constitute acceptance of a revised ARC specification. The original review observations are retained as historical context.
+
+- The core ARC specification should describe what an ARC is conceptually, independently of any workspace implementation.
+- The [ARC Base Model](https://github.com/HLWeil/ARC-base-model) is a domain-neutral reference realization and a foundation for managing ARC workspaces. Use of that implementation is optional; its role should be distinguished from the concepts it realizes.
+- Workspaces may choose their internal data models, storage systems, formats, and tools, provided their ARC information is compatible with the core concepts and can eventually be exported according to the ARC RO-Crate profiles.
+- ISA/CWL workspace representations, their decorations, and their mappings belong to the respective domain and tooling implementations. Preserving ISA/CWL requirements as separately normative ARC workspace profiles is not a requirement of this split.
+
+This supersedes point 1's recommendation to carry extracted workspace requirements forward as normative ARC profiles by default, and its recommendation to establish that three-layer structure first. The shared interoperability contract is the core concepts and the ARC RO-Crate profiles. The RFC has been updated to reflect this positioning.
+
+The required core concepts, required profile combinations, and lifecycle stage at which a conforming export must be available remain open. This discussion does not require a complete RO-Crate throughout active work or settle the remaining validation, CQC, and infrastructure questions.
+
 ## 2. Frame the proposed ARC definition as the central conformance decision
 
 The draft's "one? two? all?" questions are appropriate for a discussion issue. They currently combine several distinct decisions:
